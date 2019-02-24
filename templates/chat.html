@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head lang="ko">
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <title> 새마을 금고 중앙회 채팅창</title>
+    <!-- css -->
+<style>
+body {
+  font: 15px arial, sans-serif;
+  background-color: #f8f8f8;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+#bodybox {
+  margin: auto;
+  max-width: 550px;
+  font: 15px arial, sans-serif;
+  background-color: rgb(215, 242, 248);
+  border-style: solid;
+  border-width: 1px;
+  padding-top: 20px;
+  padding-bottom: 25px;
+  padding-right: 25px;
+  padding-left: 25px;
+  box-shadow: 5px 5px 5px rgb(138, 134, 134);
+  border-radius: 15px;
+}
+.chatlog {
+   font: 12px arial, sans-serif;
+}
+#chatbox {
+  font: 15px arial, sans-serif;
+  height: 22px;
+  width: 80%;
+}
+</style>
+<!-- js -->
+    <script type="text/javascript" charset="utf-8">
+            $(document).ready(function(){
+               	var socket = io.connect('http://127.0.0.1:5000');
+                //초기 화면
+                socket.on('init',function(msg){
+                     $('#messages').val($('#messages').val() +msg.username+': '+msg.data + '\n');
+                     $('#messages').scrollTop($('#messages')[0].scrollHeight);
+                });
+
+                //응답 띄우는 콜백함수 고객 응답
+                socket.on('response', function(msg){
+                     $('#messages').val($('#messages').val() + msg.username+': '+msg.data + '\n');
+                     $('#messages').scrollTop($('#messages')[0].scrollHeight);
+                });
+                //봇 대답
+                socket.on('botResponse',function(msg){
+                     $('#messages').val($('#messages').val() + msg.username+': '+msg.data + '\n');
+                     $('#messages').scrollTop($('#messages')[0].scrollHeight);
+                });
+                //입력 콜백함수
+                $('#inputBtn').on('click',function(){
+                    socket.emit("request",{data:$('#myMessage').val()});
+                    $('#myMessage').val('');
+                });
+                $('#myMessage').keypress(function(e) {
+                    var code = e.keyCode || e.which;
+                    if (code == 13) {
+                        text = $('#myMessage').val();
+                        $('#myMessage').val('');
+		                socket.emit("request",{data:text});
+                    }
+                });
+            });
+    </script>
+    <meta charset="UTF-8">
+    </head>
+<!------ Include the above in your HEAD tag ---------->
+<body>
+
+
+<div id='bodybox'>
+  <h1>새마을 금고 챗봇 :</h1>
+  <textarea id="messages" cols="60" rows="20" readonly></textarea><br><br>
+  <input type="text" id="myMessage" size="70" placeholder="여기에 채팅을 입력해주세요" autofocus>
+  <button id="inputBtn">입력</button>
+  <!--<input type="file" id="myFile" multiple size="50" onchange="myFunction()">-->
+</div>
+</body>
+</html>
