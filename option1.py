@@ -45,14 +45,20 @@ class Option1:
         return 1
 
     def get_answer(self):
+        connection = pymongo.MongoClient("localhost", 27017)
+        db = connection.testDB
+        co = db.Data
         if self.slot.entity2 and self.slot.entity3 is not "":
-            connection = pymongo.MongoClient("localhost", 27017)
-            db = connection.testDB
-            co = db.Data
             answer = co.distinct(self.slot.entity3, {"상품이름": self.slot.entity2})[0]
             self.slot.clear()
             return answer
-        elif self.slot.entity2 is "" and self.slot.entity3 is not "":
+
+        elif self.slot.entity1 is "" and self.slot.entity2 is "":
+            self.slot.log = "1"
+            answer = "상품의 종류를 입력해주세요"
+            return answer
+        
+        elif self.slot.entity1 is not "" and self.slot.entity2 is "":
             self.slot.log = "2"
             answer = "상품의 이름을 입력해주세요"
             return answer
