@@ -1,3 +1,8 @@
-﻿EntityName,상상모바일정기예금,EntityClass,상품명
-EntityName,행복모아자유적금,EntityClass ,상품명
-EntityName,스피드마이너스대출,EntityClass,상품명
+﻿"EntityName",우리아기첫걸음 정기적금,EntityClass,상품명
+"EntityName",상상모바일정기적금,EntityClass,상품명
+"EntityName",상상모바일통장,EntityClass,상품명
+"EntityName",상상모바일정기예금,EntityClass,상품명
+"EntityName",상상모바일자유적금,EntityClass,상품명
+"EntityName",사잇돌대출,EntityClass,상품명
+"EntityName",체크플러스론,EntityClass,상품명
+"EntityName",MG기분UP대출,EntityClass,상품명
