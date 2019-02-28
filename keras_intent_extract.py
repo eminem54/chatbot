@@ -3,23 +3,23 @@ from keras.preprocessing import sequence
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import LSTM
-import data_processing
 import numpy as np
+from konlpy.tag import Kkma
 
 
 def evaluation(msg):
     word_table = {}
-    with open('./data/word_table.txt', 'r') as js:
+    kkma = Kkma()
+
+    with open('word_table.txt', 'r') as js:
         text = js.read()
         word_table = eval(text)
 
     X = [[]]
-    splited_msg = msg.split(' ')
+    splited_msg = kkma.pos(msg)
     for word in splited_msg:
-        if word in word_table.keys():
-          X[0].append(int(word_table[word]))
-
-
+        if word[0] in word_table.keys():
+            X[0].append(int(word_table[word[0]]))
 
     X = sequence.pad_sequences(X, maxlen=20)
 
@@ -44,3 +44,4 @@ def evaluation(msg):
     elif intent == 2:
         return "대출"
 
+#print(evaluation('예금 정보 알려줘'))

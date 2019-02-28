@@ -21,6 +21,7 @@ class ChatBot:
         line, entity1_list = en.get_entity1(line, entity1_list)
         intent = self.intent_extraction(line)
 
+        print(intent,1234)
         if slot.intent is "":
             slot.intent = intent
 
@@ -43,6 +44,6 @@ class ChatBot:
         return answer
 
 
-bot = ChatBot()
-bot.run("대출 상품의 대출기간을 알려줘")
-bot.run("스피드마이너스대출")
+# bot = ChatBot()
+# bot.run("대출 상품의 대출기간을 알려줘")
+# bot.run("스피드마이너스대출")

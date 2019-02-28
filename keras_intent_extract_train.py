@@ -5,16 +5,12 @@ from keras.layers import Dense
 from keras.layers import LSTM, Dropout
 from keras.layers.embeddings import Embedding
 from keras.preprocessing import sequence
-from keras.layers import Conv1D, MaxPooling1D, Conv2D, MaxPooling2D
-import data.data_processing
+import data_processing
 from keras import optimizers
 
 np.random.seed(7)
-
 top_words = 5000
-
-X_train, y_train, X_test, y_test = data.data_processing.get_data1()
-
+X_train, y_train, X_test, y_test = data_processing.get_train_data('./data/kkk.train')
 
 max_review_length = 20
 X_train = sequence.pad_sequences(X_train, maxlen=max_review_length)
