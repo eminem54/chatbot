@@ -15,11 +15,11 @@ def save_data_csv():
         for line in pf.read().split('\n'):
             splited_line = line.split(',')
 
-            if splited_line[1] == '예금':
+            if splited_line[1] == '상품 소개':
                 save_Y_data.append(0)
-            elif splited_line[1] == '적금':
+            elif splited_line[1] == '지점 안내':
                 save_Y_data.append(1)
-            elif splited_line[1] == '대출':
+            elif splited_line[1] == '고객 상담':
                 save_Y_data.append(2)
 
             save_X_data.append([])
@@ -56,11 +56,11 @@ def add_and_save_test_csv():
         for line in pf.read().split('\n'):
             splited_line = line.split(',')
 
-            if splited_line[1] == '예금':
+            if splited_line[1] == '상품 소개':
                 save_Y_data.append(0)
-            elif splited_line[1] == '적금':
+            elif splited_line[1] == '지점 안내':
                 save_Y_data.append(1)
-            elif splited_line[1] == '대출':
+            elif splited_line[1] == '고객 상담':
                 save_Y_data.append(2)
 
             save_X_data.append([])
@@ -94,11 +94,11 @@ def get_train_data(data_path):
         for line in data.read().split('\n'):
             splited_line = line.split(',')
 
-            if splited_line[-1].strip() == '예금':
+            if splited_line[-1].strip() == '상품 소개':
                 vectorized_y_data.append(0)
-            elif splited_line[-1].strip() == '적금':
+            elif splited_line[-1].strip() == '지점 안내':
                 vectorized_y_data.append(1)
-            elif splited_line[-1].strip() == '대출':
+            elif splited_line[-1].strip() == '고객 상담':
                 vectorized_y_data.append(2)
 
             if len(splited_line) > 2:

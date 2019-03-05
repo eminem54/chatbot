@@ -38,10 +38,10 @@ def evaluation(msg):
 
     intent = np.argmax(pred[0])
     if intent == 0:
-        return "예금"
+        return "상품 소개"
     elif intent == 1:
-        return "적금"
+        return "지점 안내"
     elif intent == 2:
-        return "대출"
+        return "고객 상담"
 
 #print(evaluation('예금 정보 알려줘'))
