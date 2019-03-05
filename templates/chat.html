@@ -1,89 +1,170 @@
 <!DOCTYPE html>
 <html>
-<head lang="ko">
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <title> 새마을 금고 중앙회 채팅창</title>
-    <!-- css -->
 <style>
-body {
-  font: 15px arial, sans-serif;
-  background-color: #f8f8f8;
-  padding-top: 15px;
-  padding-bottom: 15px;
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-#bodybox {
-  margin: auto;
-  max-width: 550px;
-  font: 15px arial, sans-serif;
-  background-color: rgb(215, 242, 248);
-  border-style: solid;
-  border-width: 1px;
-  padding-top: 20px;
-  padding-bottom: 25px;
-  padding-right: 25px;
-  padding-left: 25px;
-  box-shadow: 5px 5px 5px rgb(138, 134, 134);
-  border-radius: 15px;
+.chat li
+{
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #B3A9A9;
 }
-.chatlog {
-   font: 12px arial, sans-serif;
+
+.chat li.left .chat-body
+{
+    margin-left: 60px;
 }
-#chatbox {
-  font: 15px arial, sans-serif;
-  height: 22px;
-  width: 80%;
+
+.chat li.right .chat-body
+{
+    margin-right: 60px;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    color: #777777;
+}
+
+.panel .slidedown .glyphicon, .chat .glyphicon
+{
+    margin-right: 5px;
+}
+
+.panel-body
+{
+    overflow-y: scroll;
+    height: 250px;
+}
+
+::-webkit-scrollbar-track
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
 }
 </style>
-<!-- js -->
-    <script type="text/javascript" charset="utf-8">
-            $(document).ready(function(){
-               	var socket = io.connect('http://127.0.0.1:5000');
-                //초기 화면
-                socket.on('init',function(msg){
-                     $('#messages').val($('#messages').val() +msg.username+': '+msg.data + '\n');
-                     $('#messages').scrollTop($('#messages')[0].scrollHeight);
-                });
 
-                //응답 띄우는 콜백함수 고객 응답
-                socket.on('response', function(msg){
-                     $('#messages').val($('#messages').val() + msg.username+': '+msg.data + '\n');
-                     $('#messages').scrollTop($('#messages')[0].scrollHeight);
-                });
-                //봇 대답
-                socket.on('botResponse',function(msg){
-                     $('#messages').val($('#messages').val() + msg.username+': '+msg.data + '\n');
-                     $('#messages').scrollTop($('#messages')[0].scrollHeight);
-                });
-                //입력 콜백함수
-                $('#inputBtn').on('click',function(){
-                    socket.emit("request",{data:$('#myMessage').val()});
-                    $('#myMessage').val('');
-                });
-                $('#myMessage').keypress(function(e) {
-                    var code = e.keyCode || e.which;
-                    if (code == 13) {
-                        text = $('#myMessage').val();
-                        $('#myMessage').val('');
-		                socket.emit("request",{data:text});
-                    }
-                });
-            });
-    </script>
-    <meta charset="UTF-8">
-    </head>
-<!------ Include the above in your HEAD tag ---------->
+</head>
 <body>
+<!------ Include the above in your HEAD tag ---------->
 
+<script type="text/javascript">
+$(document).ready(function() {
 
-<div id='bodybox'>
-  <h1>새마을 금고 챗봇 :</h1>
-  <textarea id="messages" cols="60" rows="20" readonly></textarea><br><br>
-  <input type="text" id="myMessage" size="70" placeholder="여기에 채팅을 입력해주세요" autofocus>
-  <button id="inputBtn">입력</button>
-  <!--<input type="file" id="myFile" multiple size="50" onchange="myFunction()">-->
+	var socket = io.connect('http://127.0.0.1:5000');
+	socket.on('init', function(msg) {
+		$(".chat").append(
+		    "<li>"+"뉴빌리지 봇 : "+msg.data+"</li>"
+		);
+        $(".panel-body").scrollTop($(".chat").height());
+	});
+	socket.on('messageServer', function(msg) {
+		$(".chat").append("<li>"+"뉴빌리지 봇 : "+msg.data+"</li>");
+        $(".panel-body").scrollTop($(".chat").height());
+	});
+	socket.on('messageClient',function(msg){
+		$(".chat").append("<li>"+"고객님 : "+msg.data+"</li>");
+        $(".panel-body").scrollTop($(".chat").height());
+	});
+
+    socket.on('slot',function(msg){
+        $(".chat").append("<li>"+"뉴빌리지 봇 : ");
+        for(var i=0;i<msg.data.length;i++){
+		    var btn=document.createElement('input');
+		    btn.setAttribute('type','button');
+		    btn.setAttribute('id',msg.data[i]);
+		    btn.setAttribute('value',msg.data[i]);
+		    $(".chat").append(btn);
+		}
+		$(".chat").append("</li>");
+        $(".panel-body").scrollTop($(".chat").height());
+        $("input").click(function(){
+            var text=$(this).attr('value');
+            socket.emit("serverMsg",text);
+         });
+    });
+	//입력 콜백함수
+    $('#inputBtn').on('click',function(){
+        socket.emit("serverMsg",$('#myMessage').val());
+        $('#myMessage').val('');
+    });
+
+    $('#myMessage').keypress(function(e) {
+        var code = e.keyCode || e.which;
+        if (code == 13) {
+            text = $('#myMessage').val();
+            $('#myMessage').val('');
+		    socket.emit("serverMsg",text);
+        }
+    });
+});
+</script>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-comment"></span> Chat
+                    <div class="btn-group pull-right">
+                        <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-chevron-down"></span>
+                        </button>
+                        <ul class="dropdown-menu slidedown">
+                            <li><a href="#"><span class="glyphicon glyphicon-refresh">
+                            </span>Refresh</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-ok-sign">
+                            </span>Available</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-remove">
+                            </span>Busy</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-time"></span>
+                                Away</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-off"></span>
+                                Sign Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <ul class="chat"></ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="myMessage" type="text" class="form-control input-sm" placeholder="여기에 메시지를 입력해주세요." autofocus />
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" id="inputBtn">전송</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>
