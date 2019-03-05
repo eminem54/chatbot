@@ -52,6 +52,11 @@ class Option1:
             answer = co.distinct(self.slot.entity3, {"상품이름": self.slot.entity2})[0]
             self.slot.clear()
             return answer
+        
+        elif self.slot.entity2 is not "" and self.slot.entity3 is  "":
+            answer = co.distinct("상품설명", {"상품이름": self.slot.entity2})[0]
+            self.slot.clear()
+            return answer
 
         elif self.slot.entity1 is "" and self.slot.entity2 is "":
             self.slot.log = "1"
