@@ -48,7 +48,7 @@ class Option1:
         connection = pymongo.MongoClient("localhost", 27017)
         db = connection.testDB
         co = db.Data
-        if self.slot.entity2 and self.slot.entity3 is not "":
+        if self.slot.entity2 is not "" and self.slot.entity3 is not "":
             answer = co.distinct(self.slot.entity3, {"상품이름": self.slot.entity2})[0]
             self.slot.clear()
             return answer
@@ -61,6 +61,11 @@ class Option1:
         elif self.slot.entity1 is not "" and self.slot.entity2 is "":
             self.slot.log = "2"
             answer = "상품의 이름을 입력해주세요"
+            return answer
+        
+        elif self.slot.entity2 is not "" and self.slot.entity3 is "":
+            answer = co.distinct("상품설명", {"상품이름": self.slot.entity2})[0]
+            self.slot.clear()
             return answer
 
     def slot_filling(self):
