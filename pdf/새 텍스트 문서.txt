@@ -1,0 +1,33 @@
+#-*-coding: utf-8-*-
+
+import codecs
+import gridfs
+import pymongo
+from flask import Flask, render_template
+from bottle import response
+
+app = Flask(__name__)
+connection = pymongo.MongoClient()
+
+@app.route('/download/<name>')
+@app.route('/')
+def downloadFile (name=None):
+	
+	fs = gridfs.GridFS(connection.Product)
+
+	if name is not None :
+		thing = fs.get_last_version(name)
+		
+		r = app.response_class(thing, direct_passthrough=True, mimetype='application/octet-stream')
+		
+		r.headers.set('Content-Disposition', 'attachment', filename=name)
+
+
+		return r
+		
+	return render_template('get_file.html',names=fs.listj())
+	
+
+if __name__ == '__main__':
+	app.run(host='0.0.0.0',port=8080) 
+

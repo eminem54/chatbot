@@ -1,0 +1,33 @@
+<!doctype html>
+
+   <html>
+<head>
+<meta charset="utf-8">
+<title>다운로드</title>
+</head>
+<p>약관 다운로드</p>
+<a href="http://127.0.0.1:8080/download/Basic.pdf" download>MG기분UP대출 여신약관</a><br>
+<a href="http://127.0.0.1:8080/download/Basic.pdf" download>체크플러스론 여신약관</a><br>
+<a href="http://127.0.0.1:8080/download/Basic.pdf" download>사잇돌대출 여신약관</a><br>
+<a href="http://127.0.0.1:8080/download/Woman.pdf" download>MG여성만세약관</a><br>
+<a href="http://127.0.0.1:8080/download/m10.pdf" download>듬뿍기업자유예탁금특약</a><br>
+<a href="http://127.0.0.1:8080/download/18.pdf" download>듬뿍기업자유예탁금상품설명서</a><br>
+<a href="http://127.0.0.1:8080/download/m16.pdf" download>좀도리우대저축 특약</a><br>
+<a href="http://127.0.0.1:8080/download/m014.pdf" download>좀도리우대저축 상품설명서</a><br>
+<a href="http://127.0.0.1:8080/download/m14.pdf" download>일일자유적금특약</a><br>
+<a href="http://127.0.0.1:8080/download/m010.pdf" download>일일자유적금 상품설명서</a><br>
+<a href="http://127.0.0.1:8080/download/m27.pdf" download>자유적립적금특약</a><br>
+<a href="http://127.0.0.1:8080/download/m011.pdf" download>자유적립적금 상품설명서</a><br>
+<a href="http://127.0.0.1:8080/download/baby1.pdf" download>우리아기첫걸음정기적금특약</a><br>
+<a href="http://127.0.0.1:8080/download/baby2.pdf" download>우리아기첫걸음정기적금상품설명서</a><br>
+<a href="http://127.0.0.1:8080/download/sangsang1.pdf" download>상상모바일 정기적금특약</a><br>
+<a href="http://127.0.0.1:8080/download/sangsang2.pdf" download>상상모바일 정기적금상품설명서</a><br>
+<a href="http://127.0.0.1:8080/download/sangsang3.pdf" download>상상모바일통장 특약</a><br>
+<a href="http://127.0.0.1:8080/download/sangsang4.pdf" download>상상모바일통장 상품설명서</a><br>
+<a href="http://127.0.0.1:8080/download/sangsang5.pdf" download>상상모바일 정기예금특약</a><br>
+<a href="http://127.0.0.1:8080/download/sangsang6.pdf" download>상상모바일 정기예금상품설명서</a><br>
+<a href="http://127.0.0.1:8080/download/sangsang7.pdf" download>상상모바일 자유적금특약</a><br>
+<a href="http://127.0.0.1:8080/download/sangsang8.pdf" download>상상모바일 자유적금상품설명서</a><br>
+<a href="http://192.168.123.105:8080/download/dog.jpg" download>개</a><br>
+
+   </html>

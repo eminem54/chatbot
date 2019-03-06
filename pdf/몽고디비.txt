@@ -1,0 +1,1 @@
+mongofile.exe -d (db이름) put (파일이름.pdf)
