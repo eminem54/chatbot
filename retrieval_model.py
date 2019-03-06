@@ -21,7 +21,6 @@ class ChatBot:
         line, entity1_list = en.get_entity1(line, entity1_list)
         intent = self.intent_extraction(line)
 
-        print(intent,1234)
         if slot.intent is "":
             slot.intent = intent
 
@@ -32,6 +31,14 @@ class ChatBot:
                 answer = module.get_answer()
             if result is 1:
                 return self.run(msg)
+
+        elif slot.intent == "지점 안내":
+            slot.clear()
+            answer = "지점 안내입니다"
+
+        elif slot.intent == "고객 상담":
+            slot.clear()
+            answer = "고객 상담입니다"
 
         print("의도: ", slot.intent)
         print("entity1: ", slot.entity1)

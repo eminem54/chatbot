@@ -49,11 +49,15 @@ class Option1:
         db = connection.testDB
         co = db.Data
         if self.slot.entity2 is not "" and self.slot.entity3 is not "":
-            answer = co.distinct(self.slot.entity3, {"상품이름": self.slot.entity2})[0]
-            self.slot.clear()
-            return answer
-        
-        elif self.slot.entity2 is not "" and self.slot.entity3 is  "":
+            answer = co.distinct(self.slot.entity3, {"상품이름": self.slot.entity2})
+            if answer == []:
+                self.slot.clear()
+                return "해당하는 정보가 없습니다"
+            else:
+                self.slot.clear()
+                return answer[0]
+
+        elif self.slot.entity2 is not "" and self.slot.entity3 is "":
             answer = co.distinct("상품설명", {"상품이름": self.slot.entity2})[0]
             self.slot.clear()
             return answer
@@ -62,12 +66,12 @@ class Option1:
             self.slot.log = "1"
             answer = "상품의 종류를 입력해주세요"
             return answer
-        
+
         elif self.slot.entity1 is not "" and self.slot.entity2 is "":
             self.slot.log = "2"
             answer = "상품의 이름을 입력해주세요"
             return answer
-        
+
         elif self.slot.entity2 is not "" and self.slot.entity3 is "":
             answer = co.distinct("상품설명", {"상품이름": self.slot.entity2})[0]
             self.slot.clear()
@@ -97,4 +101,3 @@ class Option1:
             if result is 1:
                 self.slot.clear()
             return result
-
