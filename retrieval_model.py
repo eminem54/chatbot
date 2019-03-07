@@ -28,8 +28,9 @@ class ChatBot:
             module = opt1.Option1(slot, entity1_list, entity2_list, entity3_list)
             result = module.slot_filling()
             if result is 0:
-                answer = module.get_answer()
+                answer, slot_result = module.get_answer()
             if result is 1:
+                slot.clear()
                 return self.run(msg)
 
         elif slot.intent == "지점 안내":
@@ -47,8 +48,11 @@ class ChatBot:
         print("log: ", slot.log)
         print("대답: ", answer)
         print("type(answer): ", type(answer))
-        
-        return answer
+
+        if slot_result == 1:
+            slot.clear()
+
+        return answer, slot.intent, slot.entity1, slot.entity2, slot.entity3
 
 
 # bot = ChatBot()
