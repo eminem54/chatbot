@@ -80,7 +80,6 @@ def add_and_save_test_csv():
 
 def get_train_data(data_path):
     word_table = {}
-    kkma = Kkma()
     max_key = 0
     vectorized_x_data = []
     vectorized_y_data = []
@@ -103,13 +102,12 @@ def get_train_data(data_path):
 
             if len(splited_line) > 2:
                 splited_line = [''.join(splited_line[0:-1]), splited_line[-1]]
-
             vectorized_x_data.append([])
-            for voca in kkma.pos(splited_line[0]):
-                if voca[0] not in word_table.keys():
-                    word_table[voca[0]] = max_key
+            for voca in splited_line[0].split(' '):
+                if voca not in word_table.keys():
+                    word_table[voca] = max_key
                     max_key += 1
-                vectorized_x_data[-1].append(word_table[voca[0]])
+                vectorized_x_data[-1].append(word_table[voca])
 
     with open('./word_table.txt', 'w') as f:
         json.dump(word_table, f, ensure_ascii=False)

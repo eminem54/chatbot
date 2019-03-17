@@ -9,14 +9,13 @@ from konlpy.tag import Kkma
 
 def evaluation(msg):
     word_table = {}
-    kkma = Kkma()
 
     with open('word_table.txt', 'r') as js:
         text = js.read()
         word_table = eval(text)
 
     X = [[]]
-    splited_msg = kkma.pos(msg)
+    splited_msg = msg.split(' ')
     for word in splited_msg:
         if word[0] in word_table.keys():
             X[0].append(int(word_table[word[0]]))
