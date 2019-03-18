@@ -16,9 +16,9 @@ class ChatBot:
         entity2_list = []
         entity3_list = []
 
-        line, entity3_list = en.get_entity3(line, entity3_list)
-        line, entity2_list = en.get_entity2(line, entity2_list)
-        line, entity1_list = en.get_entity1(line, entity1_list)
+        line, entity3_list = en.get_entity(line, entity3_list, 3)
+        line, entity2_list = en.get_entity(line, entity2_list, 2)
+        line, entity1_list = en.get_entity(line, entity1_list, 1)
         intent = self.intent_extraction(line)
 
         if slot.intent is "":

@@ -8,41 +8,38 @@ class Option1:
         self.entity2List = entity2_list
         self.entity3List = entity3_list
 
-    def fill_entity1(self):
+    def fill_entity(self, num):
         connection = pymongo.MongoClient("localhost", 27017)
         db = connection.testDB
-        co = db.Slot1
-        if self.entity1List != []:
-            for entity in self.entity1List:
-                temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
-            if temp_class == "상품분류":
-                self.slot.entity1 = entity
-            return 0
-        return 1
+        colname = "Slot" + str(num)
+        co = db[colname]
 
-    def fill_entity2(self):
-        connection = pymongo.MongoClient("localhost", 27017)
-        db = connection.testDB
-        co = db.Slot2
-        if self.entity2List != []:
-            for entity in self.entity2List:
-                temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
-            if temp_class == "상품명":
-                self.slot.entity2 = entity
+        if num == 1:
+            if self.entity1List != []:
+                for entity in self.entity1List:
+                    temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
+                if temp_class == "상품분류":
+                    self.slot.entity1 = entity
                 return 0
-        return 1
+            return 1
 
-    def fill_entity3(self):
-        connection = pymongo.MongoClient("localhost", 27017)
-        db = connection.testDB
-        co = db.Slot3
-        if self.entity3List != []:
-            for entity in self.entity3List:
-                temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
-            if temp_class == "상세설명":
-                self.slot.entity3 = entity
-                return 0
-        return 1
+        if num == 2:
+            if self.entity2List != []:
+                for entity in self.entity2List:
+                    temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
+                if temp_class == "상품명":
+                    self.slot.entity2 = entity
+                    return 0
+            return 1
+
+        if num == 3:
+            if self.entity3List != []:
+                for entity in self.entity3List:
+                    temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
+                if temp_class == "상세설명":
+                    self.slot.entity3 = entity
+                    return 0
+            return 1
 
     def get_answer(self):
         connection = pymongo.MongoClient("localhost", 27017)
@@ -51,7 +48,7 @@ class Option1:
         if self.slot.entity2 is not "" and self.slot.entity3 is not "":
             answer = co.distinct(self.slot.entity3, {"상품이름": self.slot.entity2})
             if answer == []:
-                return "해당하는 정보가 없습니다", 1
+                return "해당되는 정보가 없습니다", 1
             else:
                 return answer[0], 1
 
@@ -75,19 +72,19 @@ class Option1:
 
     def slot_filling(self):
         if self.slot.log is "":
-            self.fill_entity3()
-            self.fill_entity2()
-            self.fill_entity1()
+            self.fill_entity(3)
+            self.fill_entity(2)
+            self.fill_entity(1)
             return 0
 
         elif self.slot.log is "1":
-            result = self.fill_entity1()
+            result = self.fill_entity(1)
             return result
 
         elif self.slot.log is "2":
-            result = self.fill_entity2()
+            result = self.fill_entity(2)
             return result
 
         elif self.slot.log is "3":
-            result = self.fill_entity3()
+            result = self.fill_entity(3)
             return result
