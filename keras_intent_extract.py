@@ -17,9 +17,9 @@ def evaluation(msg):
     X = [[]]
     splited_msg = msg.split(' ')
     for word in splited_msg:
-        if word[0] in word_table.keys():
-            X[0].append(int(word_table[word[0]]))
-
+        if word in word_table.keys():
+            X[0].append(int(word_table[word]))
+    print(X)
     X = sequence.pad_sequences(X, maxlen=20)
 
     json_file = open("model.json", "r")
@@ -43,4 +43,4 @@ def evaluation(msg):
     elif intent == 2:
         return "고객 상담"
 
-#print(evaluation('예금 정보 알려줘'))
+#print(evaluation('고객 상담 켜줘'))

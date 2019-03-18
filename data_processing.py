@@ -131,8 +131,8 @@ def suffle_train_data(x_data, y_data):
 
     start_index = 0
     for idx, number in enumerate(number_list_of_data):
-        train_x += [line for line in temp[start_index: start_index + int(number/2)]]
-        valid_x += [line for line in temp[start_index + int(number/2): start_index + number]]
+        train_x += [line for line in temp[start_index: start_index + number//2]]
+        valid_x += [line for line in temp[start_index + number//2: start_index + number]]
         start_index += number
 
     random.shuffle(train_x)
