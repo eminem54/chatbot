@@ -1,6 +1,6 @@
 import entity_extractor as en
 import chatbot_slot as cs
-import option1 as opt1
+import intent_product
 import keras_intent_extract
 
 slot = cs.Slot()
@@ -12,24 +12,26 @@ class ChatBot:
 
     def run(self, msg):
         line = msg
-        entity1_list = []
-        entity2_list = []
-        entity3_list = []
+        entity_list = [[0 for cols in range(5)] for rows in range(5)]
 
-        line, entity3_list = en.get_entity(line, entity3_list, 3)
-        line, entity2_list = en.get_entity(line, entity2_list, 2)
-        line, entity1_list = en.get_entity(line, entity1_list, 1)
+        line, entity_list[3] = en.get_entity(line, entity_list[3], 3)
+        line, entity_list[2] = en.get_entity(line, entity_list[2], 2)
+        line, entity_list[1] = en.get_entity(line, entity_list[1], 1)
         intent = self.intent_extraction(line)
+
+        print("e1 ", entity_list[1])
+        print("e2 ", entity_list[2])
+        print("e3 ", entity_list[3])
 
         if slot.intent is "":
             slot.intent = intent
 
         if slot.intent == "상품 소개":
-            module = opt1.Option1(slot, entity1_list, entity2_list, entity3_list)
+            module = intent_product.Slot_Operator(slot, entity_list)
             result = module.slot_filling()
             if result is 0:
                 answer, slot_result = module.get_answer()
-            if result is 1:
+            elif result is 1:
                 slot.clear()
                 return self.run(msg)
 
@@ -55,6 +57,6 @@ class ChatBot:
         return answer, slot.intent, slot.entity1, slot.entity2, slot.entity3
 
 
-# bot = ChatBot()
-# bot.run("대출 상품의 대출기간을 알려줘")
-# bot.run("스피드마이너스대출")
+#bot = ChatBot()
+#bot.run("대출 상품의 대출기간을 알려줘")
+#bot.run("스피드마이너스대출")

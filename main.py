@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template,session
 from flask_socketio import SocketIO
 import logging
-import retrieval_model as re
+import chatbot_model as re
 
 
 chatbot=re.ChatBot()

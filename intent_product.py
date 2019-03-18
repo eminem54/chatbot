@@ -1,45 +1,32 @@
 import pymongo
 
 
-class Option1:
-    def __init__(self, slot, entity1_list, entity2_list, entity3_list):
+class Slot_Operator:
+    def __init__(self, slot, entity_list):
         self.slot = slot
-        self.entity1List = entity1_list
-        self.entity2List = entity2_list
-        self.entity3List = entity3_list
+        self.entity_list = entity_list
 
     def fill_entity(self, num):
         connection = pymongo.MongoClient("localhost", 27017)
         db = connection.testDB
-        colname = "Slot" + str(num)
-        co = db[colname]
-
-        if num == 1:
-            if self.entity1List != []:
-                for entity in self.entity1List:
-                    temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
-                if temp_class == "상품분류":
-                    self.slot.entity1 = entity
-                return 0
-            return 1
-
-        if num == 2:
-            if self.entity2List != []:
-                for entity in self.entity2List:
-                    temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
-                if temp_class == "상품명":
-                    self.slot.entity2 = entity
-                    return 0
-            return 1
-
-        if num == 3:
-            if self.entity3List != []:
-                for entity in self.entity3List:
-                    temp_class = co.distinct("EntityClass", {"EntityName": entity})[0]
-                if temp_class == "상세설명":
-                    self.slot.entity3 = entity
-                    return 0
-            return 1
+        collection_name = "Slot" + str(num)
+        co = db[collection_name]
+        if self.entity_list[num] != []:
+            print("데이터 확인", self.entity_list[num], num)
+            for entity in self.entity_list[num]:
+                print("entity 확인 ",entity)
+                temp_class = co.distinct("EntityClass", {"EntityName": entity})
+                if temp_class != []:
+                    if temp_class[0] == "상품분류" and num == 1:
+                        self.slot.entity1 = entity
+                        return 0
+                    elif temp_class[0] == "상품명" and num == 2:
+                        self.slot.entity2 = entity
+                        return 0
+                    elif temp_class[0] == "상세설명" and num == 3:
+                        self.slot.entity3 = entity
+                        return 0
+        return 1
 
     def get_answer(self):
         connection = pymongo.MongoClient("localhost", 27017)
@@ -78,13 +65,10 @@ class Option1:
             return 0
 
         elif self.slot.log is "1":
-            result = self.fill_entity(1)
-            return result
+            return self.fill_entity(1)
 
         elif self.slot.log is "2":
-            result = self.fill_entity(2)
-            return result
+            return self.fill_entity(2)
 
         elif self.slot.log is "3":
-            result = self.fill_entity(3)
-            return result
+            return self.fill_entity(3)
