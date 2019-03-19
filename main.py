@@ -33,16 +33,19 @@ def initMsg():
 def server_msg_function(msg):
     print('client: ' + msg)
     slotfilling=False
-    intentData, _ = chatbot.run(msg)
+    branch_information=False
+    intentData, _, _, _, _ = chatbot.run(msg)
     #모델 돌려서 슬롯필링으로 처리할지 그냥 넘길지 판단 후
-
-    if slotfilling==False:
+    if slotfilling==False or branch_information==False:
         socketio.emit('messageClient',{'data':msg})
         socketio.emit('messageServer',{'data':intentData})
-    else:
+    elif slotfilling==True and branch_information==False:
         socketio.emit('messageClient',{'data':msg})
         arr=['대출','이자','상품','기타']
         socketio.emit('slot',{'data':arr})
+    if branch_information==True and slotfilling==False:
+        socketio.emit('messageClient',{'data':msg})
+        socketio.emit('messageServerLocation',{'data':intentData})
 
 if __name__ == '__main__':
     mylogger=logging.getLogger("새마을금고")
