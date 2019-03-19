@@ -1,7 +1,7 @@
 import pymongo
 
 
-class Slot_Operator:
+class SlotOperator:
     def __init__(self, slot, entity_list):
         self.slot = slot
         self.entity_list = entity_list
@@ -12,9 +12,7 @@ class Slot_Operator:
         collection_name = "Slot" + str(num)
         co = db[collection_name]
         if self.entity_list[num] != []:
-            print("데이터 확인", self.entity_list[num], num)
             for entity in self.entity_list[num]:
-                print("entity 확인 ",entity)
                 temp_class = co.distinct("EntityClass", {"EntityName": entity})
                 if temp_class != []:
                     if temp_class[0] == "상품분류" and num == 1:

@@ -12,22 +12,21 @@ class ChatBot:
 
     def run(self, msg):
         line = msg
-        entity_list = [[0 for cols in range(5)] for rows in range(5)]
+        entity_list = [[0 for cols in range(5)] for rows in range(7)]
 
         line, entity_list[3] = en.get_entity(line, entity_list[3], 3)
         line, entity_list[2] = en.get_entity(line, entity_list[2], 2)
         line, entity_list[1] = en.get_entity(line, entity_list[1], 1)
         intent = self.intent_extraction(line)
 
-        print("e1 ", entity_list[1])
-        print("e2 ", entity_list[2])
-        print("e3 ", entity_list[3])
+#        for i in range(6, 0, -1):
+#            line, entity_list[i] = en.get_entity(line, entity_list[i], i)
 
         if slot.intent is "":
             slot.intent = intent
 
         if slot.intent == "상품 소개":
-            module = intent_product.Slot_Operator(slot, entity_list)
+            module = intent_product.SlotOperator(slot, entity_list)
             result = module.slot_filling()
             if result is 0:
                 answer, slot_result = module.get_answer()
