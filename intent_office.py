@@ -16,13 +16,13 @@ class SlotOperator:
                 temp_class = co.distinct("EntityClass", {"EntityName": entity})
                 if temp_class != []:
                     if temp_class[0] == "지점지역" and num == 4:
-                        self.slot.entity4 = entity
+                        self.slot.entity[num] = entity
                         return 0
                     elif temp_class[0] == "지점시군구" and num == 5:
-                        self.slot.entity5 = entity
+                        self.slot.entity[num] = entity
                         return 0
                     elif temp_class[0] == "지점영업점" and num == 6:
-                        self.slot.entity6 = entity
+                        self.slot.entity[num] = entity
                         return 0
         return 1
 
@@ -36,12 +36,12 @@ class SlotOperator:
 
     def get_answer(self):
         answer = "새마을금고"
-        if self.slot.entity6 is not "":
-            answer = answer + self.slot.entity6
-        if self.slot.entity5 is not "":
-            answer = self.slot.entity5 + answer
-        if self.slot.entity4 is not "":
-            answer = self.slot.entity4 + answer
+        if self.slot.entity[6] is not "":
+            answer = answer + " " + self.slot.entity[6]
+        if self.slot.entity[5] is not "":
+            answer = self.slot.entity[5] + " " + answer
+        if self.slot.entity[4] is not "":
+            answer = self.slot.entity[4] + " " + answer
 
         return answer
 
