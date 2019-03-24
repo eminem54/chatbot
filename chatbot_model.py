@@ -60,6 +60,6 @@ class ChatBot:
         return answer, store_slot
 
 
-bot = ChatBot()
-bot.run("서울 마포구 새마을금고 지역 안내해줘")
+#bot = ChatBot()
+#bot.run("서울 마포구 새마을금고 지역 안내해줘")
 #bot.run("스피드마이너스대출")

@@ -4,7 +4,7 @@ import csv
 connection = pymongo.MongoClient("localhost", 27017)
 db = connection.testDB
 
-<<<<<<< HEAD
+
 db.drop_collection("Slot1")
 db.drop_collection("Slot2")
 db.drop_collection("Slot3")
@@ -53,7 +53,7 @@ for line in rdr:
     co.insert(data)
 f.close()
 
-=======
+
 for i in range(1, 7):
     collectionName = "Slot" + str(i)
     co = db[collectionName]
@@ -69,7 +69,7 @@ for i in range(1, 7):
     f.close()
 
 db.drop_collection("Data")
->>>>>>> 1bc1b65ac1878cedd77f75b7551d0fdfe150c900
+
 co = db.Data
 f = open('data.csv', 'r', encoding='utf-8-sig')
 rdr = csv.reader(f)
