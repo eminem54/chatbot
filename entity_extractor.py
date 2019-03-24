@@ -35,3 +35,15 @@ def get_entity3(line, entity_list):
             line = line.replace(entity, entity_class[0])
             entity_list.append(entity)
     return line, entity_list
+
+
+def get_entity4(line, entity_list):
+    connection = pymongo.MongoClient("localhost", 27017)
+    db = connection.testDB
+    co = db.Slot4
+    for entity in co.distinct("EntityName"):
+        if entity in line:
+            entity_class = co.distinct("EntityClass", {"EntityName": entity})
+            line = line.replace(entity, entity_class[0])
+            entity_list.append(entity)
+    return line, entity_list

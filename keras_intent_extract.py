@@ -19,7 +19,6 @@ def evaluation(msg):
     for word in splited_msg:
         if word in word_table.keys():
             X[0].append(int(word_table[word]))
-    print(X)
     X = sequence.pad_sequences(X, maxlen=20)
 
     json_file = open("model.json", "r")
@@ -33,9 +32,12 @@ def evaluation(msg):
     loaded_model.compile(loss="sparse_categorical_crossentropy", optimizer="adam", metrics=['accuracy'])
     # model evaluation
 
-    pred =  loaded_model.predict(X)
+    pred = loaded_model.predict(X)
 
+    print(pred[0])
     intent = np.argmax(pred[0])
+    if max(pred[0]) < 0.5:
+        return "Unknown"
     if intent == 0:
         return "상품 소개"
     elif intent == 1:
@@ -43,4 +45,4 @@ def evaluation(msg):
     elif intent == 2:
         return "고객 상담"
 
-#print(evaluation('고객 상담 켜줘'))
+#print(evaluation(''))

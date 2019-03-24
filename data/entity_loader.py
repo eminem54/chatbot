@@ -7,6 +7,7 @@ db = connection.testDB
 db.drop_collection("Slot1")
 db.drop_collection("Slot2")
 db.drop_collection("Slot3")
+db.drop_collection("address")
 db.drop_collection("Data")
 
 co = db.Slot1
@@ -39,6 +40,15 @@ for line in rdr:
     for num in range(len(line)):
         if num % 2 == 0:
             data[line[num]] = line[num+1]
+    co.insert(data)
+f.close()
+
+co = db.address
+f = open('address.csv', 'r', encoding='utf-8-sig')
+rdr = csv.reader(f)
+for line in rdr:
+    data = {}
+    data[line[0]] = line[1]
     co.insert(data)
 f.close()
 
