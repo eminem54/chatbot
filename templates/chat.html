@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c36eea9692204fc67febf52fae4e696e"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
@@ -75,8 +76,10 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
 	var socket = io.connect('http://127.0.0.1:5000');
+	socket.on('connect',function(){
+	    socket.emit('joined',{});
+	});
 	socket.on('init', function(msg) {
 		$(".chat").append(
 		    "<li>"+"뉴빌리지 봇 : "+msg.data+"</li>"
@@ -89,9 +92,23 @@ $(document).ready(function() {
 	});
 	socket.on('messageClient',function(msg){
 		$(".chat").append("<li>"+"고객님 : "+msg.data+"</li>");
+
         $(".panel-body").scrollTop($(".chat").height());
 	});
-
+	socket.on('messageServerLocation',function(msg){
+        $(".chat").append("<li>"+"뉴빌리지 봇 :"+msg.data+"</li>");
+        var mapMake=document.createElement('div');
+        mapMake.setAttribute('id','map');
+        mapMake.setAttribute('style',"width:300px;height:300px;");
+        $(".chat").append(mapMake);
+        var container = document.getElementById('map');
+        var options = {
+			center: new daum.maps.LatLng(33.450701, 126.570667),
+			level: 3
+		};
+		var maps = new daum.maps.Map(map, options);
+        $(".panel-body").scrollTop($(".chat").height());
+	});
     socket.on('slot',function(msg){
         $(".chat").append("<li>"+"뉴빌리지 봇 : ");
         for(var i=0;i<msg.data.length;i++){
@@ -151,7 +168,8 @@ $(document).ready(function() {
                     </div>
                 </div>
                 <div class="panel-body">
-                    <ul class="chat"></ul>
+                    <ul class="chat">
+                    </ul>
                 </div>
                 <div class="panel-footer">
                     <div class="input-group">
@@ -165,6 +183,5 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-
 </body>
 </html>
