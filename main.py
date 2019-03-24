@@ -38,12 +38,12 @@ def server_msg_function(msg):
     print('client: ' + msg)
     room=session.get('room')
     slotfilling=False
-<<<<<<< HEAD
+
     intentData, _, _, _, _=chatbot.run(msg)
-=======
+
     branch_information=False
     intentData, _, _, _, _ = chatbot.run(msg)
->>>>>>> 1bc1b65ac1878cedd77f75b7551d0fdfe150c900
+
     #모델 돌려서 슬롯필링으로 처리할지 그냥 넘길지 판단 후
     if slotfilling==False or branch_information==False:
         socketio.emit('messageClient',{'data':msg},room=room)
