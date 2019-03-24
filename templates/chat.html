@@ -76,8 +76,10 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-
 	var socket = io.connect('http://127.0.0.1:5000');
+	socket.on('connect',function(){
+	    socket.emit('joined',{});
+	});
 	socket.on('init', function(msg) {
 		$(".chat").append(
 		    "<li>"+"뉴빌리지 봇 : "+msg.data+"</li>"
