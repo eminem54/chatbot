@@ -39,10 +39,10 @@ def server_msg_function(msg):
     room=session.get('room')
     slotfilling=False
 
-    intentData, _, _, _, _=chatbot.run(msg)
+    intentData, _= chatbot.run(msg)
 
     branch_information=False
-    intentData, _, _, _, _ = chatbot.run(msg)
+    intentData, _= chatbot.run(msg)
 
     #모델 돌려서 슬롯필링으로 처리할지 그냥 넘길지 판단 후
     if slotfilling==False or branch_information==False:
