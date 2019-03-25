@@ -36,8 +36,7 @@ def evaluation(msg):
 
     print(pred[0])
     intent = np.argmax(pred[0])
-    if max(pred[0]) < 0.5:
-        return "Unknown"
+
     if intent == 0:
         return "상품 소개"
     elif intent == 1:
@@ -45,4 +44,4 @@ def evaluation(msg):
     elif intent == 2:
         return "고객 상담"
 
-#print(evaluation(''))
+#print(evaluation('구로구 지점 위치 알려줘'))

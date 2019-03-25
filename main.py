@@ -37,15 +37,14 @@ def joined(msg):
 def server_msg_function(msg):
     print('client: ' + msg)
     room=session.get('room')
-    slotfilling=False
+    slotfilling=True
 
-    intentData, _= chatbot.run(msg)
 
     branch_information=False
     intentData, _= chatbot.run(msg)
 
     #모델 돌려서 슬롯필링으로 처리할지 그냥 넘길지 판단 후
-    if slotfilling==False or branch_information==False:
+    if slotfilling==False and branch_information==False:
         socketio.emit('messageClient',{'data':msg},room=room)
         socketio.emit('messageServer',{'data':intentData},room=room)
     elif slotfilling==True and branch_information==False:

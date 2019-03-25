@@ -13,6 +13,7 @@ def get_entity(line, entity_list, num):
             entity_list.append(entity)
     return line, entity_list
 
+
 def get_location(line, entity_list):
     connection = pymongo.MongoClient("localhost", 27017)
     db = connection.testDB
