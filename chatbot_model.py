@@ -15,7 +15,7 @@ class ChatBot:
         line = msg
         slot_result = 0
         entity_list = [[0 for cols in range(5)] for rows in range(7)]
-
+        answer = ""
         for i in range(6, 0, -1):
             line, entity_list[i] = en.get_entity(line, entity_list[i], i)
         intent = self.intent_extraction(line)
@@ -28,11 +28,12 @@ class ChatBot:
             result = module.slot_filling()
             if result is 0:
                 answer, slot_result = module.get_answer()
+
             elif result is 1:
                 slot.clear()
                 return self.run(msg)
 
-        elif slot.intent == "지점 안내":
+        elif slot.intent == "지점 안내": #입력라인으로 뽑아낸 데이터가 지점안내인경우에
             module = intent_office.SlotOperator(slot, entity_list)
             result = module.slot_filling()
             if result is 0:

@@ -3,7 +3,7 @@ class Slot:
     entity1 = ""
     #상품명
     entity2 = ""
-    #상세설명
+    #상세설명\
     entity3 = ""
     #지점지역
     entity4 = ""

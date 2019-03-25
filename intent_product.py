@@ -37,7 +37,7 @@ class SlotOperator:
             else:
                 return answer[0], 1
 
-        elif self.slot.entity[2] is not "" and self.slot.entity[3] is "":
+        elif self.slot.entity[2] is not "" and self.slot.entity[3] is "": #2: 상품명 3:상세설명은 없는경우
             answer = co.distinct("상품설명", {"상품이름": self.slot.entity[2]})[0]
             return answer, 1
 
