@@ -44,4 +44,4 @@ def evaluation(msg):
     elif intent == 2:
         return "고객 상담"
 
-#print(evaluation('구로구 지점 위치 알려줘'))
+print(evaluation('구로구 지점 위치 알려줘'))
