@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c36eea9692204fc67febf52fae4e696e"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c36eea9692204fc67febf52fae4e696e&libraries=services"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.8/socket.io.min.js"></script>
@@ -16,6 +16,7 @@ body {
   background-size: cover;
   -o-background-size: cover;
 }
+
 .chat
 {
     list-style: none;
@@ -44,7 +45,7 @@ body {
 .chat li .chat-body p
 {
     margin: 0;
-    color: #777777;
+    color: #888888;
 }
 
 .panel .slidedown .glyphicon, .chat .glyphicon
@@ -80,9 +81,9 @@ body {
 </style>
 
 </head>
-<body>
-<!------ Include the above in your HEAD tag ---------->
+<body class="bg">
 
+<!------ Include the above in your HEAD tag ---------->
 <script type="text/javascript">
 $(document).ready(function() {
 	var socket = io.connect('http://127.0.0.1:5000');
@@ -118,6 +119,19 @@ $(document).ready(function() {
 		var maps = new daum.maps.Map(map, options);
         $(".panel-body").scrollTop($(".chat").height());
 	});
+
+	socket.on('pdf_download',function(msg){
+	    $(".chat").append("<li>"+"상품 약관 다운로드 하기 : ");
+	    var btn=document.createElement('input');
+	    btn.setAttribute('type','button');
+	    btn.setAttribute('id','pdf_btn');
+	    btn.setAttribute('value','Download');
+	    btn.setAttribute('onclick',"location.href='http://127.0.0.1:5000/download/sangsang2.pdf'");
+	    $(".chat").append(btn);
+	    $(".chat").append("</li>");
+        $(".panel-body").scrollTop($(".chat").height());
+	});
+
     socket.on('slot',function(msg){
         $(".chat").append("<li>"+"뉴빌리지 봇 : ");
         for(var i=0;i<msg.data.length;i++){
@@ -150,7 +164,6 @@ $(document).ready(function() {
     });
 });
 </script>
-
 <div class="container">
     <div class="row">
         <div class="col-md-5">
@@ -161,19 +174,6 @@ $(document).ready(function() {
                         <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-chevron-down"></span>
                         </button>
-                        <ul class="dropdown-menu slidedown">
-                            <li><a href="#"><span class="glyphicon glyphicon-refresh">
-                            </span>Refresh</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-ok-sign">
-                            </span>Available</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-remove">
-                            </span>Busy</a></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-time"></span>
-                                Away</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#"><span class="glyphicon glyphicon-off"></span>
-                                Sign Out</a></li>
-                        </ul>
                     </div>
                 </div>
                 <div class="panel-body">
