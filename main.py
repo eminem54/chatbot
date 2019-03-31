@@ -39,7 +39,6 @@ def server_msg_function(msg):
     room=session.get('room')
     slotfilling=True
 
-
     branch_information=False
     intentData, _= chatbot.run(msg)
 
@@ -49,8 +48,9 @@ def server_msg_function(msg):
         socketio.emit('messageServer',{'data':intentData},room=room)
     elif slotfilling==True and branch_information==False:
         socketio.emit('messageClient',{'data':msg},room=room)
-        arr=['대출','이자','상품','기타']
+        arr=['상품안내','지점안내','FAQ']
         socketio.emit('slot',{'data':arr},room=room)
+
     if branch_information==True and slotfilling==False:
         socketio.emit('messageClient',{'data':msg},room=room)
         socketio.emit('messageServerLocation',{'data':intentData},room=room)

@@ -13,6 +13,7 @@ class ChatBot:
 
     def run(self, msg):
         line = msg
+
         slot_result = 0
         entity_list = [[0 for cols in range(5)] for rows in range(7)]
         answer = ""
@@ -46,13 +47,9 @@ class ChatBot:
             slot.clear()
             answer = "고객 상담입니다"
 
-        print("의도: ", slot.intent)
+        print("의도: ", slot.intent, "log: ", slot.log, "대답: ", answer, "type(answer): ", type(answer))
         for i in range(1, 7):
             print("entity" + str(i) + ": ", slot.entity[i])
-        print("log: ", slot.log)
-        print("대답: ", answer)
-        print("type(answer): ", type(answer))
-
         store_slot = slot
 
         if slot_result == 1:
