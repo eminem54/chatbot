@@ -9,8 +9,7 @@ class SlotOperator:
     def fill_entity(self, db, address):
         pass
 
-
-    def slot_filling(self):
+    def slot_filling(self, file_list):
         connection = pymongo.MongoClient("localhost", 27017)
         db = connection.testDB
         for it in ["Dong", "Ro", "Gu", "Si"]:

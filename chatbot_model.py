@@ -39,7 +39,7 @@ class ChatBot:
             module = intent_office.SlotOperator(slot, entity_list)
             compare_address = cs.Address()
             address_list = module.find_address_keyword(msg)
-
+            module.slot_filling(address_list)
             if True:#슬롯필링후 찾으면
                 pass
             else: #못찾으면
