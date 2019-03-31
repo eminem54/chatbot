@@ -77,7 +77,7 @@ def server_msg_function(msg):
     #지점안내 지도 그려지는 조건문 (키워드가 주어지면 그 키워드에 맞는 지도를 출력해주면 된다.)
     if branch_information==True and slotfilling==False:
         socketio.emit('messageClient',{'data':msg},room=room)
-        socketio.emit('messageServerLocation',{'data':intentData},room=room)
+        socketio.emit('messageServerLocation',{'data':'강남구 새마을금고'},room=room)
 
     #pdf 약관 다운 받는 조건문
     if pdf_download_check==True:
