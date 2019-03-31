@@ -8,6 +8,7 @@ slot = cs.Slot()
 
 
 class ChatBot:
+
     def intent_extraction(self, msg):
         return keras_intent_extract.evaluation(msg)
 
@@ -36,12 +37,13 @@ class ChatBot:
 
         elif slot.intent == "지점 안내": #입력라인으로 뽑아낸 데이터가 지점안내인경우에
             module = intent_office.SlotOperator(slot, entity_list)
-            result = module.slot_filling()
-            if result is 0:
-                answer = module.get_answer()
-            elif result is 1:
-                slot.clear()
-                return self.run(msg)
+            compare_address = cs.Address()
+            address_list = module.find_address_keyword(msg)
+
+            if True:#슬롯필링후 찾으면
+                pass
+            else: #못찾으면
+                pass
 
         elif slot.intent == "고객 상담":
             slot.clear()
