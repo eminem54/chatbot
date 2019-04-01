@@ -8,7 +8,10 @@ db = connection.testDB
 db.drop_collection("Slot1")
 db.drop_collection("Slot2")
 db.drop_collection("Slot3")
-db.drop_collection("address")
+db.drop_collection("Si")
+db.drop_collection("Gu")
+db.drop_collection("Ro")
+db.drop_collection("Dong")
 db.drop_collection("Data")
 
 co = db.Slot1
@@ -44,8 +47,9 @@ for line in rdr:
     co.insert(data)
 f.close()
 
-co = db.address
-f = open('address.csv', 'r', encoding='utf-8-sig')
+
+co = db.Si
+f = open('Si.csv', 'r', encoding='utf-8-sig')
 rdr = csv.reader(f)
 for line in rdr:
     data = {}
@@ -54,7 +58,35 @@ for line in rdr:
 f.close()
 
 
-for i in range(1, 7):
+co = db.Gu
+f = open('Gu.csv', 'r', encoding='utf-8-sig')
+rdr = csv.reader(f)
+for line in rdr:
+    data = {}
+    data[line[0]] = line[1]
+    co.insert(data)
+f.close()
+
+co = db.Dong
+f = open('Dong.csv', 'r', encoding='utf-8-sig')
+rdr = csv.reader(f)
+for line in rdr:
+    data = {}
+    data[line[0]] = line[1]
+    co.insert(data)
+f.close()
+
+co = db.Ro
+f = open('Ro.csv', 'r', encoding='utf-8-sig')
+rdr = csv.reader(f)
+for line in rdr:
+    data = {}
+    data[line[0]] = line[1]
+    co.insert(data)
+f.close()
+
+
+for i in range(1, 4):
     collectionName = "Slot" + str(i)
     co = db[collectionName]
     db.drop_collection(collectionName)

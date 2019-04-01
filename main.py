@@ -58,6 +58,8 @@ def server_msg_function(msg):
     pdf_download_check=True    #pdf 다운 생성
 
 
+    branch_information=False
+
     intentData, _= chatbot.run(msg)
 
     #모델 돌려서 슬롯필링으로 처리할지 그냥 넘길지 판단 후
@@ -73,10 +75,12 @@ def server_msg_function(msg):
     # 슬롯필링 버튼 여러개 생성하는 조건문
     elif slotfilling==True and branch_information==False:
         socketio.emit('messageClient',{'data':msg},room=room)
+
         arr=['대출','이자','상품','기타']
         socketio.emit('slot',{'data':'아래 항목 중에서 선택해주세요.','slots':arr},room=room)
 
     #지점안내 지도 그려지는 조건문 (키워드가 주어지면 그 키워드에 맞는 지도를 출력해주면 된다.)
+
     if branch_information==True and slotfilling==False:
         socketio.emit('messageClient',{'data':msg},room=room)
         socketio.emit('messageServerLocation',{'data':'강남구 새마을금고'},room=room)

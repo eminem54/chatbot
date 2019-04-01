@@ -1,38 +1,25 @@
 import pymongo
-
+import re
 
 class SlotOperator:
     def __init__(self, slot, entity_list):
         self.slot = slot
         self.entity_list = entity_list
 
-    def fill_entity(self, num):
+    def fill_entity(self, db, address):
+        pass
+
+    def slot_filling(self, file_list):
         connection = pymongo.MongoClient("localhost", 27017)
         db = connection.testDB
-        collection_name = "Slot" + str(num)
-        co = db[collection_name]
-        if self.entity_list[num] != []:
-            for entity in self.entity_list[num]:
-                temp_class = co.distinct("EntityClass", {"EntityName": entity})
-                if temp_class != []:
-                    if temp_class[0] == "지점지역" and num == 4:
-                        self.slot.entity[num] = entity
-                        return 0
-                    elif temp_class[0] == "지점시군구" and num == 5:
-                        self.slot.entity[num] = entity
-                        return 0
-                    elif temp_class[0] == "지점영업점" and num == 6:
-                        self.slot.entity[num] = entity
-                        return 0
-        return 1
-
-    def slot_filling(self):
-        if self.slot.log is "":
-            for i in range(6, 3, -1):
-                self.fill_entity(i)
-            return 0
+        for it in ["Dong", "Ro", "Gu", "Si"]:
+            collection_name_list = it
+            co = db[it]
+            result = self.fill_entity(co, it)
+            if result:
+                return True
         else:
-            return self.fill_entity(int(self.slot.log))
+            return False
 
     def get_answer(self):
         answer = "새마을금고"
@@ -46,4 +33,5 @@ class SlotOperator:
         return answer
 
 
-
+    def find_address_keyword(self, msg):
+        return re.findall('\D+[동,로,구,시]|\D\D+[동,로,구,시]|\D\D\D+[동,로,구,시]|\D\D\D\D+[동,로,구,시]|\D\D\D\D\D+[동,로,구,시]', msg)

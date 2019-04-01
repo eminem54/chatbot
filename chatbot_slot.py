@@ -1,20 +1,21 @@
+class Address:
+    def __init__(self):
+        self.Si = None
+        self.Gu = None
+        self.Ro = None
+        self.Dong = None
+
 class Slot:
-    #상품분류
+    #상품분류0
     entity1 = ""
-    #상품명
+    #상품명1
     entity2 = ""
-    #상세설명\
+    #상세설명\2
     entity3 = ""
-    #지점지역
-    entity4 = ""
-    #지점시군구
-    entity5 = ""
-    #지점영업점
-    entity6 = ""
+    #주소저장클래스3
+    address = Address()
 
     entity = ["" for _ in range(7)]
-
-
     intent = ""
     log = ""
 
@@ -22,9 +23,6 @@ class Slot:
         self.entity1 = ""
         self.entity2 = ""
         self.entity3 = ""
-        self.entity4 = ""
-        self.entity5 = ""
-        self.entity6 = ""
 
         for i in range(7):
             self.entity[i] = ""
@@ -32,4 +30,5 @@ class Slot:
         self.intent = ""
         self.log = ""
         return 0
+
 
