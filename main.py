@@ -56,9 +56,8 @@ def server_msg_function(msg):
     slotfilling=True           #버튼 생성
     branch_information=False     #지도 생성
     pdf_download_check=True    #pdf 다운 생성
-
-
     branch_information=False
+
 
     intentData, _= chatbot.run(msg)
 
