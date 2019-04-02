@@ -21,7 +21,7 @@ class ChatBot:
         for i in range(6, 0, -1):
             line, entity_list[i] = en.get_entity(line, entity_list[i], i)
         intent = self.intent_extraction(line)
-
+        print(intent)
         if slot.intent is "":
             slot.intent = intent
 
@@ -41,11 +41,11 @@ class ChatBot:
             address_list = module.find_address_keyword(msg)
             find_address = module.slot_filling(address_list)
             if find_address:#슬롯필링후 찾으면
-                return find_address + " 새마을금고"
+                return find_address + " 새마을금고", []
             else: #못찾으면 디비를 기준으로 메시지를 한번더 검사하고 그래도 없으면 리턴None
                 find_address = module.find_address_by_db(msg)
                 if find_address:
-                    return find_address + " 새마을금고"
+                    return find_address + " 새마을금고", []
                 else:
                     return None
 

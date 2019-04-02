@@ -30,7 +30,7 @@ class SlotOperator:
         for it in ["Dong", "Ro", "Gu", "Si"]:
             co = db[it]
             for address in address_list:
-                result = self.fill_entity(co, address)
+                result = self.find_address(co, address)
                 if result:
                     return address
         else:
