@@ -53,8 +53,8 @@ def joined(msg):
 @socketio.on('serverMsg')
 def server_msg_function(msg):
     room=session.get('room')
-    slotfilling=True           #버튼 생성
-    branch_information=False     #지도 생성
+    slotfilling=False           #버튼 생성
+    branch_information=True     #지도 생성
     pdf_download_check=True    #pdf 다운 생성
 
 
@@ -64,7 +64,6 @@ def server_msg_function(msg):
 
     ##클라이언트에 메시지 보낼 때 클라이언트 메시지 먼저 전송 후 서버 메시지 전송
     #db 조회후 상품에 관련된 url 주소를 넘겨주면 된다.
-
     #기본 메시지 전달
     if slotfilling==False and branch_information==False:
         socketio.emit('messageClient',{'data':msg},room=room)
