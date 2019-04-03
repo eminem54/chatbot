@@ -61,6 +61,8 @@ def server_msg_function(msg):
 
 
     intentData, _= chatbot.run(msg)
+    print("지점안내 : "+intentData)
+
     if intentData[-5:] == '새마을금고':
         branch_information = True
 
