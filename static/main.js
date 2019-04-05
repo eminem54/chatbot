@@ -23,12 +23,13 @@ $(document).ready(function() {
 	socket.on('messageServerLocation',function(msg){
         $(".chat").append("<li>"+"뉴빌리지 봇 :"+msg.data+"</li>");
         var mapMake=document.createElement('div');
-        mapMake.setAttribute('id','map');
+        var id_value=Math.random();
+        mapMake.setAttribute('id',id_value);
         mapMake.setAttribute('style',"width:300px;height:300px;");
         $(".chat").append(mapMake);
         var infowindow = new daum.maps.InfoWindow({zIndex:1});
 
-        var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        var mapContainer = document.getElementById(id_value), // 지도를 표시할 div
             mapOption = {
                 center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
                 level: 1 // 지도의 확대 레벨
