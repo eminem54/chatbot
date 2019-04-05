@@ -6,7 +6,6 @@ import chatbot_model as re
 import gridfs
 import pymongo
 
-print(1234)
 chatbot=re.ChatBot()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
@@ -57,8 +56,7 @@ def server_msg_function(msg):
     slotfilling=False         #버튼 생성
     branch_information=False     #지도 생성
     pdf_download_check=False    #pdf 다운 생성
-    branch_information=False
-
+    ##todo 시나리오: 기본적으로 버튼을 생성 슬롯필링중엔 버튼 생성 멈춤.
 
     intentData, _= chatbot.run(msg)
     print("지점안내 : "+intentData)
