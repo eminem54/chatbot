@@ -5,6 +5,12 @@ class Address:
         self.Ro = None
         self.Dong = None
 
+    def empty(self):
+        if self.Si is None and self.Gu is None and self.Ro is None and self.Dong is None:
+            return True
+        else:
+            return False
+
 
 class Slot:
     #상품분류0

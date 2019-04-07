@@ -19,7 +19,7 @@ class ChatBot:
         line = msg
         for i in range(3, 0, -1): #상품소개를 위한 엔티티추출작업 라인은 엔티티가 대체된 메세지
             line, entity_list[i] = entity_extractor.get_entity(line, entity_list[i], i)
-
+        line = entity_extractor.get_location(line) #지점안내를 위한 엔티티추출과 단어대체
         intent = self.intent_extraction(line); print(intent)#엔티티로 대체된 문장으로 의도추출
 
         answer = ""
