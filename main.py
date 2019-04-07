@@ -6,7 +6,6 @@ import chatbot_model as re
 import gridfs
 import pymongo
 
-print(1234)
 chatbot=re.ChatBot()
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'

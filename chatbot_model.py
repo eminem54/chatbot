@@ -1,10 +1,10 @@
-import entity_extractor as en
-import chatbot_slot as cs
+import entity_extractor
+import chatbot_slot
 import intent_product
 import intent_office
 import keras_intent_extract
 
-slot = cs.Slot()
+slot = chatbot_slot.Slot()
 
 
 class ChatBot:
@@ -13,15 +13,16 @@ class ChatBot:
         return keras_intent_extract.evaluation(msg)
 
     def run(self, msg):
-        line = msg
-
         slot_result = 0
-        entity_list = [[0 for cols in range(5)] for rows in range(7)]
+
+        entity_list = [[0 for cols in range(5)] for rows in range(4)] #엔티티추출을위한 리스트
+        line = msg
+        for i in range(3, 0, -1): #상품소개를 위한 엔티티추출작업 라인은 엔티티가 대체된 메세지
+            line, entity_list[i] = entity_extractor.get_entity(line, entity_list[i], i)
+
+        intent = self.intent_extraction(line); print(intent)#엔티티로 대체된 문장으로 의도추출
+
         answer = ""
-        for i in range(6, 0, -1):
-            line, entity_list[i] = en.get_entity(line, entity_list[i], i)
-        intent = self.intent_extraction(line)
-        print(intent)
         if slot.intent is "":
             slot.intent = intent
 
@@ -30,14 +31,12 @@ class ChatBot:
             result = module.slot_filling()
             if result is 0:
                 answer, slot_result = module.get_answer()
-
             elif result is 1:
                 slot.clear()
                 return self.run(msg)
 
         elif slot.intent == "지점 안내": #입력라인으로 뽑아낸 데이터가 지점안내인경우에
             module = intent_office.SlotOperator(slot, entity_list)
-            compare_address = cs.Address()
             address_list = module.find_address_keyword(msg)
             find_address = module.slot_filling(address_list)
             if find_address:#슬롯필링후 찾으면

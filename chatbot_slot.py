@@ -5,6 +5,7 @@ class Address:
         self.Ro = None
         self.Dong = None
 
+
 class Slot:
     #상품분류0
     entity1 = ""
