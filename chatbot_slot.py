@@ -15,7 +15,7 @@ class Slot:
     #주소저장클래스3
     address = Address()
 
-    entity = ["" for _ in range(7)]
+    entity = ["" for _ in range(4)]
     intent = ""
     log = ""
 
@@ -24,7 +24,7 @@ class Slot:
         self.entity2 = ""
         self.entity3 = ""
 
-        for i in range(7):
+        for i in range(4):
             self.entity[i] = ""
 
         self.intent = ""

@@ -54,7 +54,7 @@ class ChatBot:
             answer = "고객 상담입니다"
 
         print("의도: ", slot.intent, "log: ", slot.log, "대답: ", answer, "type(answer): ", type(answer))
-        for i in range(1, 7):
+        for i in range(1, 4):
             print("entity" + str(i) + ": ", slot.entity[i])
         store_slot = slot
 
