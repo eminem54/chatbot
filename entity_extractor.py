@@ -17,14 +17,19 @@ def get_entity(line, entity_list, num):
 def get_location(line):
     connection = pymongo.MongoClient("localhost", 27017)
     db = connection.testDB
+    answer = line
     for it in ["Dong", "Ro", "Gu", "Si"]:
-        co = db[it].find()
-        for address in co.keys():
-            if address == '_id':
-                continue
-            else:
-                while line.find(address) == 0:
-                    line.replace(address, '장소')
+        co = db[it].find({})
+        for address in co:
+            for name in address.keys():
+                if name == '_id':
+                    continue
+                else:
+                    if answer.find(name) != -1:
+                        answer = answer.replace(name, '장소')
+
+    return answer
 
 
-#print(get_location("광진구 금고 위치", []))
+#print(get_location("광진구 금고 수유동 위치"))
+
