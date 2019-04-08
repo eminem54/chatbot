@@ -5,6 +5,13 @@ class Address:
         self.Ro = None
         self.Dong = None
 
+    def empty(self):
+        if self.Si is None and self.Gu is None and self.Ro is None and self.Dong is None:
+            return True
+        else:
+            return False
+
+
 class Slot:
     #상품분류0
     entity1 = ""
@@ -15,7 +22,7 @@ class Slot:
     #주소저장클래스3
     address = Address()
 
-    entity = ["" for _ in range(7)]
+    entity = ["" for _ in range(4)]
     intent = ""
     log = ""
 
@@ -24,7 +31,7 @@ class Slot:
         self.entity2 = ""
         self.entity3 = ""
 
-        for i in range(7):
+        for i in range(4):
             self.entity[i] = ""
 
         self.intent = ""
