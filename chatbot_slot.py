@@ -22,6 +22,8 @@ class Slot:
     #주소저장클래스3
     address = Address()
 
+    button = []
+
     entity = ["" for _ in range(4)]
     intent = ""
     log = ""
