@@ -11,6 +11,16 @@ class Address:
         else:
             return False
 
+    def set_address_field(self, index, value):
+        if index is 0:
+            self.Dong = value
+        elif index is 1:
+            self.Ro = value
+        elif index is 2:
+            self.Gu = value
+        elif index is 3:
+            self.Si = value
+
 
 class Slot:
     #상품분류0

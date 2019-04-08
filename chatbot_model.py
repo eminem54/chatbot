@@ -41,13 +41,12 @@ class ChatBot:
             find_address = module.slot_filling(address_list)
             if find_address:#슬롯필링후 찾으면
                 answer = find_address + " 새마을금고"
-
             else: #못찾으면 디비를 기준으로 메시지를 한번더 검사하고 그래도 없으면 답변으로 위치를 제대로 입력해주세요
                 find_address = module.find_address_by_db(msg)
                 if find_address:
                     answer = find_address + " 새마을금고"
                 else:
-                    answer = '원하시는 지역명을 정확히 입력해주세요.^^'
+                    answer = '원하시는 지역명을 정확히 입력해주세요.^^ ex) 00구, 00동, 00로'
 
         elif slot.intent == "고객 상담":
             slot.clear()
@@ -55,12 +54,11 @@ class ChatBot:
 
         print("의도: ", slot.intent, "log: ", slot.log, "대답: ", answer, "type(answer): ", type(answer))
         for i in range(1, 4):
-            print("entity" + str(i) + ": ", slot.entity[i])
+            print("entity" + str(i) + ": ", slot.entity[i], end='')
+
         store_slot = slot
-
-        if slot_result == 1:
+        if slot_result == 1 or not slot.address.empty():
             slot.clear()
-
         return answer, store_slot
 
 
