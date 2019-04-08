@@ -36,8 +36,8 @@ class ChatBot:
                 return self.run(msg)
 
         elif slot.intent == "지점 안내": #입력라인으로 뽑아낸 데이터가 지점안내인경우에
-            module = intent_office.SlotOperator(slot)
-            address_list = module.find_address_keyword(msg)
+            module = intent_office.SlotOperator(slot) #엔티티추출기클래스
+            address_list = module.find_address_keyword(msg) #시구로동을 뽑아서 배열로
             find_address = module.slot_filling(address_list)
             if find_address:#슬롯필링후 찾으면
                 answer = find_address + " 새마을금고"
