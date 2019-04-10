@@ -5,23 +5,23 @@ $(document).ready(function() {
 	});
 	socket.on('init', function(msg) {
 		$(".chat").append(
-		    "<li>"+"뉴빌리지 봇 : "+msg.data+"</li>"
+		    "<li><pre> 뉴빌리지 봇 : "+msg.data+"</pre></li>"
 		);
         $(".panel-body").scrollTop($(".chat").height());
 	});
 	socket.on('messageServer', function(msg) {
-		$(".chat").append("<li>"+"뉴빌리지 봇 : "+msg.data+"</li>");
+		$(".chat").append( "<li><pre> 뉴빌리지 봇 : "+msg.data+"</pre></li>");
         $(".panel-body").scrollTop($(".chat").height());
 	});
 	socket.on('messageClient',function(msg){
-		$(".chat").append("<li>"+"고객님 : "+msg.data+"</li>");
+		$(".chat").append("<li><pre> 고객님 : "+msg.data+"</pre></li>");
 
         $(".panel-body").scrollTop($(".chat").height());
 	});
 
 
 	socket.on('messageServerLocation',function(msg){
-        $(".chat").append("<li>"+"뉴빌리지 봇 :"+msg.data+"</li>");
+        $(".chat").append( "<li><pre> 뉴빌리지 봇 : "+msg.data+"</pre></li>");
         var mapMake=document.createElement('div');
         var id_value=Math.random();
         mapMake.setAttribute('id',id_value);
@@ -91,7 +91,7 @@ $(document).ready(function() {
 	});
 
     socket.on('slot',function(msg){
-        $(".chat").append("<li>"+"뉴빌리지 봇 : "+msg.data);
+        $(".chat").append( "<li><pre> 뉴빌리지 봇 : "+msg.data);
         for(var i=0;i<msg.slots.length;i++){
 		    var btn=document.createElement('input');
 		    btn.setAttribute('type','button');
@@ -99,7 +99,7 @@ $(document).ready(function() {
 		    btn.setAttribute('value',msg.slots[i]);
 		    $(".chat").append(btn);
 		}
-		$(".chat").append("</li>");
+		$(".chat").append("</pre></li>");
         $(".panel-body").scrollTop($(".chat").height());
         $("input").click(function(){
             var text=$(this).attr('value');
