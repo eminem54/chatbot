@@ -45,7 +45,7 @@ def downloadFile(name=None):
 def joined(msg):
     room=session.get('room','')
     join_room(room)
-    socketio.emit('init',{'data':'새마을금고 고객센터에 오신것을 환영합니다. 궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.' },room=room)
+    socketio.emit('slot',{'data':'새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.','slots':['상품 소개','지점 안내','자주 묻는 키워드','상품 추천'] },room=room)
 
 
 #고객으로부터 메시지를 받으면 처리 후 다시 고객에게 메시지 전달
