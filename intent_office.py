@@ -29,7 +29,7 @@ class SlotOperator:
             for address in address_list:
                 result = co.find_one({address:'0'})
                 if result:
-                    self.slot.address.set_address_field(idx, result)
+                    self.slot.address.set_address_field(idx, address)
                     return address
         else:
             return None
