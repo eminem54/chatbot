@@ -58,7 +58,7 @@ def server_msg_function(msg):
     pdf_download_check=False    #pdf 다운 생성
     ##todo 시나리오: 기본적으로 버튼을 생성 슬롯필링중엔 버튼 생성 멈춤.
 
-    intentData, _= chatbot.run(msg)
+    intentData, slot= chatbot.run(msg)
     print("지점안내 : "+intentData)
 
     if intentData[-5:] == '새마을금고':
