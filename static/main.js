@@ -4,7 +4,7 @@ $(document).ready(function() {
         socket.emit('joined',{});
     });
     socket.on('messageServer', function(msg) {
-        $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data+"</p></div></li>");
+        $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data+"</pre></div></li>");
         $(".panel-body").scrollTop($(".chat").height());
     });
     socket.on('messageClient',function(msg){
@@ -99,6 +99,7 @@ $(document).ready(function() {
         });
     });
 
+    //faq 슬롯 구현
     socket.on('faq_slot',function(msg){
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data);
             for(var i=0;i<msg.slots.length;i++){
@@ -115,6 +116,30 @@ $(document).ready(function() {
             socket.emit("serverMsg",'자주 묻는 키워드@'+text);
         });
     });
+    //faq 프레임 생성하기
+    socket.on('faq_server',function(msg){
+           $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data+"모여");
+           $(".chat").append("<div class='MultiCarousel' data-items=1,3,5,6;data-slide=1; data-interval=1000;' style='float: left; overflow: hidden; padding: 15px; width: 80%; position:absolute;'>");
+
+            //for문 돌리거임
+            for(var i=0;i<msg.faqs.length;i++){
+           $(".chat").append("<div class='MultiCarousel-inner' style='transition: 1s ease all; float: left;'>");
+           $(".chat").append("<div class='item' style='float: left;'>");
+           $(".chat").append("<div class='pad15' style='text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;'><p>제발여</p>");
+           $(".chat").append("</div></div>");
+            //
+            }
+            $(".chat").append("<button class='btn-primary leftLst'  left:0;'><</button>");
+            $(".chat").append("<button class='btn-primary rightLst' right:0;'>></button>");
+
+            $(".chat").append("</div></div></p></div></li>");
+            $(".panel-body").scrollTop($(".chat").height());
+            $("input").click(function(){
+            var text=$(this).attr('value');
+            socket.emit("serverMsg",text);
+        });
+    });
+
     //입력 콜백함수
     $('#inputBtn').on('click',function(){
     socket.emit("serverMsg",$('#myMessage').val());

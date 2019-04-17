@@ -63,17 +63,19 @@ def server_msg_function(msg):
     if faq_check=='자주 묻는 키워드':
         if len(msg)!=9:
             select_faq=msg[10:]
-            if select_faq=='뒤로가기':
+            if select_faq=='돌아가기':
                 socketio.emit('messageClient',{'data':select_faq},room=room)
-                socketio.emit('faq_slot', {'data': '원하시는 카테고리를 선택해주세요.', 'slots': ['전체보기', '예적금', '대출', '인터넷뱅킹', '기타']},
-                              room=room)
+                socketio.emit('slot', {'data': '새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.',
+                                       'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천']}, room=room)
+
             elif select_faq=='전체보기':
                 socketio.emit('messageClient',{'data':select_faq},room=room)
+                socketio.emit('faq_server',{'data':'바밤','faqs':['1','2','3']},room=room)
                 #해당되는 질문 & 답을 전부 출력하면 된다.
 
         else:
             socketio.emit('messageClient', {'data': msg}, room=room)
-            socketio.emit('faq_slot', {'data': '원하시는 카테고리를 선택해주세요.', 'slots': ['전체보기', '예적금', '대출', '인터넷뱅킹', '기타']},
+            socketio.emit('faq_slot', {'data': '원하시는 카테고리를 선택해주세요.', 'slots': ['전체보기', '예적금', '대출', '개인인터넷뱅킹', '돌아가기']},
                           room=room)
 
     ################## 모델 돌린다.

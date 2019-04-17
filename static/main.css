@@ -145,7 +145,6 @@ input:before,button:after{
   top:0;
   right:0;
   height:2px;
-
   width:0;
   background: rgb(45, 139, 233);
   transition:400ms ease all;
