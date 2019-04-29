@@ -6,7 +6,7 @@ import keras_intent_extract
 import copy
 
 slot = chatbot_slot.Slot()
-
+    
 
 class ChatBot:
 
@@ -48,6 +48,10 @@ class ChatBot:
                     answer = find_address + " 새마을금고"
                 else:
                     answer = '원하시는 지역명을 정확히 입력해주세요.^^ ex) 00구, 00동, 00로'
+
+        elif slot.intent == "상품 추천":  # 입력라인으로 뽑아낸 데이터가 상품추천인경우에
+           slot.clear()
+           answer = "고객님 성별을 알려주세요"
 
         elif slot.intent == "고객 상담":
             slot.clear()

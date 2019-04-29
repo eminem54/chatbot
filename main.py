@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app)
 connection = pymongo.MongoClient()
-#html 호출전 초기화
+#html 호출전 초기화ㅇ
 @app.before_request
 def before_request():
     session['room']=os.urandom(24)
