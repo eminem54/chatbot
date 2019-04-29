@@ -58,7 +58,7 @@ class ChatBot:
         #     print("entity" + str(i) + ": ", slot.entity[i], end='')
 
         slot.print_slot()
-        store_slot = copy.copy(slot)
+        store_slot = copy.deepcopy(slot)
         if slot_result == 1 or not slot.address.empty():
             slot.clear()
         return answer, store_slot

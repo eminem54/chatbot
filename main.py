@@ -83,7 +83,7 @@ def server_msg_function(msg):
     else :
         intentData, slot= chatbot.run(msg)
         print("의도 확인 : "+intentData)
-
+        print(slot.intent)
         if intentData[-5:] == '새마을금고':
             branch_information = True
 
