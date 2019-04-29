@@ -6,7 +6,7 @@ import os
 from konlpy.tag import Kkma
 import random
 
-def save_data_csv():
+def __save_data_csv():
     word_table = {}
     save_X_data = []
     save_Y_data = []
@@ -42,7 +42,7 @@ def save_data_csv():
             json.dump(word_table, f, ensure_ascii=False)
 
 
-def add_and_save_test_csv():
+def __add_and_save_test_csv():
     word_table = {}
     with open('./word_table.txt', 'r') as js:
         text = js.read()
@@ -99,6 +99,10 @@ def get_train_data(data_path):
                 vectorized_y_data.append(1)
             elif splited_line[-1].strip() == '고객 상담':
                 vectorized_y_data.append(2)
+            elif splited_line[-1].strip() == '상품 추천':
+                vectorized_y_data.append(3)
+            elif splited_line[-1].strip() == 'Unknown':
+                vectorized_y_data.append(4)
 
             if len(splited_line) > 2:
                 splited_line = [''.join(splited_line[0:-1]), splited_line[-1]]
