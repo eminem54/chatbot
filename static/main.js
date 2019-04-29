@@ -1,4 +1,7 @@
 $(document).ready(function() {
+var static_faq=true;
+$('.bxslider').bxSlider();
+
     var socket = io.connect('http://127.0.0.1:5000');
     socket.on('connect',function(){
         socket.emit('joined',{});
@@ -94,6 +97,7 @@ $(document).ready(function() {
             $(".chat").append("</p></div></li>");
             $(".panel-body").scrollTop($(".chat").height());
             $("input").click(function(){
+            static_faq=false;
             var text=$(this).attr('value');
             socket.emit("serverMsg",text);
         });
@@ -109,69 +113,125 @@ $(document).ready(function() {
                 btn.setAttribute('value',msg.slots[i]);
                 $(".chat").append(btn);
             }
+            var return_btn=document.createElement('input');
+            return_btn.setAttribute('type','button');
+            return_btn.setAttribute('id','returnBtn');
+            return_btn.setAttribute('value','처음화면');
+            $(".chat").append(return_btn);
             $(".chat").append("</p></div></li>");
+
+
             $(".panel-body").scrollTop($(".chat").height());
             $("input").click(function(){
+            static_faq=true;
             var text=$(this).attr('value');
             socket.emit("serverMsg",'자주 묻는 키워드@'+text);
         });
     });
-    //faq 프레임 생성하기
+
+    //faq_server
     socket.on('faq_server',function(msg){
-           $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data+"모여");
-           $(".chat").append("<div class='MultiCarousel' data-items=1,3,5,6;data-slide=1; data-interval=1000;' style='float: left; overflow: hidden; padding: 15px; width: 80%; position:absolute;'>");
+           var left_clearfix=document.createElement('li');
+           left_clearfix.setAttribute('class','leftclearfix');
 
-            //for문 돌리거임
-            for(var i=0;i<msg.faqs.length;i++){
-           $(".chat").append("<div class='MultiCarousel-inner' style='transition: 1s ease all; float: left;'>");
-           $(".chat").append("<div class='item' style='float: left;'>");
-           $(".chat").append("<div class='pad15' style='text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;'><p>제발여</p>");
-           $(".chat").append("</div></div>");
-            //
+
+           var chat_img=document.createElement('span');
+           chat_img.setAttribute('class',"chat-img pull-left");
+           var img=document.createElement('img');
+           img.setAttribute('src','http://placehold.it/50/55C1E7/fff&text=BOT');
+           img.setAttribute('alt','User Avatar');
+           img.setAttribute('class','img-circle');
+           chat_img.appendChild(img);
+           left_clearfix.appendChild(chat_img);
+
+           var chat_body=document.createElement('div');
+           chat_body.setAttribute('class','chat-body clearfix');
+           var header=document.createElement('div');
+           header.setAttribute('class','header');
+           var primary_font=document.createElement('strong');
+           primary_font.setAttribute('class','primary-font');
+           primary_font.append('뉴빌리지 봇');
+           header.appendChild(primary_font);
+           chat_body.appendChild(header);
+
+          // 유사도 추출된 문장 출력
+           var pp=document.createElement('p');
+           pp.append(msg.data);
+           var slider = $("<div class='slider' />");
+           var box = $("<ul class='bxslider'/>");
+           for(var i=0;i<msg.faq_db_question.length;i++){
+               var li=document.createElement('li');
+               li.setAttribute('style','text-align:center');
+
+               var title=document.createElement('div');
+               title.append(msg.faq_db_question[i]);
+               li.append(title);
+               var hr=document.createElement('hr');
+               li.append(hr);
+               var content=document.createElement('div');
+               content.append(msg.faq_db_answer[i]);
+               li.append(content);
+               box.append(li);
+               slider.append(box);
+           }
+           chat_body.appendChild(pp);
+           left_clearfix.appendChild(chat_body);
+           $(".chat").append(left_clearfix);
+           $(".chat").append(slider[0]);
+           $('.bxslider').bxSlider();
+
+           //버튼 생성
+           for(var i=0;i<msg.slots.length;i++){
+                var btn=document.createElement('input');
+                btn.setAttribute('type','button');
+                btn.setAttribute('id',msg.slots[i]);
+                btn.setAttribute('value',msg.slots[i]);
+                $(".chat").append(btn);
             }
-            $(".chat").append("<button class='btn-primary leftLst'  left:0;'><</button>");
-            $(".chat").append("<button class='btn-primary rightLst' right:0;'>></button>");
+            var return_btn=document.createElement('input');
+            return_btn.setAttribute('type','button');
+            return_btn.setAttribute('id','returnBtn');
+            return_btn.setAttribute('value','처음화면');
+            $(".chat").append(return_btn);
 
-            $(".chat").append("</div></div></p></div></li>");
+
             $(".panel-body").scrollTop($(".chat").height());
             $("input").click(function(){
+            static_faq=true;
             var text=$(this).attr('value');
-            socket.emit("serverMsg",text);
+            socket.emit("serverMsg",'자주 묻는 키워드@'+text);
         });
     });
 
     //입력 콜백함수
     $('#inputBtn').on('click',function(){
-    socket.emit("serverMsg",$('#myMessage').val());
-    $('#myMessage').val('');
+    if(static_faq==false){
+        socket.emit("serverMsg",$('#myMessage').val());
+        $('#myMessage').val('');
+    }
+    else{
+        socket.emit("serverFaq",$('#myMessage').val());
+        $('#myMessage').val('');
+    }
     });
 
     $('#myMessage').keypress(function(e) {
+    if(static_faq==false){
         var code = e.keyCode || e.which;
         if (code == 13) {
             text = $('#myMessage').val();
             $('#myMessage').val('');
-            socket.emit("serverMsg",text);
+            socket.emit("serverFaq",text);
         }
-    });
-    });
-    function make(){
-        container.style.display="none";
-        var img = document.createElement('img'); // 이미지 객체 생성
-        img.onclick = function(){document.getElementById('board').removeChild(this)}; // 이미지를 클릭하면 제거되는 onclick 함수 생성
-        img.src = 'https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/16641049_625376667647811_8844539678282274552_n.png?_nc_cat=103&_nc_ht=scontent-icn1-1.xx&oh=55d1f745fa762e5fbc966898ea7be6d0&oe=5D0A450D'
-        img.style.cursor = 'pointer'; // 커서 지정
-        img.style.width="40px";
-        img.style.height="40px";
-        document.getElementById('board').appendChild(img); // board DIV 에 이미지 동적 추가
     }
-
-    function del(){
-    container.style.display="";
-    document.getElementById('board').innerHTML = '';
+    else{
+        var code = e.keyCode || e.which;
+        if (code == 13) {
+            text = $('#myMessage').val();
+            $('#myMessage').val('');
+            socket.emit("serverFaq",text);
+        }
     }
+    });
+ });
 
-
-    $('#blogCarousel').carousel({
-    interval: 5000
-});
