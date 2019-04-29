@@ -52,8 +52,8 @@ class Slot:
 
 
     def print_slot(self):
-        print(f'상품분류: {self.entity[1]} 상품명: {self.entity[2]} 상세설명: {self.entity[3]} 시: {self.address.Si} '
-              f'구: {self.address.Gu} 로: {self.address.Ro} 동: {self.address.Dong} log: {self.log} 의도: {self.intent}')
+        print('상품분류: {self.entity[1]} 상품명: {self.entity[2]} 상세설명: {self.entity[3]} 시: {self.address.Si} '
+              '구: {self.address.Gu} 로: {self.address.Ro} 동: {self.address.Dong} log: {self.log} 의도: {self.intent}')
 
     def clone_slot(self, source):
         pass

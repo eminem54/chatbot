@@ -13,6 +13,7 @@ db.drop_collection("Gu")
 db.drop_collection("Ro")
 db.drop_collection("Dong")
 db.drop_collection("Data")
+db.drop_collection("Faq")
 
 co = db.Slot1
 f = open('slot1.csv', 'r', encoding='utf-8-sig')
@@ -112,4 +113,5 @@ for line in rdr:
             data[line[num]] = line[num+1]
     co.insert(data)
 f.close()
+
 
