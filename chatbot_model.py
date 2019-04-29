@@ -21,7 +21,7 @@ class ChatBot:
         for i in range(3, 0, -1): #상품소개를 위한 엔티티추출작업 라인은 엔티티가 대체된 메세지
             line, entity_list[i] = entity_extractor.get_entity(line, entity_list[i], i)
         line = entity_extractor.get_location(line) #지점안내를 위한 엔티티추출과 단어대체
-        intent = self.intent_extraction(line); print(intent)#엔티티로 대체된 문장으로 의도추출
+        intent = self.intent_extraction(line)                                                                                                                                                                    #엔티티로 대체된 문장으로 의도추출
 
         answer = ""
         #if slot.intent is "":
@@ -57,7 +57,7 @@ class ChatBot:
         # for i in range(1, 4):
         #     print("entity" + str(i) + ": ", slot.entity[i], end='')
 
-        slot.print_slot()
+        #slot.print_slot()
         store_slot = copy.deepcopy(slot)
         if slot_result == 1 or not slot.address.empty():
             slot.clear()
