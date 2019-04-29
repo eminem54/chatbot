@@ -221,7 +221,7 @@ $('.bxslider').bxSlider();
         if (code == 13) {
             text = $('#myMessage').val();
             $('#myMessage').val('');
-            socket.emit("serverFaq",text);
+            socket.emit("serverMsg",text);
         }
     }
     else{
