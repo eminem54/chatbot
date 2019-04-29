@@ -3,6 +3,7 @@ import chatbot_slot
 import intent_product
 import intent_office
 import keras_intent_extract
+import copy
 
 slot = chatbot_slot.Slot()
 
@@ -23,8 +24,8 @@ class ChatBot:
         intent = self.intent_extraction(line); print(intent)#엔티티로 대체된 문장으로 의도추출
 
         answer = ""
-        if slot.intent is "":
-            slot.intent = intent
+        #if slot.intent is "":
+        slot.intent = intent
 
         if slot.intent == "상품 소개":
             module = intent_product.SlotOperator(slot, entity_list)
@@ -52,11 +53,12 @@ class ChatBot:
             slot.clear()
             answer = "고객 상담입니다"
 
-        print("의도: ", slot.intent, "log: ", slot.log, "대답: ", answer, "type(answer): ", type(answer))
-        for i in range(1, 4):
-            print("entity" + str(i) + ": ", slot.entity[i], end='')
+        # print("의도: ", slot.intent, "log: ", slot.log, "대답: ", answer, "type(answer): ", type(answer))
+        # for i in range(1, 4):
+        #     print("entity" + str(i) + ": ", slot.entity[i], end='')
 
-        store_slot = slot
+        slot.print_slot()
+        store_slot = copy.copy(slot)
         if slot_result == 1 or not slot.address.empty():
             slot.clear()
         return answer, store_slot

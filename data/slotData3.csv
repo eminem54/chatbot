@@ -1,0 +1,14 @@
+EntityName,특징,EntityClass,상세설명
+EntityName,대상,EntityClass,상세설명
+EntityName,제한,EntityClass,상세설명
+EntityName,기간,EntityClass,상세설명
+EntityName,한도,EntityClass,상세설명
+EntityName,금리,EntityClass,상세설명
+EntityName,지급,EntityClass,상세설명
+EntityName,환급,EntityClass,상세설명
+EntityName,세제,EntityClass,상세설명
+EntityName,거래,EntityClass,상세설명
+EntityName,상환,EntityClass,상세설명
+EntityName,서류,EntityClass,상세설명
+EntityName,혜택,EntityClass,상세설명
+EntityName,예금자보호여부,EntityClass,상세설명

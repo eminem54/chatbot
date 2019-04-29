@@ -92,7 +92,7 @@ body {
   position:relative;
   height:20px;
   font-size:1.0em;
-  padding:0 2em;
+  padding:0 0.5em;
   cursor:pointer;
   transition:800ms ease all;
   outline:none;
@@ -129,10 +129,11 @@ input{
   position:relative;
   height:20px;
   font-size:1.0em;
-  padding:0 2em;
+  padding:0 0.5em;
   cursor:pointer;
   transition:800ms ease all;
   outline:none;
+  margin-left: 10px;
 }
 input:hover{
   background:#fff;
