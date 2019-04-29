@@ -26,7 +26,7 @@ def get_location(line):
                     continue
                 else:
                     if answer.find(name) != -1:
-                        answer = answer.replace(name, '장소')
+                        answer = answer.replace(name, '지점')
 
     return answer
 
