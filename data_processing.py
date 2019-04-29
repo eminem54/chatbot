@@ -21,6 +21,8 @@ def save_data_csv():
                 save_Y_data.append(1)
             elif splited_line[1] == '고객 상담':
                 save_Y_data.append(2)
+            elif splited_line[1] == '상품 추천':
+                save_Y_data.append(3)
 
             save_X_data.append([])
             for word in splited_line[0].split(' '):
@@ -62,6 +64,8 @@ def add_and_save_test_csv():
                 save_Y_data.append(1)
             elif splited_line[1] == '고객 상담':
                 save_Y_data.append(2)
+            elif splited_line[1] == '상품 추천':
+                save_Y_data.append(3)
 
             save_X_data.append([])
             for word in splited_line[0].split(' '):
@@ -99,6 +103,8 @@ def get_train_data(data_path):
                 vectorized_y_data.append(1)
             elif splited_line[-1].strip() == '고객 상담':
                 vectorized_y_data.append(2)
+            elif splited_line[-1].strip() == '상품 추천':
+                vectorized_y_data.append(3)
 
             if len(splited_line) > 2:
                 splited_line = [''.join(splited_line[0:-1]), splited_line[-1]]
