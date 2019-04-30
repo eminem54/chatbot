@@ -11,7 +11,7 @@ $('.bxslider').bxSlider();
         $(".panel-body").scrollTop($(".chat").height());
     });
     socket.on('messageClient',function(msg){
-        $(".chat").append( "<li class='right clearfix'><span class='chat-img pull-right'><img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='pull-right primary-font'>고객님</strong></div> <p>"+msg.data+"</p></div></li>");
+        $(".chat").append( "<li class='right clearfix'><span class='chat-img pull-right'><img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='pull-right primary-font'>고객님</strong></div><br/><p style='text-align:right;'>"+msg.data+"</p></div></li>");
         $(".panel-body").scrollTop($(".chat").height());
     });
 
