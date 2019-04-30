@@ -166,6 +166,7 @@ $('.bxslider').bxSlider();
                var title=document.createElement('div');
                title.append(msg.faq_db_question[i]);
                li.append(title);
+               li.innerHTML='<details><summary>제목</summary><p>내용</p></details>';
                var hr=document.createElement('hr');
                li.append(hr);
                var content=document.createElement('div');
@@ -202,7 +203,10 @@ $('.bxslider').bxSlider();
             socket.emit("serverMsg",'자주 묻는 키워드@'+text);
         });
     });
-
+    $('#returnBtn').on('click',function(){
+        static_faq=false;
+        socket.emit("serverMsg","메인화면");
+    });
     //입력 콜백함수
     $('#inputBtn').on('click',function(){
     if(static_faq==false){
