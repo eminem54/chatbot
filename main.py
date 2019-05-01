@@ -66,7 +66,7 @@ def server_faq_function(msg):
         dataB.append(b)
 
     socketio.emit('messageClient', {'data': msg}, room=room)
-    socketio.emit('faq_server', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.','slots': ['전체보기', '대출', '인터넷뱅킹', '예금'],
+    socketio.emit('faq_server', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.',
                                              'faq_db_question':dataA,'faq_db_answer':dataB},
                               room=room)
 
@@ -86,37 +86,10 @@ def server_msg_function(msg):
                                'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천'],
                                }, room=room)
     elif faq_check=='자주 묻는 키워드':
-        if len(msg) != 9:
-            select_faq = msg[10:]
-            #여기서 db에 저장된 데이터들을 꺼내온다..
-
-            if select_faq == '전체보기':
-                socketio.emit('messageClient',{'data':select_faq},room=room)        #클라이언트 메시지
-                #전체보기인 경우 데이터들 전부 출력
-                socketio.emit('faq_server',{'data':'전체보기 FAQ 입니다. \n 찾고자 하는 키워드를 입력해주세요.','slots': ['전체보기', '대출', '인터넷뱅킹', '예금'],'faq_db':['1','2','3','4','5','6','7','8']},room=room)    #디비에서 모든 질
-                #해당되는 질문 & 답을 전부 출력하면 된다.
-            elif select_faq == '예금':
-                socketio.emit('messageClient', {'data': select_faq}, room=room)  # 클라이언트 메시지
-                #예금인 경우 예금 데이터들 전부 출력
-                socketio.emit('faq_server',{'data': '예적금 FAQ 입니다. \n 찾고자 하는 키워드를 입력해주세요. ','slots': ['전체보기', '대출', '인터넷뱅킹', '예금'],'faq_db': ['1', '2', '3', '4', '5', '6', '7', '8']},room=room)  # 디비에서 모든 질
-            elif select_faq == '인터넷뱅킹':
-                socketio.emit('messageClient', {'data': select_faq}, room=room)  # 클라이언트 메시지
-                #인터넷뱅킹인 경우 인터넷 뱅킹 데이터 전부 출력
-                socketio.emit('faq_server', {'data': '인터넷뱅킹 FAQ 입니다. \n 찾고자 하는 키워드를 입력해주세요. ',
-                                             'slots': ['전체보기', '대출', '인터넷뱅킹', '예금'],
-                                             'faq_db': ['1', '2', '3', '4', '5', '6', '7', '8']},
-                              room=room)  # 디비에서 모든 질
-            elif select_faq == '대출':
-                socketio.emit('messageClient', {'data': select_faq}, room=room)  # 클라이언트 메시지
-                socketio.emit('faq_server', {'data': '대출 FAQ 입니다. \n 찾고자 하는 키워드를 입력해주세요. ',
-                                             'slots': ['전체보기', '대출', '인터넷뱅킹', '예금'],
-                                             'faq_db': ['1', '2', '3', '4', '5', '6', '7', '8']},
-                              room=room)  # 디비에서 모든 질
-
-        else:   #초기화면
-            socketio.emit('messageClient', {'data': msg}, room=room)
-            socketio.emit('faq_slot', {'data': '궁금한 키워드를 입력해주세요..', 'slots': ['전체보기', '대출', '인터넷뱅킹', '예금']},
-                          room=room)
+        #여기서 db에 저장된 데이터들을 꺼내온다..
+        socketio.emit('messageClient', {'data': msg}, room=room)
+        socketio.emit('faq_slot', {'data': '궁금한 키워드를 입력해주세요..'},
+                      room=room)
 
     ################## 모델 돌린다.
     else :

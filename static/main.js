@@ -84,7 +84,6 @@ $('.bxslider').bxSlider();
         $(".chat").append("</li>");
         $(".panel-body").scrollTop($(".chat").height());
     });
-
     socket.on('slot',function(msg){
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data);
             for(var i=0;i<msg.slots.length;i++){
@@ -97,41 +96,26 @@ $('.bxslider').bxSlider();
             $(".chat").append("</p></div></li>");
             $(".panel-body").scrollTop($(".chat").height());
             $("input").click(function(){
-            static_faq=false;
             var text=$(this).attr('value');
-            socket.emit("serverMsg",text);
+            if(text!=null){
+                    static_faq=false;
+                    socket.emit("serverMsg",text);
+            }
         });
     });
 
     //faq 슬롯 구현
     socket.on('faq_slot',function(msg){
+    alert("ccccccc");
+         static_faq=true;
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data);
-            for(var i=0;i<msg.slots.length;i++){
-                var btn=document.createElement('input');
-                btn.setAttribute('type','button');
-                btn.setAttribute('id',msg.slots[i]);
-                btn.setAttribute('value',msg.slots[i]);
-                $(".chat").append(btn);
-            }
-            var return_btn=document.createElement('input');
-            return_btn.setAttribute('type','button');
-            return_btn.setAttribute('id','returnBtn');
-            return_btn.setAttribute('value','처음화면');
-            $(".chat").append(return_btn);
             $(".chat").append("</p></div></li>");
-
-
             $(".panel-body").scrollTop($(".chat").height());
-            $("input").click(function(){
-            static_faq=true;
-            var text=$(this).attr('value');
-            socket.emit("serverMsg",'자주 묻는 키워드@'+text);
-        });
     });
-
-
     //faq_server 디테일즈
      socket.on('faq_server',function(msg){
+           static_faq=true;
+
            var left_clearfix=document.createElement('li');
            left_clearfix.setAttribute('class','leftclearfix');
 
@@ -196,11 +180,7 @@ $('.bxslider').bxSlider();
 
 
             $(".panel-body").scrollTop($(".chat").height());
-            $("input").click(function(){
-            static_faq=true;
-            var text=$(this).attr('value');
-            socket.emit("serverMsg",'자주 묻는 키워드@'+text);
-        });
+
      });
 
     //faq_server  슬라이드
@@ -294,11 +274,14 @@ $('.bxslider').bxSlider();
         $('#myMessage').val('');
     }
     });
-
+    function text_click() {
+	    alert("버튼1을 누르셨습니다.");
+    }
     $('#myMessage').keypress(function(e) {
     if(static_faq==false){
         var code = e.keyCode || e.which;
         if (code == 13) {
+                alert("aa");
             text = $('#myMessage').val();
             $('#myMessage').val('');
             socket.emit("serverMsg",text);
@@ -306,7 +289,10 @@ $('.bxslider').bxSlider();
     }
     else{
         var code = e.keyCode || e.which;
+
         if (code == 13) {
+                        alert("bb");
+
             text = $('#myMessage').val();
             $('#myMessage').val('');
             socket.emit("serverFaq",text);
