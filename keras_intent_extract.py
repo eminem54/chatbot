@@ -48,4 +48,4 @@ def evaluation(msg):
     elif intent == 4:
         return "Unknown"
 
-print(evaluation(''))
+#print(evaluation(''))
