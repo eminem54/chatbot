@@ -54,7 +54,7 @@ body {
 .chat li .chat-body p
 {
     margin: 0;
-    color: #888888;
+    color: #123456;
 }
 
 .panel .slidedown .glyphicon, .chat .glyphicon
@@ -376,4 +376,19 @@ ul.bxslider {
     height:100%;
     width:100%;
 
+}
+
+pre{
+display:block;
+padding:0px;
+margin:0 0 10px;
+font-size:14px;
+line-height:1.428571429;
+color:#123456;
+word-break:break-all;
+word-wrap:break-word;
+background-color:white;
+border-radius:0px;
+font-family:  "Helvetica Neue",Helvetica,Arial,sans-serif;
+border:white;
 }
