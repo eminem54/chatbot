@@ -20,7 +20,7 @@ $('.bxslider').bxSlider();
         var mapMake=document.createElement('div');
         var id_value=Math.random();
         mapMake.setAttribute('id',id_value);
-        mapMake.setAttribute('style',"width:300px;height:300px;");
+        mapMake.setAttribute('style',"width:100%;height:300px;");
         $(".chat").append(mapMake);
         var infowindow = new daum.maps.InfoWindow({zIndex:1});
 
