@@ -143,19 +143,19 @@ $('.bxslider').bxSlider();
            pp.append(msg.data);
            var div_box = $("<div />");
            var faq_ul = $("<ul/ >");
-           for (var i=0;i<msg.faq_db_question.length;i++){
-                var faq_li=document.createElement('li');
-                faq_li.setAttribute('style','text-align:center');
-                var faq_details=document.createElement('details');
-                var faq_question=document.createElement('summary');
-                faq_question.append(msg.faq_db_question[i]);
-                faq_details.append(faq_question);
-                var faq_answer=document.createElement('p');
-                faq_answer.append(msg.faq_db_answer[i]);
-                faq_details.append(faq_answer);
-                faq_li.append(faq_details);
-                faq_ul.append(faq_li);
-           }
+               for (var i=0;i<msg.faq_db_question.length;i++){
+                    var faq_li=document.createElement('li');
+                    faq_li.setAttribute('style','text-align:center');
+                    var faq_details=document.createElement('details');
+                    var faq_question=document.createElement('summary');
+                    faq_question.append(msg.faq_db_question[i]);
+                    faq_details.append(faq_question);
+                    var faq_answer=document.createElement('p');
+                    faq_answer.append(msg.faq_db_answer[i]);
+                    faq_details.append(faq_answer);
+                    faq_li.append(faq_details);
+                    faq_ul.append(faq_li);
+               }
           div_box.append(faq_ul);
           chat_body.appendChild(pp);
            left_clearfix.appendChild(chat_body);

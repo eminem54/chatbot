@@ -64,11 +64,14 @@ def server_faq_function(msg):
     for a,b in zip(question,answer):
         dataA.append(a)
         dataB.append(b)
-
-    socketio.emit('messageClient', {'data': msg}, room=room)
-    socketio.emit('faq_server', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.',
-                                             'faq_db_question':dataA,'faq_db_answer':dataB},
-                              room=room)
+    if len(dataA) == 0:
+        socketio.emit('messageClient', {'data': msg}, room=room)
+        socketio.emit('messageServer', {'data':'검색된 데이터가 없습니다. 다시 입력해주세요.'},room=room)
+    else :
+        socketio.emit('messageClient', {'data': msg}, room=room)
+        socketio.emit('faq_server', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.',
+                                                 'faq_db_question':dataA,'faq_db_answer':dataB},
+                                  room=room)
 
 
 #고객으로부터 메시지를 받으면 처리 후 다시 고객에게 메시지 전달
