@@ -35,4 +35,13 @@ class SlotOperator:
             return None
 
     def find_address_keyword(self, msg):
-        return re.findall('\D+[동,로,구]|\D\D+[동,로,구,]|\D\D\D+[동,로,구,시]|\D\D\D\D+[동,로,구]', msg)
+        return re.findall('\D+[동,로,구]|\D\D+[동,로,구]|\D\D\D+[동,로,구,시]|\D\D\D\D+[동,로,구]', msg)
+
+
+    def not_found_address_entity(self, msg):
+        find_address = self.find_address_by_db(msg)
+        answer = ""
+        if find_address: # 디비를 기준으로 메시지를 한번더 검사
+            return find_address + " 새마을금고", True
+        else: #없으면 사용자입력그대로
+            return msg if msg != "지점 안내" else "지명을 입력해주세요.", False

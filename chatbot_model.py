@@ -41,15 +41,21 @@ class ChatBot:
         elif slot.intent == "지점 안내": #입력라인으로 뽑아낸 데이터가 지점안내인경우에
             module = intent_office.SlotOperator(slot) #엔티티추출기클래스
             address_list = module.find_address_keyword(msg) #시구로동을 뽑아서 배열로
-            find_address = module.slot_filling(address_list)
-            if find_address:#슬롯필링후 찾으면
+            find_address = module.slot_filling(address_list) #슬롯을 채운다
+
+            if find_address: #슬롯필링후 찾으면
                 answer = find_address + " 새마을금고"
-            else: #못찾으면 디비를 기준으로 메시지를 한번더 검사하고 그래도 없으면 답변으로 위치를 제대로 입력해주세요
-                find_address = module.find_address_by_db(msg)
-                if find_address:
-                    answer = find_address + " 새마을금고"
+                slot.address.answer_find = True
+            else: #못찾으면
+                answer, is_find = module.not_found_address_entity(msg)
+
+                if is_find:
+                    slot.address.answer_find = True
                 else:
-                    answer = '원하시는 지역명을 정확히 입력해주세요.^^ ex) 00구, 00동, 00로'
+                    slot.address.answer_find = False
+                    if len(address_list) > 0:
+                        answer = address_list[0] + "새마을금고"
+                        slot.address.answer_find = True
 
         elif slot.intent == "고객 상담":
             slot.clear()
@@ -59,7 +65,7 @@ class ChatBot:
         # for i in range(1, 4):
         #     print("entity" + str(i) + ": ", slot.entity[i], end='')
 
-        #slot.print_slot()
+        slot.print_slot()
         store_slot = copy.deepcopy(slot)
         if slot_result == 1 or not slot.address.empty():
             slot.clear()
