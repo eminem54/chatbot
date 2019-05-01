@@ -106,7 +106,6 @@ $('.bxslider').bxSlider();
 
     //faq 슬롯 구현
     socket.on('faq_slot',function(msg){
-    alert("ccccccc");
          static_faq=true;
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data);
             $(".chat").append("</p></div></li>");
@@ -281,7 +280,6 @@ $('.bxslider').bxSlider();
     if(static_faq==false){
         var code = e.keyCode || e.which;
         if (code == 13) {
-                alert("aa");
             text = $('#myMessage').val();
             $('#myMessage').val('');
             socket.emit("serverMsg",text);
@@ -289,10 +287,7 @@ $('.bxslider').bxSlider();
     }
     else{
         var code = e.keyCode || e.which;
-
         if (code == 13) {
-                        alert("bb");
-
             text = $('#myMessage').val();
             $('#myMessage').val('');
             socket.emit("serverFaq",text);
