@@ -1,6 +1,7 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 import csv
+from konlpy.tag import Mecab
 
 from sklearn.metrics.pairwise import linear_kernel
 
@@ -8,16 +9,29 @@ class Similarity:
     #class Similarity:
     #유사한 문장 찾기 위해서 csv 파일을 만든다.
 
+    def nlp_function(self,str):
+        mecab = Mecab(dicpath="C:\\mecab\\mecab-ko-dic")
+        pos_data = mecab.pos(str)
+        res_str=""
+        for i in range(len(pos_data)):
+            if pos_data[i][1][:2]=='NN' or pos_data[i][1][:2]=='VV':
+                res_str+=pos_data[0][0]+" "
+        return res_str
+
     def get_csv_writer(self, callStr,filename,rows,delimiter):
         with open('data/dataMake.csv', 'w', encoding='utf-8-sig', newline='') as csvfile:
-            fieldnames = ['index', 'question','answer']
+            fieldnames = ['index','nlp_question' ,'question','answer']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames,delimiter=delimiter)
             writer.writeheader()
             idx=0
-            writer.writerow(({'index':0,'question':callStr,'answer':''}))
+            nlp_str=""
+            nlp_str=self.nlp_function(callStr)
+            writer.writerow(({'index':0,'nlp_question':nlp_str,'question':callStr,'answer':''}))
             for row in rows:
                 idx=idx+1
-                writer.writerow({'index':idx,'question':row[1],'answer':row[2]})
+                data_nlp_str=""
+                data_nlp_str=self.nlp_function(row[1])
+                writer.writerow({'index':idx,'nlp_question':data_nlp_str,'question':row[1],'answer':row[2]})
 
     #훈련 데이터 파일을 불러온다.
     def get_csv_reader(self, filename,delimiter):
@@ -39,7 +53,6 @@ class Similarity:
 
         # 유사도에 따라 정렬
         sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-        print(sim_scores)
         # 가장 유사한 문장을 저장.
         sim_scores = sim_scores[1:11]
 
@@ -67,15 +80,14 @@ class Similarity:
         data = pd.read_csv('data/dataMake.csv', low_memory=False)
         data = data.head(100)
 
-
         tfidf = TfidfVectorizer()
-        data['question'] = data['question'].fillna('')
-        tfidf_matrix = tfidf.fit_transform(data['question'])
+        data['nlp_question'] = data['nlp_question'].fillna('')
+        tfidf_matrix = tfidf.fit_transform(data['nlp_question'])
 
         # 코사인 유사도를 사용하면 바로 문서의 유사도를 구할수 있다.
         cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
-        indices = pd.Series(data.index, index=data['question']).drop_duplicates()
+        indices = pd.Series(data.index, index=data['nlp_question']).drop_duplicates()
         question,answer=self.get_similarity(0,data,cosine_sim,indices)
         return question, answer
 
