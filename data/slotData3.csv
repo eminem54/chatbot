@@ -1,14 +1,22 @@
 EntityName,특징,EntityClass,상세설명
-EntityName,대상,EntityClass,상세설명
-EntityName,제한,EntityClass,상세설명
-EntityName,기간,EntityClass,상세설명
-EntityName,한도,EntityClass,상세설명
-EntityName,금리,EntityClass,상세설명
-EntityName,지급,EntityClass,상세설명
-EntityName,환급,EntityClass,상세설명
-EntityName,세제,EntityClass,상세설명
-EntityName,거래,EntityClass,상세설명
-EntityName,상환,EntityClass,상세설명
-EntityName,서류,EntityClass,상세설명
-EntityName,혜택,EntityClass,상세설명
-EntityName,예금자보호여부,EntityClass,상세설명
+EntityName,가입대상,EntityClass,상세설명
+EntityName,계약기간,EntityClass,상세설명
+EntityName,계약금액 한도 등,EntityClass,상세설명
+EntityName,이자지급,EntityClass,상세설명
+EntityName,우대이율,EntityClass,상세설명
+EntityName,해지,EntityClass,상세설명
+EntityName,세제관련,EntityClass,상세설명
+EntityName,제한사항,EntityClass,상세설명
+EntityName,예금자보호 여부,EntityClass,상세설명
+EntityName,이율,EntityClass,상세설명
+EntityName,납입한도,EntityClass,상세설명
+EntityName,계약금액 한도 등,EntityClass,상세설명
+EntityName,가입제한,EntityClass,상세설명
+EntityName,신청대상,EntityClass,상세설명
+EntityName,대출기간,EntityClass,상세설명
+EntityName,대출한도,EntityClass,상세설명
+EntityName,대출금리,EntityClass,상세설명
+EntityName,거래형태,EntityClass,상세설명
+EntityName,상환방식,EntityClass,상세설명
+EntityName,준비서류,EntityClass,상세설명
+EntityName,안내사항,EntityClass,상세설명
