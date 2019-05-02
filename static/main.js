@@ -239,7 +239,6 @@ $('.bxslider').bxSlider();
                  }
                  div_frame.append(entity_frame);
             }
-           alert(value);
 
 
            //추가 버튼
@@ -265,6 +264,10 @@ $('.bxslider').bxSlider();
                 $('#divSave').hide();
             });
 
+            $(document).on("click","#innerAddBtn",function(){
+                alert(value);
+
+            });
 
             $(document).on("click","#saveBtn",function(){
                     var state=$('#divSave').css('display');
