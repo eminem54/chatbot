@@ -45,7 +45,5 @@ def evaluation(msg):
         return "고객 상담"
     elif intent == 3:
         return "상품 추천"
-    elif intent == 4:
-        return "Unknown"
 
 #print(evaluation(''))
