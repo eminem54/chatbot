@@ -99,12 +99,13 @@ def server_msg_function(msg):
             socketio.emit('messageClient',{'data':msg},room=room)
             socketio.emit('slot',{'data':'아래 항목 중에서 선택해주세요.','slots':slot.button},room=room)
 
-        elif slot.intent == "지점 안내":#의도는 잘나왔지만 어드레스클래스가 비어있는경우는 아무것도주지않아야한다
+        elif slot.intent == "지점 안내":
             socketio.emit('messageClient',{'data':msg},room=room)
-            if slot.address.empty():
-                socketio.emit('messageServer', {'data': answer}, room=room)
+            if slot.address.answer_find:
+                socketio.emit('messageServerLocation', {'data': answer + " 새마을금고"}, room=room)
             else:
-                socketio.emit('messageServerLocation',{'data':answer},room=room)
+                socketio.emit('slot', {'data': '아래 항목 중에서 선택해주세요.', 'slots': slot.button}, room=room)
+
 
         elif slot.intent == "고객 상담":
             pass
