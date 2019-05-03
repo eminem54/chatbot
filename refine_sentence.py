@@ -11,7 +11,6 @@ for token in tokens:
     for key, values in data.items():
         for value in values:
             refine_tokens[str(value)] = str(key)
-#print(refine_tokens)
 
 def refine_sentence(raw):
     for token_key, token_value in refine_tokens.items():
@@ -19,10 +18,10 @@ def refine_sentence(raw):
     
     return raw
 
-test1 = '속성가입자'
-test2 = '가입자우대이자금액조건'
-test3 = '서류서비스변상금액한도조건상환'
+#test1 = '속성가입자'
+#test2 = '가입자우대이자금액조건'
+#test3 = '서류서비스변상금액한도조건상환'
 
-print(refine_sentence(test1))
-print(refine_sentence(test2))
-print(refine_sentence(test3))
+#print(refine_sentence(test1))
+#print(refine_sentence(test2))
+#print(refine_sentence(test3))

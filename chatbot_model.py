@@ -4,6 +4,7 @@ import intent_product
 import intent_office
 import keras_intent_extract
 import copy
+import refine_sentence
 
 slot = chatbot_slot.Slot()
 
@@ -11,9 +12,11 @@ slot = chatbot_slot.Slot()
 class ChatBot:
 
     def intent_extraction(self, msg):
+        msg = refine_sentence.refine_sentence(msg)
         return keras_intent_extract.evaluation(msg)
 
     def run(self, msg):
+        msg = refine_sentence.refine_sentence(msg)
         slot_result = 0
 
         entity_list = [[0 for cols in range(5)] for rows in range(4)] #엔티티추출을위한 리스트
