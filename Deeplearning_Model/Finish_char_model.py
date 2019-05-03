@@ -4,7 +4,7 @@ from keras.layers import Input, LSTM, Dense
 import numpy as np
 
 batch_size = 16  # Batch size for training.
-epochs = 300  # Number of epochs to train for.
+epochs = 1  # Number of epochs to train for.
 latent_dim = 512  # Latent dimensionality of the encoding space.
 num_samples = 10000  # Number of samples to train on.
 # Path to the data txt file on disk.
@@ -84,30 +84,30 @@ for i, (input_text, target_text) in enumerate(zip(input_texts, target_texts)):
 
 # Define an input sequence and process it.
 encoder_inputs = Input(shape=(None, num_encoder_tokens))
-print(encoder_inputs,111)
+print("인코더 인풋:", encoder_inputs)
 encoder = LSTM(latent_dim, return_state=True)
-print(encoder, 222)
+print("인코더:", encoder)
 encoder_outputs, state_h, state_c = encoder(encoder_inputs)
-print(encoder_outputs,333)
+print("인코더 아웃풋:", encoder_outputs)
 # We discard `encoder_outputs` and only keep the states.
 encoder_states = [state_h, state_c]
-print(encoder_states,444)
+print("인코더 상태:", encoder_states)
 print()
 # Set up the decoder, using `encoder_states` as initial state.
 decoder_inputs = Input(shape=(None, num_decoder_tokens))
-print(decoder_inputs,555)
+print("디코더 인풋:", decoder_inputs)
 # We set up our decoder to return full output sequences,
 # and to return internal states as well. We don't use the
 # return states in the training model, but we will use them in inference.
 decoder_lstm = LSTM(latent_dim, return_sequences=True, return_state=True)
-print(decoder_lstm,666)
+print("decoder_lstm:", decoder_lstm)
 decoder_outputs, _, _ = decoder_lstm(decoder_inputs,
                                      initial_state=encoder_states)
-print(decoder_outputs,777)
+print("decoder_outputs:", decoder_outputs)
 decoder_dense = Dense(num_decoder_tokens, activation='softmax')
-print(decoder_dense,888)
+print("decoder_dense:", decoder_dense)
 decoder_outputs = decoder_dense(decoder_outputs)
-print(decoder_outputs,999)
+print("decoder_outputs:", decoder_outputs)
 # Define the model that will turn
 # `encoder_input_data` & `decoder_input_data` into `decoder_target_data`
 model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
@@ -129,20 +129,27 @@ model.save('s2s.h5')
 # Output will be the next target token
 # 3) Repeat with the current target token and current states
 
+print()
 # Define sampling models
 encoder_model = Model(encoder_inputs, encoder_states)
-
+print("encoder_model:", encoder_model)
 decoder_state_input_h = Input(shape=(latent_dim,))
+print("decoder_state_input_h", decoder_state_input_h)
 decoder_state_input_c = Input(shape=(latent_dim,))
+print("decoder_state_input_c", decoder_state_input_c)
 decoder_states_inputs = [decoder_state_input_h, decoder_state_input_c]
+print("decoder_states_inputs:", decoder_states_inputs)
 decoder_outputs, state_h, state_c = decoder_lstm(
     decoder_inputs, initial_state=decoder_states_inputs)
+print("decoder_outputs:", decoder_outputs)
 decoder_states = [state_h, state_c]
+print("decoder_states:", decoder_states)
 decoder_outputs = decoder_dense(decoder_outputs)
+print("decoder_outputs:", decoder_outputs)
 decoder_model = Model(
     [decoder_inputs] + decoder_states_inputs,
     [decoder_outputs] + decoder_states)
-
+print("decoder_model:", decoder_model)
 # Reverse-lookup token index to decode sequences back to
 # something readable.
 reverse_input_char_index = dict(
