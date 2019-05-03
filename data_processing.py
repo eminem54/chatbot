@@ -101,8 +101,6 @@ def get_train_data(data_path):
                 vectorized_y_data.append(2)
             elif splited_line[-1].strip() == '상품 추천':
                 vectorized_y_data.append(3)
-            elif splited_line[-1].strip() == 'Unknown':
-                vectorized_y_data.append(4)
 
             if len(splited_line) > 2:
                 splited_line = [''.join(splited_line[0:-1]), splited_line[-1]]

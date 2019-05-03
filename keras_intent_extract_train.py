@@ -22,7 +22,7 @@ model.add(Embedding(300, embedding_vector_length, input_length=max_review_length
 model.add(LSTM(128, input_dim=128, return_sequences=True))
 model.add(LSTM(64, return_sequences=True))
 model.add(LSTM(16, return_sequences=False))
-model.add(Dense(5, activation='sigmoid'))
+model.add(Dense(4, activation='sigmoid'))
 
 adam = optimizers.Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False)
 model.compile(loss='sparse_categorical_crossentropy', optimizer=adam, metrics=['accuracy'])

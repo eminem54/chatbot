@@ -99,18 +99,24 @@ def server_msg_function(msg):
             socketio.emit('messageClient',{'data':msg},room=room)
             socketio.emit('slot',{'data':'아래 항목 중에서 선택해주세요.','slots':slot.button},room=room)
 
-        elif slot.intent == "지점 안내":#의도는 잘나왔지만 어드레스클래스가 비어있는경우는 아무것도주지않아야한다
+        elif slot.intent == "지점 안내":
             socketio.emit('messageClient',{'data':msg},room=room)
-            if slot.address.empty():
-                socketio.emit('messageServer', {'data': answer}, room=room)
+            if slot.address.answer_find:
+                socketio.emit('messageServerLocation', {'data': answer + " 새마을금고"}, room=room)
             else:
-                socketio.emit('messageServerLocation',{'data':answer},room=room)
+                socketio.emit('slot', {'data': '아래 항목 중에서 선택해주세요.', 'slots': slot.button}, room=room)
+
 
         elif slot.intent == "고객 상담":
             pass
 
+
         elif slot.intent == "상품 추천":
-            pass
+            intent_btn=[]
+            entity_btn=[]
+            intent_btn=['aaa','dd']
+            entity_btn=[[1,2,3,11,11,11],[4,5,6],[7,8,9],[10,11,12,14]]
+            socketio.emit('test', {'data': '테스트입니다.', 'intent': intent_btn,'entity':entity_btn}, room=room)
 
 
         ##클라이언트에 메시지 보낼 때 클라이언트 메시지 먼저 전송 후 서버 메시지 전송
