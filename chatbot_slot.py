@@ -21,7 +21,6 @@ class Address:
         elif index is 3:
             self.Si = value
 
-
 class Slot:
     #상품분류0
     entity1 = ""
@@ -31,12 +30,22 @@ class Slot:
     entity3 = ""
     #주소저장클래스3
     address = Address()
+    #성별
+    recoentity1 = ""
+    #나이
+    recoentity2 = ""
+    #직업
+    recoentity3 = ""
 
+    recoentity4 = ""
     button = []
 
     entity = ["" for _ in range(4)]
+    recoentity = ["" for _ in range(5)]
     intent = ""
     log = ""
+    recointent = ""
+    recolog = ""
 
     def clear(self):
         self.entity1 = ""
@@ -50,10 +59,25 @@ class Slot:
         self.log = ""
         return 0
 
+    def recoClear(self):
+        self.recoentity1 = ""
+        self.recoentity2 = ""
+        self.recoentity3 = ""
+        self.recoentity4 = ""
+
+        for j in range(5):
+            self.recoentity[j] = ""
+
+        self.recointent = ""
+        self.recolog = ""
+        return 0
 
     def print_slot(self):
+
         print('상품분류: {self.entity[1]} 상품명: {self.entity[2]} 상세설명: {self.entity[3]} 시: {self.address.Si} '
-              '구: {self.address.Gu} 로: {self.address.Ro} 동: {self.address.Dong} log: {self.log} 의도: {self.intent}')
+              '구: {self.address.Gu} 로: {self.address.Ro} 동: {self.address.Dong} 성별: {self.recoentity[1] } 나이: {self.recoentity[2]}'
+              'recolog: {self.recolog} 추천의도: {self.recointent} 설명: {self.recoentity[4]} log: {self.log} 의도: {self.intent} 직업: {self.recoentity[3]}')
+
 
     def clone_slot(self, source):
         pass

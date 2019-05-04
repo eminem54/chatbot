@@ -2,6 +2,7 @@ import entity_extractor
 import chatbot_slot
 import intent_product
 import intent_office
+import intent_reco
 import keras_intent_extract
 import copy
 
@@ -17,9 +18,12 @@ class ChatBot:
         slot_result = 0
 
         entity_list = [[0 for cols in range(5)] for rows in range(4)] #엔티티추출을위한 리스트
+        recoentity_list = [[0 for cols in range(6)] for rows in range(5)]
         line = msg
         for i in range(3, 0, -1): #w 라인은 엔티티가 대체된 메세지
             line, entity_list[i] = entity_extractor.get_entity(line, entity_list[i], i)
+        for i in range(4, 0, -1):
+            line, recoentity_list[i] = entity_extractor.get_Recoentity(line, recoentity_list[i], i)
         line = entity_extractor.get_location(line) #지점안내를 위한 엔티티추출과 단어대체
         intent = self.intent_extraction(line)                                                                                                                                                                    #엔티티로 대체된 문장으로 의도추출
 
@@ -50,12 +54,18 @@ class ChatBot:
                     answer = '원하시는 지역명을 정확히 입력해주세요.^^ ex) 00구, 00동, 00로'
 
         elif slot.intent == "상품 추천":  # 입력라인으로 뽑아낸 데이터가 상품추천인경우에
-           slot.clear()
-           answer = "고객님 성별을 알려주세요"
+            module = intent_reco.SlotOperator(slot, recoentity_list)
+            result = module.slot_filling()
+            if result is 0:
+                answer, slot_result = module.receive_answer()
+            elif result is 1:
+                slot.recoClear()
+                return self.run(msg)
 
         elif slot.intent == "고객 상담":
             slot.clear()
             answer = "고객 상담입니다"
+
 
         # print("의도: ", slot.intent, "log: ", slot.log, "대답: ", answer, "type(answer): ", type(answer))
         # for i in range(1, 4):
