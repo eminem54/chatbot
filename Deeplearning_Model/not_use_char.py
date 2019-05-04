@@ -1,10 +1,15 @@
+# char train and char predict
+# it work successfully but it is too sensitive
+# so i don't use it anymore
+
+
 from __future__ import print_function
 from keras.models import Model
 from keras.layers import Input, LSTM, Dense
 import numpy as np
 
 batch_size = 16  # Batch size for training.
-epochs = 300  # Number of epochs to train for.
+epochs = 100  # Number of epochs to train for.
 latent_dim = 512  # Latent dimensionality of the encoding space.
 num_samples = 10000  # Number of samples to train on.
 # Path to the data txt file on disk.
@@ -21,7 +26,7 @@ for line in lines[: min(num_samples, len(lines) - 1)]:
     input_text, target_text = line.split('\t')
     # We use "tab" as the "start sequence" character
     # for the targets, and "\n" as "end sequence" character.
-    target_text = '\t' + target_text + '\n'
+    target_text = '\t ' + target_text + ' \n'
     input_texts.append(input_text)
     target_texts.append(target_text)
     #print(input_texts, target_texts,12345)
@@ -135,14 +140,12 @@ encoder_model = Model(encoder_inputs, encoder_states)
 decoder_state_input_h = Input(shape=(latent_dim,))
 decoder_state_input_c = Input(shape=(latent_dim,))
 decoder_states_inputs = [decoder_state_input_h, decoder_state_input_c]
+
 decoder_outputs, state_h, state_c = decoder_lstm(
     decoder_inputs, initial_state=decoder_states_inputs)
 decoder_states = [state_h, state_c]
 decoder_outputs = decoder_dense(decoder_outputs)
-decoder_model = Model(
-    [decoder_inputs] + decoder_states_inputs,
-    [decoder_outputs] + decoder_states)
-
+decoder_model = Model([decoder_inputs] + decoder_states_inputs, [decoder_outputs] + decoder_states)
 # Reverse-lookup token index to decode sequences back to
 # something readable.
 reverse_input_char_index = dict(
