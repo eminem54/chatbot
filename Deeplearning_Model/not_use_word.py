@@ -1,3 +1,7 @@
+# seq2seq word model
+# but it does not work so i don't use anymore
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from keras.models import model_from_json
@@ -86,11 +90,12 @@ print(x,333)
 print(encoder_states,444)
 decoder_inputs = Input(shape=(None,))
 print("디코더 인풋 모델:", decoder_inputs)
-x = Embedding(max_decoder_seq_length, latent_dim)(decoder_inputs)
-print(x,666)
-x = LSTM(latent_dim, return_sequences=True)(x, initial_state=encoder_states)
-print(x,777)
-decoder_outputs = Dense(num_decoder_tokens, activation='softmax')(x)
+x2 = Embedding(max_decoder_seq_length, latent_dim)(decoder_inputs)
+print(x2,666)
+x1_before = LSTM(latent_dim, return_sequences=True)
+print(x1_before,777)
+x1 = x1_before(x2, initial_state=encoder_states)
+decoder_outputs = Dense(num_decoder_tokens, activation='softmax')(x1)
 print("디코더 아웃풋 모델:", decoder_outputs)
 model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
 
@@ -106,10 +111,8 @@ reverse_input_char_index = dict(
 reverse_target_char_index = dict(
     (i, char) for char, i in target_token_index.items())
 
-
-
-
 model.save('s2s.h5')
+
 
 # todo:Next: inference mode (sampling).
 # Here's the drill:
@@ -119,29 +122,33 @@ model.save('s2s.h5')
 # Output will be the next target token
 # 3) Repeat with the current target token and current states
 
-print()
+
 # Define sampling models
 encoder_model = Model(encoder_inputs, encoder_states)
-print("encoder_model:", encoder_model)
-decoder_state_input_h = Input(shape=(latent_dim,))
-print("decoder_state_input_h", decoder_state_input_h)
-decoder_state_input_c = Input(shape=(latent_dim,))
-print("decoder_state_input_c", decoder_state_input_c)
+print("인코더모델의 shape:", encoder_model.input_shape)
+decoder_state_input_h = Input(shape=(None,))
+decoder_state_input_c = Input(shape=(None,))
 decoder_states_inputs = [decoder_state_input_h, decoder_state_input_c]
 print("decoder_states_inputs:", decoder_states_inputs)
-decoder_outputs, state_h, state_c = x(
-    decoder_inputs, initial_state=decoder_states_inputs)
-print("decoder_outputs:", decoder_outputs)
+
+x_new = Embedding(max_encoder_seq_length, latent_dim)(encoder_inputs)
+print("x1:", x_new)
+decoder_outputs_for, state_h, state_c = LSTM(latent_dim, return_state=True)(x_new)
+print("decoder_outputs_for:", decoder_outputs_for)
+
+#decoder_outputs, state_h, state_c = x1(decoder_inputs, initial_state=decoder_states_inputs)
 decoder_states = [state_h, state_c]
 print("decoder_states:", decoder_states)
-decoder_outputs = decoder_outputs(decoder_outputs)
-print("decoder_outputs:", decoder_outputs)
-decoder_model = Model(
-    [decoder_inputs] + decoder_states_inputs,
-    [decoder_outputs] + decoder_states)
-print("decoder_model:", decoder_model)
+decoder_outputs_final = Dense(num_decoder_tokens, activation='softmax')(decoder_outputs_for)
+print("decoder_outputs_final:", decoder_outputs_final)
+decoder_model = Model([decoder_inputs] + decoder_states_inputs, [decoder_outputs_final] + decoder_states)
+print(decoder_model.input_shape)
 # Reverse-lookup token index to decode sequences back to
 # something readable.
+reverse_input_char_index = dict(
+    (i, char) for char, i in input_token_index.items())
+reverse_target_char_index = dict(
+    (i, char) for char, i in target_token_index.items())
 
 
 def decode_sequence(input_seq):
@@ -179,6 +186,7 @@ def decode_sequence(input_seq):
         states_value = [h, c]
 
     return decoded_sentence
+
 
 for seq_index in range(100):
     # Take one sequence (part of the training set)

@@ -1,10 +1,14 @@
+# it is training keras model by word(split whitespace)
+# it works successfully on training data
+
+
 from __future__ import print_function
 from keras.models import Model
 from keras.layers import Input, LSTM, Dense, Embedding
 import numpy as np
 
-batch_size = 64  # Batch size for training.
-epochs = 1  # Number of epochs to train for.
+batch_size = 10  # Batch size for training.
+epochs = 200  # Number of epochs to train for.
 latent_dim = 256  # Latent dimensionality of the encoding space.
 num_samples = 10000  # Number of samples to train on.
 # Path to the data txt file on disk.
@@ -107,7 +111,7 @@ model.fit([encoder_input_data, decoder_input_data], decoder_target_data,
           epochs=epochs,
           validation_split=0.2)
 # Save model
-model.save('s2s.h5')
+#model.save('s2s.h5')
 
 # todo:Next: inference mode (sampling).
 # Here's the drill:
@@ -139,6 +143,32 @@ reverse_target_char_index = dict(
     (i, char) for char, i in target_token_index.items())
 
 
+# dictionary and model save
+import json
+import os
+
+with open('./input_token_index.txt', 'w') as f:
+    json.dump(input_token_index, f, ensure_ascii=False)
+with open('./target_token_index.txt', 'w') as f:
+    json.dump(target_token_index, f, ensure_ascii=False)
+with open('./reverse_input_char_index.txt', 'w') as f:
+    json.dump(reverse_input_char_index, f, ensure_ascii=False)
+with open('./reverse_target_char_index.txt', 'w') as f:
+    json.dump(reverse_target_char_index, f, ensure_ascii=False)
+
+from keras.models import model_from_json
+
+model_json = encoder_model.to_json()
+with open("encoder_model.json", "w") as json_file :
+    json_file.write(model_json)
+encoder_model.save_weights("encoder_model.h5")
+
+model_json = decoder_model.to_json()
+with open("decoder_model.json", "w") as json_file :
+    json_file.write(model_json)
+decoder_model.save_weights("decoder_model.h5")
+
+
 def decode_sequence(input_seq):
     # Encode the input as state vectors.
     states_value = encoder_model.predict(input_seq)
@@ -159,6 +189,7 @@ def decode_sequence(input_seq):
 
         # Sample a token
         sampled_token_index = np.argmax(output_tokens[0, -1, :])
+        print(sampled_token_index)
         sampled_char = reverse_target_char_index[sampled_token_index]
         decoded_sentence += sampled_char
 
@@ -169,7 +200,7 @@ def decode_sequence(input_seq):
             stop_condition = True
 
         # Update the target sequence (of length 1).
-        target_seq = np.zeros((1, 1, max_decoder_seq_length))
+        target_seq = np.zeros((1, 1, num_decoder_tokens))
         target_seq[0, 0, sampled_token_index] = 1.
 
         # Update states

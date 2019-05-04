@@ -1,3 +1,8 @@
+# char train and char predict
+# it work successfully but it is too sensitive
+# so i don't use it anymore
+
+
 from __future__ import print_function
 from keras.models import Model
 from keras.layers import Input, LSTM, Dense
@@ -21,7 +26,7 @@ for line in lines[: min(num_samples, len(lines) - 1)]:
     input_text, target_text = line.split('\t')
     # We use "tab" as the "start sequence" character
     # for the targets, and "\n" as "end sequence" character.
-    target_text = '\t' + target_text + '\n'
+    target_text = '\t ' + target_text + ' \n'
     input_texts.append(input_text)
     target_texts.append(target_text)
     #print(input_texts, target_texts,12345)
