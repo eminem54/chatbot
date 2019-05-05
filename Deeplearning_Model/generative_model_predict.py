@@ -84,7 +84,6 @@ def decode_sequence(input_seq):
     return decoded_sentence
 
 
-
 def convert_to_vector(text):
     encoder_input_data = np.zeros((1, max_encoder_seq_length, num_encoder_tokens), dtype='float32')
     for t, voca in enumerate(text.split(' ')):
@@ -93,11 +92,13 @@ def convert_to_vector(text):
             print(input_token_index[voca], '데이터만들기')
     return encoder_input_data
 
-question = " "
-while question!="":
-    question = input('메시지입력 : ')
-    input_seq = convert_to_vector(question)
+
+def make_generative_answer(msg):
+    input_seq = convert_to_vector(msg)
     decoded_sentence = decode_sequence(input_seq)
-    print('-')
-    print('Input sentence:', question)
-    print('Decoded sentence:', decoded_sentence)
+    return decoded_sentence
+
+
+def test_gm():
+    question = input('메시지입력 : ')
+    print(make_generative_answer(question))
