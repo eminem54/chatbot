@@ -21,6 +21,8 @@ def __save_data_csv():
                 save_Y_data.append(1)
             elif splited_line[1] == '고객 상담':
                 save_Y_data.append(2)
+            elif splited_line[1] == '상품 추천':
+                save_Y_data.append(3)
 
             save_X_data.append([])
             for word in splited_line[0].split(' '):
@@ -62,6 +64,8 @@ def __add_and_save_test_csv():
                 save_Y_data.append(1)
             elif splited_line[1] == '고객 상담':
                 save_Y_data.append(2)
+            elif splited_line[1] == '상품 추천':
+                save_Y_data.append(3)
 
             save_X_data.append([])
             for word in splited_line[0].split(' '):

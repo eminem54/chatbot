@@ -34,7 +34,7 @@ class SlotOperator:
             answer = co.distinct(self.slot.entity[3], {"상품이름": self.slot.entity[2]})
             if answer == []:
                 self.get_button_list(3)
-                return "상품이 가진 항목의 입력이 잘못되었습니다.", 1
+                return "상품이 가진 항목의 입력이 잘못되었습니다.", 0
             else:
                 return answer[0], 1
 
@@ -43,7 +43,7 @@ class SlotOperator:
             post = co.find_one({"상품이름": self.slot.entity[2]})
             for postItem in post.items():
                 if postItem[0] != "_id" and postItem[0] != "상품종류" and postItem[0] != "":
-                    answer += postItem[1] + "\n";
+                    answer += postItem[1] + "\n\n"
             return answer, 1
 
         elif self.slot.entity[1] is "" and self.slot.entity[2] is "":
@@ -72,7 +72,9 @@ class SlotOperator:
             return self.fill_entity(2)
 
         elif self.slot.log is "3":
+
             return self.fill_entity(3)
+
 
     def get_button_list(self, num):
         button_list = set()
@@ -104,4 +106,3 @@ class SlotOperator:
             self.slot.button = list(button_list)
             print(self.slot.button)
             return
-

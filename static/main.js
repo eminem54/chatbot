@@ -17,18 +17,21 @@ $('.bxslider').bxSlider();
 
     socket.on('messageServerLocation',function(msg){
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data+"</p></div></li>");
+
         var mapMake=document.createElement('div');
         var id_value=Math.random();
         mapMake.setAttribute('id',id_value);
         mapMake.setAttribute('style',"width:100%;height:300px;");
         $(".chat").append(mapMake);
+
+
         var infowindow = new daum.maps.InfoWindow({zIndex:1});
 
         var mapContainer = document.getElementById(id_value), // 지도를 표시할 div
         mapOption = {
-        center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-        level: 1 // 지도의 확대 레벨
-    };
+            center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+            level: 1 // 지도의 확대 레벨
+         };
 
     // 지도를 생성합니다
     var map = new daum.maps.Map(mapContainer, mapOption);
@@ -72,6 +75,7 @@ $('.bxslider').bxSlider();
         }
     });
 
+
     socket.on('pdf_download',function(msg){
         $(".chat").append("<li>"+"상품 약관 다운로드 하기 : ");
         var btn=document.createElement('input');
@@ -85,7 +89,7 @@ $('.bxslider').bxSlider();
         $(".panel-body").scrollTop($(".chat").height());
     });
     socket.on('slot',function(msg){
-        $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data);
+        $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data+"</pre>");
             for(var i=0;i<msg.slots.length;i++){
                 var btn=document.createElement('input');
                 btn.setAttribute('type','button');
@@ -103,6 +107,8 @@ $('.bxslider').bxSlider();
             }
         });
     });
+
+
     //기본 태그 설정
     /*
     socket.on('test',function(msg){
@@ -158,6 +164,300 @@ $('.bxslider').bxSlider();
 
     */
 
+
+    //상품 추천
+    socket.on('product_recommend',function(msg){
+            $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data);
+            for(var i=0;i<msg.data_btn.length;i++){
+                var btn=document.createElement('input');
+                btn.setAttribute('type','button');
+                btn.setAttribute('id',msg.data_btn[i]);
+                btn.setAttribute('value',msg.data_btn[i]);
+                $(".chat").append(btn);
+            }
+            $(".chat").append("</p></div></li>");
+            $(".panel-body").scrollTop($(".chat").height());
+            $("input").click(function(){
+            var text=$(this).attr('value');
+            if(text!=null){
+                    static_faq=false;
+                    for(var i=0;i<msg.data_list.length;i++){
+                        if(text==msg.data_list[i][0]){
+                            alert(msg.data_list[i][1]);
+                            break;
+                        }
+                    }
+            }
+        });
+    });
+
+
+
+
+    //키워드 지도 테스트
+
+    socket.on('testLocation',function(msg){
+           $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data+"</p></div></li>");
+
+        var mapMake=document.createElement('div');
+        var id_value=Math.random();
+        mapMake.setAttribute('id',id_value);
+        mapMake.setAttribute('style',"width:100%;height:100%;position:relative;overflow:hidden;");
+        $(".chat").append(mapMake);
+
+
+
+       var menu_wrap=document.createElement('div');
+       menu_wrap.setAttribute('id','menu_wrap');
+       menu_wrap.setAttribute('class','bg_white');
+
+       var div_option=document.createElement('div');
+       div_option.setAttribute('class','option');
+
+       var div=document.createElement('div');
+       var form=document.createElement('form');
+       form.setAttribute('onsubmit','searchPlaces(); return false;');
+       form.append('키워드');
+       var input_text=document.createElement('input');
+       input_text.setAttribute('type','text');
+       input_text.setAttribute('value',"강남구 새마을금고");
+       input_text.setAttribute('id','keyword');
+       form.append(input_text);
+
+       var input_btn=document.createElement('button');
+       input_btn.setAttribute('type','submit');
+       input_btn.append('검색하기');
+       form.append(input_btn);
+       div.append(form);
+       div_option.append(div);
+       menu_wrap.append(div_option);
+
+       var place_list=document.createElement('ul');
+       place_list.setAttribute('id','placeList');
+       menu_wrap.append(place_list);
+
+       var pagination=document.createElement('div');
+       pagination.setAttribute('id','pagination');
+
+       menu_wrap.append(pagination);
+
+        $(".chat").append(menu_wrap);
+
+        var infowindow = new daum.maps.InfoWindow({zIndex:1});
+        var mapContainer = document.getElementById(id_value), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+            level: 1 // 지도의 확대 레벨
+         };
+
+    // 지도를 생성합니다
+    var map = new daum.maps.Map(mapContainer, mapOption);
+    var ps = new daum.maps.services.Places();
+    // 키워드로 장소를 검색합니다
+    ps.keywordSearch('강남구 새마을금고', placesSearchCB);
+
+function placesSearchCB(data, status, pagination) {
+    if (status === daum.maps.services.Status.OK) {
+
+        // 정상적으로 검색이 완료됐으면
+        // 검색 목록과 마커를 표출합니다
+        displayPlaces(data);
+
+        // 페이지 번호를 표출합니다
+        displayPagination(pagination);
+
+    } else if (status === daum.maps.services.Status.ZERO_RESULT) {
+
+        alert('검색 결과가 존재하지 않습니다.');
+        return;
+
+    } else if (status === daum.maps.services.Status.ERROR) {
+
+        alert('검색 결과 중 오류가 발생했습니다.');
+        return;
+
+    }
+}
+
+// 검색 결과 목록과 마커를 표출하는 함수입니다
+function displayPlaces(places) {
+
+    var listEl = $('#placesList'),
+    menuEl = $('#menu_wrap'),
+    fragment = document.createDocumentFragment(),
+    bounds = new daum.maps.LatLngBounds(),
+    listStr = '';
+    alert(listEl);
+    // 검색 결과 목록에 추가된 항목들을 제거합니다
+    removeAllChildNods(listEl);
+
+    // 지도에 표시되고 있는 마커를 제거합니다
+    removeMarker();
+
+    for ( var i=0; i<places.length; i++ ) {
+
+        // 마커를 생성하고 지도에 표시합니다
+        var placePosition = new daum.maps.LatLng(places[i].y, places[i].x),
+            marker = addMarker(placePosition, i),
+            itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+        // LatLngBounds 객체에 좌표를 추가합니다
+        bounds.extend(placePosition);
+
+        // 마커와 검색결과 항목에 mouseover 했을때
+        // 해당 장소에 인포윈도우에 장소명을 표시합니다
+        // mouseout 했을 때는 인포윈도우를 닫습니다
+        (function(marker, title) {
+            daum.maps.event.addListener(marker, 'mouseover', function() {
+                displayInfowindow(marker, title);
+            });
+
+            daum.maps.event.addListener(marker, 'mouseout', function() {
+                infowindow.close();
+            });
+
+            itemEl.onmouseover =  function () {
+                displayInfowindow(marker, title);
+            };
+
+            itemEl.onmouseout =  function () {
+                infowindow.close();
+            };
+        })(marker, places[i].place_name);
+
+        fragment.appendChild(itemEl);
+    }
+
+    // 검색결과 항목들을 검색결과 목록 Elemnet에 추가합니다
+    listEl.appendChild(fragment);
+    menuEl.scrollTop = 0;
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+    map.setBounds(bounds);
+}
+
+// 검색결과 항목을 Element로 반환하는 함수입니다
+function getListItem(index, places) {
+
+    var el = document.createElement('li'),
+    itemStr = '<span class="markerbg marker_' + (index+1) + '"></span>' +
+                '<div class="info">' +
+                '   <h5>' + places.place_name + '</h5>';
+
+    if (places.road_address_name) {
+        itemStr += '    <span>' + places.road_address_name + '</span>' +
+                    '   <span class="jibun gray">' +  places.address_name  + '</span>';
+    } else {
+        itemStr += '    <span>' +  places.address_name  + '</span>';
+    }
+
+      itemStr += '  <span class="tel">' + places.phone  + '</span>' +
+                '</div>';
+
+    el.innerHTML = itemStr;
+    el.className = 'item';
+
+    return el;
+}
+
+// 마커를 생성하고 지도 위에 마커를 표시하는 함수입니다
+function addMarker(position, idx, title) {
+    var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+        imageSize = new daum.maps.Size(36, 37),  // 마커 이미지의 크기
+        imgOptions =  {
+            spriteSize : new daum.maps.Size(36, 691), // 스프라이트 이미지의 크기
+            spriteOrigin : new daum.maps.Point(0, (idx*46)+10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+            offset: new daum.maps.Point(13, 37) // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+        },
+        markerImage = new daum.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+            marker = new daum.maps.Marker({
+            position: position, // 마커의 위치
+            image: markerImage
+        });
+
+    marker.setMap(map); // 지도 위에 마커를 표출합니다
+    markers.push(marker);  // 배열에 생성된 마커를 추가합니다
+
+    return marker;
+}
+
+// 지도 위에 표시되고 있는 마커를 모두 제거합니다
+function removeMarker() {
+    for ( var i = 0; i < markers.length; i++ ) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+// 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
+function displayPagination(pagination) {
+    var paginationEl = $('#pagination'),
+        fragment = document.createDocumentFragment(),
+        i;
+
+    // 기존에 추가된 페이지번호를 삭제합니다
+    while (paginationEl.hasChildNodes()) {
+        paginationEl.removeChild (paginationEl.lastChild);
+    }
+
+    for (i=1; i<=pagination.last; i++) {
+        var el = document.createElement('a');
+        el.href = "#";
+        el.innerHTML = i;
+
+        if (i===pagination.current) {
+            el.className = 'on';
+        } else {
+            el.onclick = (function(i) {
+                return function() {
+                    pagination.gotoPage(i);
+                }
+            })(i);
+        }
+
+        fragment.appendChild(el);
+    }
+    paginationEl.appendChild(fragment);
+}
+
+// 검색결과 목록 또는 마커를 클릭했을 때 호출되는 함수입니다
+// 인포윈도우에 장소명을 표시합니다
+function displayInfowindow(marker, title) {
+    var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+    infowindow.setContent(content);
+    infowindow.open(map, marker);
+}
+
+ // 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {
+    while (el.hasChildNodes()) {
+        el.removeChild (el.lastChild);
+    }
+}
+
+
+
+           //버튼 생성
+           for(var i=0;i<msg.slots.length;i++){
+                var btn=document.createElement('input');
+                btn.setAttribute('type','button');
+                btn.setAttribute('id',msg.slots[i]);
+                btn.setAttribute('value',msg.slots[i]);
+                $(".chat").append(btn);
+            }
+
+
+            var return_btn=document.createElement('input');
+            return_btn.setAttribute('type','button');
+            return_btn.setAttribute('id','returnBtn');
+            return_btn.setAttribute('value','처음화면');
+            $(".chat").append(return_btn);
+
+
+            $(".panel-body").scrollTop($(".chat").height());
+    });
 
     //컴퍼젼트 테스트
     socket.on('test',function(msg){
@@ -301,6 +601,7 @@ $('.bxslider').bxSlider();
             $(".chat").append("</p></div></li>");
             $(".panel-body").scrollTop($(".chat").height());
     });
+
     //faq_server
      socket.on('faq_server',function(msg){
            static_faq=true;
