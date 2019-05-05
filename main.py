@@ -97,7 +97,7 @@ def server_msg_function(msg):
 
         if slot.intent == "상품 소개":
             socketio.emit('messageClient',{'data':msg},room=room)
-            socketio.emit('slot',{'data':'아래 항목 중에서 선택해주세요.','slots':slot.button},room=room)
+            socketio.emit('slot',{'data': answer, 'slots':slot.button},room=room)
 
         elif slot.intent == "지점 안내":
             socketio.emit('messageClient',{'data':msg},room=room)
