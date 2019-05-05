@@ -15,7 +15,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app)
 connection = pymongo.MongoClient()
-#html 호출전 초기화
+#html 호출전 초기화ㅇ
 @app.before_request
 def before_request():
     session['room']=os.urandom(24)
@@ -49,7 +49,7 @@ def downloadFile(name=None):
 def joined(msg):
     room=session.get('room','')
     join_room(room)
-    socketio.emit('slot',{'data':'새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.','slots':['상품 소개','지점 안내','자주 묻는 키워드','상품 추천'] },room=room)
+    socketio.emit('slot',{'data':'새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.','slots':['상품 소개','지점 안내','자주 묻는 키워드','상품 추천','테스트'] },room=room)
 
 #faq 질문 처리
 @socketio.on('serverFaq')
@@ -86,7 +86,7 @@ def server_msg_function(msg):
     if msg == '메인화면':
         socketio.emit('messageClient', {'data': '메인화면'}, room=room)
         socketio.emit('slot', {'data': '새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.',
-                               'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천'],
+                               'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천','테스트'],
                                }, room=room)
     elif msg == '자주 묻는 키워드':
         socketio.emit('messageClient', {'data': msg}, room=room)
@@ -112,11 +112,19 @@ def server_msg_function(msg):
 
 
         elif slot.intent == "상품 추천":
+            data_btn=[]
+            data_list=[]
+            data_btn=['남자','여자']
+            data_list=[['남자','남자아아아아아'],['여자','여자아아아아'],['대학생','대학생애애앵'],['직장인','직장이닌니니']]
+            socketio.emit('product_recommend',{'data':'해당되는 버튼을 클릭하세요.','data_btn':data_btn,'data_list':data_list}, room=room)
+
+
+        elif slot.intent == "테스트":
             intent_btn=[]
             entity_btn=[]
             intent_btn=['aaa','dd']
             entity_btn=[[1,2,3,11,11,11],[4,5,6],[7,8,9],[10,11,12,14]]
-            socketio.emit('test', {'data': '테스트입니다.', 'intent': intent_btn,'entity':entity_btn}, room=room)
+            socketio.emit('testLocation', {'data': '테스트입니다.', 'intent': intent_btn,'entity':entity_btn}, room=room)
 
 
         ##클라이언트에 메시지 보낼 때 클라이언트 메시지 먼저 전송 후 서버 메시지 전송
