@@ -32,7 +32,7 @@ class Slot:
     address = Address()
     #성별
     recoentity1 = ""
-    #나이
+    #종류
     recoentity2 = ""
     #직업
     recoentity3 = ""
@@ -46,6 +46,7 @@ class Slot:
     log = ""
     recointent = ""
     recolog = ""
+    gender = ""
 
     def clear(self):
         self.entity1 = ""
@@ -70,11 +71,12 @@ class Slot:
 
         self.recointent = ""
         self.recolog = ""
+        self.gender = ""
         return 0
 
     def print_slot(self):
         print(f'상품분류: {self.entity[1]} 상품명: {self.entity[2]} 상세설명: {self.entity[3]} 시: {self.address.Si} '
-              f'구: {self.address.Gu} 로: {self.address.Ro} 동: {self.address.Dong} 성별: {self.recoentity[1] } 나이: {self.recoentity[2]}'
+              f'구: {self.address.Gu} 로: {self.address.Ro} 동: {self.address.Dong} 성별: {self.recoentity[1] } 종류: {self.recoentity[2]}'
               f'recolog: {self.recolog} 추천의도: {self.recointent} 설명: {self.recoentity[4]} log: {self.log} 의도: {self.intent} 직업: {self.recoentity[3]}')
 
     def clone_slot(self, source):
