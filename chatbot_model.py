@@ -79,8 +79,7 @@ class ChatBot:
         slot.print_slot()
         store_slot = copy.deepcopy(slot)
         slot.button = []
-        if slot_result == 1 or slot.intent == "지점 안내": #비어있을때가아니라 지점안내를 거치고나면 지우도록바꾸자
-
+        if slot_result == 1 or slot.intent == "지점 안내" or slot.intent == "UnKnown": #비어있을때가아니라 지점안내를 거치고나면 지우도록바꾸자
             slot.clear()
         return answer, store_slot
 
