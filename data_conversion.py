@@ -1,9 +1,10 @@
 import pymongo
 from konlpy.tag import Mecab
 
+mecab = Mecab(dicpath="C:\\mecab\\mecab-ko-dic")
+
 
 class ConversionClass:
-    mecab = Mecab(dicpath="C:\\mecab\\mecab-ko-dic")
     msg_pos_result = []
     msg_pos_len = 0
     file_name = "ConversionData"
@@ -13,7 +14,7 @@ class ConversionClass:
     co = db[file_name]
 
     def tag_input_msg(self, input_msg):
-        msg_pos_list = self.mecab.pos(input_msg)  # 입력 메시지를 형태소 분석
+        msg_pos_list = mecab.pos(input_msg)  # 입력 메시지를 형태소 분석
         for msg_pos in msg_pos_list:
             if msg_pos[1][0] == "N" or msg_pos[1][0] == "V":    # 형태소가 명사, 동사일 경우
                 ConversionClass.msg_pos_result.append(msg_pos[0])
@@ -43,9 +44,9 @@ class ConversionClass:
         return self.co.distinct("변환문장", {"입력문장": ConversionClass.msg_pos_result})
 
 
-conversion = "상품소개 대출 알려줘"
-test_input = "예금 금리 알려줘"
-
-cc = ConversionClass()
-cc.add_conversion_data(test_input, conversion)
-print(cc.get_conversion_data(test_input))
+# conversion = "상품소개 대출 알려줘"
+# test_input = "예금 금리 알려줘"
+#
+# cc = ConversionClass()
+# cc.add_conversion_data(test_input, conversion)
+# print(cc.get_conversion_data(test_input))
