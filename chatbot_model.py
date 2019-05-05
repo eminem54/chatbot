@@ -6,6 +6,9 @@ import intent_reco
 import keras_intent_extract
 import copy
 import refine_sentence
+import data_tfidf
+from Deeplearning_Model import generative_model_predict as gm
+
 
 slot = chatbot_slot.Slot()
     
@@ -28,7 +31,12 @@ class ChatBot:
         for i in range(5, 0, -1):
             line, recoentity_list[i] = entity_extractor.get_Recoentity(line, recoentity_list[i], i)
         line = entity_extractor.get_location(line) #지점안내를 위한 엔티티추출과 단어대체
-        intent = self.intent_extraction(line)
+
+        intent = ""
+        if data_tfidf.is_unknown(line, data_tfidf.TFIDF_MATRIX):
+            intent = "UnKnown"
+        else:
+            intent = self.intent_extraction(line)
         print(intent)
         #엔티티로 대체된 문장으로 의도추출
 
@@ -61,6 +69,8 @@ class ChatBot:
             slot.clear()
             answer = "고객 상담입니다"
 
+        elif slot.intent == "UnKnown":
+            answer = gm.make_generative_answer(msg)
 
         # print("의도: ", slot.intent, "log: ", slot.log, "대답: ", answer, "type(answer): ", type(answer))
         # for i in range(1, 4):
@@ -70,6 +80,7 @@ class ChatBot:
         store_slot = copy.deepcopy(slot)
         slot.button = []
         if slot_result == 1 or slot.intent == "지점 안내": #비어있을때가아니라 지점안내를 거치고나면 지우도록바꾸자
+
             slot.clear()
         return answer, store_slot
 

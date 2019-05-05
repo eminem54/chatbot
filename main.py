@@ -126,6 +126,10 @@ def server_msg_function(msg):
             entity_btn=[[1,2,3,11,11,11],[4,5,6],[7,8,9],[10,11,12,14]]
             socketio.emit('testLocation', {'data': '테스트입니다.', 'intent': intent_btn,'entity':entity_btn}, room=room)
 
+        elif slot.intent == "UnKnown":
+            socketio.emit('messageClient',{'data':msg},room=room)
+            socketio.emit('messageServer', {'data':answer},room=room)
+
 
         ##클라이언트에 메시지 보낼 때 클라이언트 메시지 먼저 전송 후 서버 메시지 전송
         #db 조회후 상품에 관련된 url 주소를 넘겨주면 된다.
