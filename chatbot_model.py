@@ -21,11 +21,11 @@ class ChatBot:
         slot_result = 0
 
         entity_list = [[0 for cols in range(5)] for rows in range(4)] #엔티티추출을위한 리스트
-        recoentity_list = [[0 for cols in range(6)] for rows in range(5)]
+        recoentity_list = [[0 for cols in range(7)] for rows in range(6)]
         line = msg
         for i in range(3, 0, -1): #w 라인은 엔티티가 대체된 메세지
             line, entity_list[i] = entity_extractor.get_entity(line, entity_list[i], i)
-        for i in range(4, 0, -1):
+        for i in range(5, 0, -1):
             line, recoentity_list[i] = entity_extractor.get_Recoentity(line, recoentity_list[i], i)
         line = entity_extractor.get_location(line) #지점안내를 위한 엔티티추출과 단어대체
         intent = self.intent_extraction(line)

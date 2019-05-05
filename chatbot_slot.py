@@ -33,7 +33,7 @@ class Slot:
     address = Address()
     #성별
     recoentity1 = ""
-    #나이
+    #종류
     recoentity2 = ""
     #직업
     recoentity3 = ""
@@ -47,6 +47,7 @@ class Slot:
     log = ""
     recointent = ""
     recolog = ""
+    gender = ""
 
     def clear(self):
         self.entity1 = ""
@@ -73,6 +74,7 @@ class Slot:
 
         self.recointent = ""
         self.recolog = ""
+        self.gender = ""
         return 0
 
     def print_slot(self):
