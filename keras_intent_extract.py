@@ -45,5 +45,3 @@ def evaluation(msg):
         return "고객 상담"
     elif intent == 3:
         return "상품 추천"
-
-print(evaluation('상품 추천'))

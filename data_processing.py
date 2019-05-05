@@ -6,7 +6,7 @@ import os
 from konlpy.tag import Kkma
 import random
 
-def save_data_csv():
+def __save_data_csv():
     word_table = {}
     save_X_data = []
     save_Y_data = []
@@ -44,7 +44,7 @@ def save_data_csv():
             json.dump(word_table, f, ensure_ascii=False)
 
 
-def add_and_save_test_csv():
+def __add_and_save_test_csv():
     word_table = {}
     with open('./word_table.txt', 'r') as js:
         text = js.read()

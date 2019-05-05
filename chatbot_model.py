@@ -5,6 +5,7 @@ import intent_office
 import intent_reco
 import keras_intent_extract
 import copy
+import refine_sentence
 
 slot = chatbot_slot.Slot()
     
@@ -12,9 +13,11 @@ slot = chatbot_slot.Slot()
 class ChatBot:
 
     def intent_extraction(self, msg):
+        msg = refine_sentence.refine_sentence(msg)
         return keras_intent_extract.evaluation(msg)
 
     def run(self, msg):
+        msg = refine_sentence.refine_sentence(msg)
         slot_result = 0
 
         entity_list = [[0 for cols in range(5)] for rows in range(4)] #엔티티추출을위한 리스트
@@ -25,7 +28,9 @@ class ChatBot:
         for i in range(4, 0, -1):
             line, recoentity_list[i] = entity_extractor.get_Recoentity(line, recoentity_list[i], i)
         line = entity_extractor.get_location(line) #지점안내를 위한 엔티티추출과 단어대체
-        intent = self.intent_extraction(line)                                                                                                                                                                    #엔티티로 대체된 문장으로 의도추출
+        intent = self.intent_extraction(line)
+        print(intent)
+        #엔티티로 대체된 문장으로 의도추출
 
         answer = ""
         #if slot.intent is "":
@@ -41,17 +46,7 @@ class ChatBot:
                 return self.run(msg)
 
         elif slot.intent == "지점 안내": #입력라인으로 뽑아낸 데이터가 지점안내인경우에
-            module = intent_office.SlotOperator(slot) #엔티티추출기클래스
-            address_list = module.find_address_keyword(msg) #시구로동을 뽑아서 배열로
-            find_address = module.slot_filling(address_list)
-            if find_address:#슬롯필링후 찾으면
-                answer = find_address + " 새마을금고"
-            else: #못찾으면 디비를 기준으로 메시지를 한번더 검사하고 그래도 없으면 답변으로 위치를 제대로 입력해주세요
-                find_address = module.find_address_by_db(msg)
-                if find_address:
-                    answer = find_address + " 새마을금고"
-                else:
-                    answer = '원하시는 지역명을 정확히 입력해주세요.^^ ex) 00구, 00동, 00로'
+            answer = intent_office.location_service_routine(msg, slot)
 
         elif slot.intent == "상품 추천":  # 입력라인으로 뽑아낸 데이터가 상품추천인경우에
             module = intent_reco.SlotOperator(slot, recoentity_list)
@@ -71,9 +66,9 @@ class ChatBot:
         # for i in range(1, 4):
         #     print("entity" + str(i) + ": ", slot.entity[i], end='')
 
-        #slot.print_slot()
+        slot.print_slot()
         store_slot = copy.deepcopy(slot)
-        if slot_result == 1 or not slot.address.empty():
+        if slot_result == 1 or slot.intent == "지점 안내": #비어있을때가아니라 지점안내를 거치고나면 지우도록바꾸자
             slot.clear()
         return answer, store_slot
 

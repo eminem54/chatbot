@@ -64,11 +64,14 @@ def server_faq_function(msg):
     for a,b in zip(question,answer):
         dataA.append(a)
         dataB.append(b)
-
-    socketio.emit('messageClient', {'data': msg}, room=room)
-    socketio.emit('faq_server', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.','slots': ['전체보기', '예적금', '대출', '개인인터넷뱅킹'],
-                                             'faq_db_question':dataA,'faq_db_answer':dataB},
-                              room=room)
+    if len(dataA) == 0:
+        socketio.emit('messageClient', {'data': msg}, room=room)
+        socketio.emit('messageServer', {'data':'검색된 데이터가 없습니다. 다시 입력해주세요.'},room=room)
+    else :
+        socketio.emit('messageClient', {'data': msg}, room=room)
+        socketio.emit('faq_server', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.',
+                                                 'faq_db_question':dataA,'faq_db_answer':dataB},
+                                  room=room)
 
 
 #고객으로부터 메시지를 받으면 처리 후 다시 고객에게 메시지 전달
@@ -80,43 +83,14 @@ def server_msg_function(msg):
 
     faq_check=msg[:9]
     print('문자열 확인 '+faq_check)
-    if faq_check=='자주 묻는 키워드':
-        if len(msg)!=9:
-            select_faq=msg[10:]
-            #여기서 db에 저장된 데이터들을 꺼내온다..
-
-
-            if select_faq=='처음화면':
-                socketio.emit('messageClient',{'data':select_faq},room=room)
-                socketio.emit('slot', {'data': '새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.',
-                                       'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천'],
-                                       }, room=room)
-
-            elif select_faq=='전체보기':
-                socketio.emit('messageClient',{'data':select_faq},room=room)        #클라이언트 메시지
-                socketio.emit('faq_server',{'data':'전체보기 FAQ 입니다. \n 찾고자 하는 키워드를 입력해주세요.','slots': ['전체보기', '예적금', '대출', '개인인터넷뱅킹'],'faq_db':['1','2','3','4','5','6','7','8']},room=room)    #디비에서 모든 질
-                #해당되는 질문 & 답을 전부 출력하면 된다.
-            elif select_faq=='예적금':
-                socketio.emit('messageClient', {'data': select_faq}, room=room)  # 클라이언트 메시지
-                socketio.emit('faq_server',{'data': '예적금 FAQ 입니다. \n 찾고자 하는 키워드를 입력해주세요. ','slots': ['전체보기', '예적금', '대출', '개인인터넷뱅킹'],'faq_db': ['1', '2', '3', '4', '5', '6', '7', '8']},room=room)  # 디비에서 모든 질
-            elif select_faq=='인터넷뱅킹':
-                socketio.emit('messageClient', {'data': select_faq}, room=room)  # 클라이언트 메시지
-                socketio.emit('faq_server', {'data': '인터넷뱅킹 FAQ 입니다. \n 찾고자 하는 키워드를 입력해주세요. ',
-                                             'slots': ['전체보기', '예적금', '대출', '개인인터넷뱅킹'],
-                                             'faq_db': ['1', '2', '3', '4', '5', '6', '7', '8']},
-                              room=room)  # 디비에서 모든 질
-            elif select_faq=='대출':
-                socketio.emit('messageClient', {'data': select_faq}, room=room)  # 클라이언트 메시지
-                socketio.emit('faq_server', {'data': '대출 FAQ 입니다. \n 찾고자 하는 키워드를 입력해주세요. ',
-                                             'slots': ['전체보기', '예적금', '대출', '개인인터넷뱅킹'],
-                                             'faq_db': ['1', '2', '3', '4', '5', '6', '7', '8']},
-                              room=room)  # 디비에서 모든 질
-
-        else:   #초기화면
-            socketio.emit('messageClient', {'data': msg}, room=room)
-            socketio.emit('faq_slot', {'data': '궁금한 키워드를 입력해주세요..', 'slots': ['전체보기', '예적금', '대출', '개인인터넷뱅킹']},
-                          room=room)
-
+    if msg == '메인화면':
+        socketio.emit('messageClient', {'data': '메인화면'}, room=room)
+        socketio.emit('slot', {'data': '새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.',
+                               'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천'],
+                               }, room=room)
+    elif msg == '자주 묻는 키워드':
+        socketio.emit('messageClient', {'data': msg}, room=room)
+        socketio.emit('faq_slot', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.'})
     ################## 모델 돌린다.
     else :
         answer, slot= chatbot.run(msg)
@@ -125,18 +99,24 @@ def server_msg_function(msg):
             socketio.emit('messageClient',{'data':msg},room=room)
             socketio.emit('slot',{'data':'아래 항목 중에서 선택해주세요.','slots':slot.button},room=room)
 
-        elif slot.intent == "지점 안내":#의도는 잘나왔지만 어드레스클래스가 비어있는경우는 아무것도주지않아야한다
+        elif slot.intent == "지점 안내":
             socketio.emit('messageClient',{'data':msg},room=room)
-            if slot.address.empty():
-                socketio.emit('messageServer', {'data': answer}, room=room)
+            if slot.address.answer_find:
+                socketio.emit('messageServerLocation', {'data': answer + " 새마을금고"}, room=room)
             else:
-                socketio.emit('messageServerLocation',{'data':answer},room=room)
+                socketio.emit('slot', {'data': '아래 항목 중에서 선택해주세요.', 'slots': slot.button}, room=room)
+
 
         elif slot.intent == "고객 상담":
             pass
 
+
         elif slot.intent == "상품 추천":
-            pass
+            intent_btn=[]
+            entity_btn=[]
+            intent_btn=['aaa','dd']
+            entity_btn=[[1,2,3,11,11,11],[4,5,6],[7,8,9],[10,11,12,14]]
+            socketio.emit('test', {'data': '테스트입니다.', 'intent': intent_btn,'entity':entity_btn}, room=room)
 
 
         ##클라이언트에 메시지 보낼 때 클라이언트 메시지 먼저 전송 후 서버 메시지 전송
