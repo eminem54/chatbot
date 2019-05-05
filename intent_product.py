@@ -72,7 +72,9 @@ class SlotOperator:
             return self.fill_entity(2)
 
         elif self.slot.log is "3":
+
             return self.fill_entity(3)
+
 
     def get_button_list(self, num):
         button_list = set()
@@ -104,4 +106,3 @@ class SlotOperator:
             self.slot.button = list(button_list)
             print(self.slot.button)
             return
-
