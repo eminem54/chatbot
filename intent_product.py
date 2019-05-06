@@ -26,7 +26,7 @@ class SlotOperator:
                         return 0
         return 1
 
-    def get_answer(self):       # 답변 출력, 0: 완벽 답변, 슬롯 클리어 / 1: 불완전 답변, 슬롯 보존
+    def get_answer(self):       # 답변 출력, 1: 완벽 답변, 슬롯 클리어 / 0: 불완전 답변, 슬롯 보존
         connection = pymongo.MongoClient("localhost", 27017)
         db = connection.testDB
         co = db.Data
