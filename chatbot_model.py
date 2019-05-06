@@ -65,10 +65,6 @@ class ChatBot:
                 slot.recoClear()
                 return self.run(msg)
 
-        elif slot.intent == "고객 상담":
-            slot.clear()
-            answer = "고객 상담입니다"
-
         elif slot.intent == "UnKnown":
             answer = gm.make_generative_answer(msg)
 

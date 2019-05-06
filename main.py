@@ -106,11 +106,6 @@ def server_msg_function(msg):
             else:
                 socketio.emit('slot', {'data': '아래 항목 중에서 선택해주세요.', 'slots': slot.button}, room=room)
 
-
-        elif slot.intent == "고객 상담":
-            pass
-
-
         elif slot.intent == "상품 추천":
             data_btn=[]
             data_list=[]

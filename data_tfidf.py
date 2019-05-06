@@ -88,7 +88,6 @@ def is_unknown(msg, df):
 
 TFIDF_MATRIX = load_tfidf_matrix()
 
-
 # make_tfidf_matrix()
 # print(TFIDF_MATRIX)
 # print(get_tfidf_result("대출", TFIDF_MATRIX))

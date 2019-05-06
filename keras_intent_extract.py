@@ -42,6 +42,6 @@ def evaluation(msg):
     elif intent == 1:
         return "지점 안내"
     elif intent == 2:
-        return "고객 상담"
-    elif intent == 3:
         return "상품 추천"
+
+#evaluation("추천상품클래스")
