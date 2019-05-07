@@ -46,7 +46,6 @@ decoder_model.load_weights("./Deeplearning_Model/decoder_model.h5")
 print("Loaded decoder_model from disk")
 
 
-
 def decode_sequence(input_seq):
     # Encode the input as state vectors.
     states_value = encoder_model.predict(input_seq, steps=2)

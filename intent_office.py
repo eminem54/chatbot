@@ -13,7 +13,7 @@ def location_service_routine(msg, slot):
     else:  # 못찾으면
         answer = module.not_found_address_entity(msg)
 
-        if answer != None:  # 디비기준으로검사해서 찾으면
+        if answer is not None:  # 디비기준으로검사해서 찾으면
             slot.address.answer_find = True
         else:  # 못찾으면
             if len(address_list) > 0:  # 지정한 키워드 하나라도 찾으면 찾은것
@@ -26,6 +26,7 @@ def location_service_routine(msg, slot):
 
     return answer
 
+
 class SlotOperator:
     def __init__(self, slot):
         self.slot = slot
@@ -37,7 +38,7 @@ class SlotOperator:
             co = db[it].find({})
             for address in co:
                 for name in address.keys():
-                    if name=='_id':
+                    if name == '_id':
                         continue
                     else:
                         if msg.find(name) == 0:
@@ -62,13 +63,12 @@ class SlotOperator:
     def find_address_keyword(self, msg):
         return re.findall('[^ \t\n\r\f0-9]{1,7}[동,로,구,역,병원,대,공원]', msg)
 
-
     def not_found_address_entity(self, msg):
         find_address = self.find_address_by_db(msg)
         answer = ""
         if find_address: # 디비를 기준으로 메시지를 한번더 검사 성공시
             return find_address
-        else: #없으면 return None
+        else:  # 없으면 return None
             return None
 
 

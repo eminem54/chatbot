@@ -23,19 +23,19 @@ class Address:
             self.Si = value
 
 class Slot:
-    #상품분류0
+    # 상품분류0
     entity1 = ""
-    #상품명1
+    # 상품명1
     entity2 = ""
-    #상세설명\2
+    # 상세설명\2
     entity3 = ""
-    #주소저장클래스3
+    # 주소저장클래스3
     address = Address()
-    #성별
+    # 성별
     recoentity1 = ""
-    #종류
+    # 종류
     recoentity2 = ""
-    #직업
+    # 직업
     recoentity3 = ""
 
     recoentity4 = ""
@@ -78,10 +78,7 @@ class Slot:
         return 0
 
     def print_slot(self):
-
         print('상품분류: {self.entity[1]} 상품명: {self.entity[2]} 상세설명: {self.entity[3]} 시: {self.address.Si} '
               '구: {self.address.Gu} 로: {self.address.Ro} 동: {self.address.Dong} 성별: {self.recoentity[1] } 나이: {self.recoentity[2]}'
               'recolog: {self.recolog} 추천의도: {self.recointent} 설명: {self.recoentity[4]} log: {self.log} 의도: {self.intent} 직업: {self.recoentity[3]}')
 
-    def clone_slot(self, source):
-        pass
