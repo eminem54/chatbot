@@ -97,13 +97,14 @@ class SlotOperator:
     def get_data_button(self,num):
         if num == 1:
             self.slot.button = ['남자', '여자']
-            self.slot.button_list = ['남자추천성별이름봇', '여자추천성별이름봇']
+            self.slot.button_list = [['남자', '남자추천성별이름봇'], ['여자', '여자추천성별이름봇']]
             return
         if num == 2:
             self.slot.button = ['예금', '대출']
-            self.slot.button_list = ['예추천이름봇', '대추천이름봇']
+            self.slot.button_list = [['예금', '예추천이름봇'], ['대출', '대추천이름봇']]
             return
         if num == 3:
             self.slot.button = ['대학생', '직장인', '그외',]
-            self.slot.button_list = ['대직업이름봇', '직직업이름봇','그외직업이름봇']
+            self.slot.button_list = [['대학생', '직장인', '그외',], ['대직업이름봇', '직직업이름봇','그외직업이름봇']]
+            self.slot.button_list = [['대학생', '대직업이름봇'], ['직장인', '직직업이름봇'], ['그외', '그외직업이름봇']]
             return

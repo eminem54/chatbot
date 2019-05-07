@@ -101,6 +101,7 @@ def server_msg_function(msg):
                 socketio.emit('slot', {'data': '아래 항목 중에서 선택해주세요.', 'slots': slot.button}, room=room)
 
         elif slot.intent == "상품 추천":
+             print(slot.button, slot.button_list)
              socketio.emit('messageClient', {'data': msg}, room=room)
              socketio.emit('product_recommend',{'data':answer,'data_btn': slot.button, 'data_list': slot.button_list}, room=room)
 
