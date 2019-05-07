@@ -1,5 +1,5 @@
 import pymongo
-import intent_office
+
 
 def get_entity(line, entity_list, num):
     connection = pymongo.MongoClient("localhost", 27017)
@@ -12,6 +12,19 @@ def get_entity(line, entity_list, num):
             line = line.replace(entity, entity_class[0])
             entity_list.append(entity)
     return line, entity_list
+
+
+def get_Recoentity(line, recoentity_list, num):
+    connection = pymongo.MongoClient("localhost", 27017)
+    db = connection.testDB
+    collection_name = "Reco" + str(num)
+    co = db[collection_name]
+    for recoentity in co.distinct("RecoEntityNm"):
+        if recoentity in line:
+            recoentity_class = co.distinct("RecoClass", {"RecoEntityNm": recoentity})
+            line = line.replace(recoentity, recoentity_class[0])
+            recoentity_list.append(recoentity)
+    return line, recoentity_list
 
 
 def get_location(line):
@@ -29,7 +42,4 @@ def get_location(line):
                         answer = answer.replace(name, '지점')
 
     return answer
-
-
-#print(get_location("광진구 금고 수유동 위치"))
 

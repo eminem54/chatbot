@@ -1,9 +1,8 @@
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pandas as pd
 import data_conversion as dc
+import os
 
-
-TFIDF_MATRIX = pd.DataFrame()
 mecab = dc.Mecab(dicpath="C:\\mecab\\mecab-ko-dic")
 
 
@@ -51,8 +50,15 @@ def make_tfidf_matrix():
 
 
 def load_tfidf_matrix():    # 경로 안의 csv 파일을 읽어 DataFrame 생성 후 반환
-    df = pd.read_csv('./data/tfidfMatrix.csv')
-    return df
+    df = pd.DataFrame()
+    if os.path.exists('./data/tfidfMatrix.csv'):
+        df = pd.read_csv('./data/tfidfMatrix.csv')
+        return df
+    else:
+        make_tfidf_matrix()
+        df = pd.read_csv('./data/tfidfMatrix.csv')
+        return df
+
 
 
 def get_tfidf_result(input_msg, df):    # 문장과 dataframe 을 입력 받아 문장 형태소들의 tf-idf 값을 조회 후 그 값을 반환
@@ -72,8 +78,16 @@ def get_tfidf_result(input_msg, df):    # 문장과 dataframe 을 입력 받아 
     return tfidf_result
 
 
+def is_unknown(msg, df):
+    tfidf_list = get_tfidf_result(msg, df)
+    if all([c < 0.18 for c in tfidf_list]): # 0.2 는 실험적인 값
+        return True
+    else:
+        return False
 
-make_tfidf_matrix()
+
 TFIDF_MATRIX = load_tfidf_matrix()
-print(TFIDF_MATRIX)
-print(get_tfidf_result("예금 상품 조회", TFIDF_MATRIX))
+
+# make_tfidf_matrix()
+# print(TFIDF_MATRIX)
+# print(get_tfidf_result("대출", TFIDF_MATRIX))

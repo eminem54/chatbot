@@ -8,43 +8,42 @@ num_encoder_tokens = 255
 num_decoder_tokens = 303
 # dictionary load
 input_token_index = {}
-if os.path.exists('input_token_index.txt'):
-    with open('input_token_index.txt', 'r') as fd:
+if os.path.exists('./Deeplearning_Model/input_token_index.txt'):
+    with open('./Deeplearning_Model/input_token_index.txt', 'r') as fd:
         input_token_index = eval(fd.read())
 
 target_token_index = {}
-if os.path.exists('target_token_index.txt'):
-    with open('target_token_index.txt', 'r') as fd:
+if os.path.exists('./Deeplearning_Model/target_token_index.txt'):
+    with open('./Deeplearning_Model/target_token_index.txt', 'r') as fd:
         target_token_index = eval(fd.read())
 
 reverse_input_char_index = {}
-if os.path.exists('reverse_input_char_index.txt'):
-    with open('reverse_input_char_index.txt', 'r') as fd:
+if os.path.exists('./Deeplearning_Model/reverse_input_char_index.txt'):
+    with open('./Deeplearning_Model/reverse_input_char_index.txt', 'r') as fd:
         reverse_input_char_index = eval(fd.read())
 
 reverse_target_char_index = {}
-if os.path.exists('reverse_target_char_index.txt'):
-    with open('reverse_target_char_index.txt', 'r') as fd:
+if os.path.exists('./Deeplearning_Model/reverse_target_char_index.txt'):
+    with open('./Deeplearning_Model/reverse_target_char_index.txt', 'r') as fd:
         reverse_target_char_index = eval(fd.read())
 
 
 #model load
-    json_file = open("encoder_model.json", "r")
-    loaded_model_json = json_file.read()
-    json_file.close()
-    encoder_model = model_from_json(loaded_model_json)
+json_file = open("./Deeplearning_Model/encoder_model.json", "r")
+loaded_model_json = json_file.read()
+json_file.close()
+encoder_model = model_from_json(loaded_model_json)
 
-    encoder_model.load_weights("encoder_model.h5")
-    print("Loaded encoder_model from disk")
+encoder_model.load_weights("./Deeplearning_Model/encoder_model.h5")
+print("Loaded encoder_model from disk")
 
-    json_file = open("decoder_model.json", "r")
-    loaded_model_json = json_file.read()
-    json_file.close()
-    decoder_model = model_from_json(loaded_model_json)
+json_file = open("./Deeplearning_Model/decoder_model.json", "r")
+loaded_model_json = json_file.read()
+json_file.close()
+decoder_model = model_from_json(loaded_model_json)
 
-    decoder_model.load_weights("decoder_model.h5")
-    print("Loaded decoder_model from disk")
-
+decoder_model.load_weights("./Deeplearning_Model/decoder_model.h5")
+print("Loaded decoder_model from disk")
 
 
 def decode_sequence(input_seq):
@@ -65,7 +64,6 @@ def decode_sequence(input_seq):
 
         # Sample a token
         sampled_token_index = np.argmax(output_tokens[0, -1, :])
-        print(sampled_token_index, "추출된값")
         sampled_char = reverse_target_char_index[str(sampled_token_index)]
         decoded_sentence += sampled_char + " "
 
@@ -84,20 +82,20 @@ def decode_sequence(input_seq):
     return decoded_sentence
 
 
-
 def convert_to_vector(text):
     encoder_input_data = np.zeros((1, max_encoder_seq_length, num_encoder_tokens), dtype='float32')
     for t, voca in enumerate(text.split(' ')):
         if voca in input_token_index.keys():
             encoder_input_data[0, t, input_token_index[voca]] = 1.
-            print(input_token_index[voca], '데이터만들기')
     return encoder_input_data
 
-question = " "
-while question!="":
-    question = input('메시지입력 : ')
-    input_seq = convert_to_vector(question)
+
+def make_generative_answer(msg):
+    input_seq = convert_to_vector(msg)
     decoded_sentence = decode_sequence(input_seq)
-    print('-')
-    print('Input sentence:', question)
-    print('Decoded sentence:', decoded_sentence)
+    return decoded_sentence
+
+
+def test_gm():
+    question = input('메시지입력 : ')
+    print(make_generative_answer(question))

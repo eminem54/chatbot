@@ -231,7 +231,11 @@ function placesSearchCB (data, status, pagination) {
             var text=$(this).attr('value');
             if(text!=null){
                     static_faq=false;
-                    socket.emit("serverMsg",text);
+                    if(text=="상품 추천"){
+                        socket.emit("serverMsg","추천");
+                    }else{
+                        socket.emit("serverMsg",text);
+                    }
             }
         });
     });
@@ -311,7 +315,7 @@ function placesSearchCB (data, status, pagination) {
                     static_faq=false;
                     for(var i=0;i<msg.data_list.length;i++){
                         if(text==msg.data_list[i][0]){
-                            alert(msg.data_list[i][1]);
+                            socket.emit("serverMsg",msg.data_list[i][1]);
                             break;
                         }
                     }

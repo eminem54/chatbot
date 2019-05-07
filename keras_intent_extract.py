@@ -1,10 +1,6 @@
 from keras.models import model_from_json
 from keras.preprocessing import sequence
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import LSTM
 import numpy as np
-from konlpy.tag import Kkma
 
 
 def evaluation(msg):
@@ -42,8 +38,5 @@ def evaluation(msg):
     elif intent == 1:
         return "지점 안내"
     elif intent == 2:
-        return "고객 상담"
-    elif intent == 3:
         return "상품 추천"
 
-#print(evaluation(''))
