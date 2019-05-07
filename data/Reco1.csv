@@ -1,3 +1,2 @@
-RecoEntityNm,여자,RecoClass,성별
-RecoEntityNm,남자,RecoClass,성별
-RecoEntityNm,중성,RecoClass,성별
+RecoEntityNm,여자추천성별이름봇,RecoClass,추천성별클래스
+RecoEntityNm,남자추천성별이름봇,RecoClass,추천성별클래스

@@ -19,6 +19,7 @@ db.drop_collection("Reco2")
 db.drop_collection("Reco3")
 db.drop_collection("Reco4")
 db.drop_collection("Recodata")
+db.drop_collection("ProductRecommend")
 
 co = db.Slot1
 f = open('slot1.csv', 'r', encoding='utf-8-sig')
@@ -176,6 +177,17 @@ for line in rdr:
 f.close()
 
 co = db.Recodata
+f = open('Recodata.csv', 'r', encoding='utf-8-sig')
+rdr = csv.reader(f)
+for line in rdr:
+    data = {}
+    for num in range(len(line)):
+        if num % 2 == 0:
+            data[line[num]] = line[num+1]
+    co.insert(data)
+f.close()
+
+co = db.ProductRecommend
 f = open('Recodata.csv', 'r', encoding='utf-8-sig')
 rdr = csv.reader(f)
 for line in rdr:
