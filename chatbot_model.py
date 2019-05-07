@@ -39,7 +39,8 @@ class ChatBot:
         print(intent)
 
         answer = ""
-        slot.intent = intent
+        if slot.intent == "":
+            slot.intent = intent
 
         if slot.intent == "상품 소개":
             module = intent_product.SlotOperator(slot, entity_list)
@@ -72,6 +73,6 @@ class ChatBot:
         slot.print_slot()
         store_slot = copy.deepcopy(slot)
         slot.button = []
-        if slot_result == 1 or slot.intent == "지점 안내" or slot.intent == "UnKnown":
+        if slot_result == 1 or slot.intent == "지점 안내" or slot.intent == "UnKnown" or slot.intent == "상품 추천":
             slot.clear()
         return answer, store_slot
