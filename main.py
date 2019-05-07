@@ -92,6 +92,14 @@ def server_msg_function(msg):
         socketio.emit('messageClient', {'data': msg}, room=room)
         socketio.emit('faq_slot', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.'})
     ################## 모델 돌린다.
+
+    elif faq_check == "테스트":
+        intent_btn = []
+        entity_btn = []
+        intent_btn = ['aaa', 'dd']
+        entity_btn = [[1, 2, 3, 11, 11, 11], [4, 5, 6], [7, 8, 9], [10, 11, 12, 14]]
+        socketio.emit('testLocation', {'data': '테스트입니다.', 'intent': intent_btn, 'entity': entity_btn}, room=room)
+
     else :
         answer, slot= chatbot.run(msg)
 
@@ -119,12 +127,6 @@ def server_msg_function(msg):
             socketio.emit('product_recommend',{'data':'해당되는 버튼을 클릭하세요.','data_btn':data_btn,'data_list':data_list}, room=room)
 
 
-        elif slot.intent == "테스트":
-            intent_btn=[]
-            entity_btn=[]
-            intent_btn=['aaa','dd']
-            entity_btn=[[1,2,3,11,11,11],[4,5,6],[7,8,9],[10,11,12,14]]
-            socketio.emit('testLocation', {'data': '테스트입니다.', 'intent': intent_btn,'entity':entity_btn}, room=room)
 
 
         ##클라이언트에 메시지 보낼 때 클라이언트 메시지 먼저 전송 후 서버 메시지 전송
