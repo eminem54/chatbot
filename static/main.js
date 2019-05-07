@@ -212,7 +212,7 @@ function placesSearchCB (data, status, pagination) {
     });
 
     socket.on('slot',function(msg){
-        $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data);
+        $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data);
             for(var i=0;i<msg.slots.length;i+=5){
                 var div_wrap=document.createElement('div');
                 div_wrap.setAttribute('id','div_wrap');
@@ -225,7 +225,7 @@ function placesSearchCB (data, status, pagination) {
                  }
                 $(".chat").append(div_wrap);
             }
-            $(".chat").append("</p></div></li>");
+            $(".chat").append("</pre></div></li>");
             $(".panel-body").scrollTop($(".chat").height());
             $("input").click(function(){
             var text=$(this).attr('value');
