@@ -18,7 +18,7 @@ print(X_train[0])
 embedding_vector_length = 32
 
 model = Sequential()
-model.add(Embedding(300, embedding_vector_length, input_length=max_review_length))
+model.add(Embedding(400, embedding_vector_length, input_length=max_review_length))
 model.add(LSTM(64, input_dim=64, return_sequences=True))
 model.add(LSTM(32, return_sequences=True))
 model.add(LSTM(16, return_sequences=False))

@@ -15,16 +15,16 @@ class SlotOperator:
             for recoentity in self.recoentity_list[num]:
                 temp_class = co.distinct("RecoClass", {"RecoEntityNm": recoentity})
                 if temp_class != []:
-                    if temp_class[0] == "성별" and num == 1:
+                    if temp_class[0] == "추천성별클래스" and num == 1:
                         self.slot.recoentity[num] = recoentity
                         return 0
-                    elif temp_class[0] == "나이" and num == 2:
+                    elif temp_class[0] == "추천종류클래스" and num == 2:
                         self.slot.recoentity[num] = recoentity
                         return 0
-                    elif temp_class[0] == "좋은" and num == 3:
+                    elif temp_class[0] == "추천직업클래스" and num == 3:
                         self.slot.recoentity[num] = recoentity
                         return 0
-                    elif temp_class[0] == "추천상품" and num == 4:
+                    elif temp_class[0] == "추천상품클래스" and num == 4:
                         self.slot.recoentity[num] = recoentity
                         return 0
 
@@ -34,39 +34,43 @@ class SlotOperator:
         connection = pymongo.MongoClient("localhost", 27017)
         db = connection.testDB
         co = db.Recodata
+        conv = db.ProductRecommend
         if self.slot.recoentity[3] is not "" and self.slot.recoentity[4] is not "":
-            answer = co.distinct(self.slot.recoentity[4], {"직업이름": self.slot.recoentity[3]})
-            if answer == []:
+           #congender = conv.distinct(self.slot.recoentity[1],{"성별":self.slot.recoentity[1]})
+           answer = co.distinct(self.slot.recoentity[4], {"직업": self.slot.recoentity[3],"성별":self.slot.recoentity[1],
+                                                           "상품종류": self.slot.recoentity[2]})
+           if answer == []:
                 return "해당되는 정보가 없습니다", 1
-            else:
+           else:
                 return answer[0], 1
 
-        elif self.slot.entity[3] is not "" and self.slot.entity[4] is "":  # 2: 상품명 3:상세설명은 없는경우
-            answer = co.distinct("상품이름", {"상품종류": self.slot.entity[3]})[0]
+        elif self.slot.recoentity[3] is not "" and self.slot.recoentity[4] is "":
+           # congender = conv.distinct("변환", {"성별": self.slot.recoentity1})
+            gender = self.slot.recoentity[1]
+            answer = co.distinct("상품설명", {"직업": self.slot.recoentity[3],"성별": gender,"상품종류": self.slot.recoentity[2]})[0]
             return answer, 1
 
         elif self.slot.recoentity[1] is "" and self.slot.recoentity[2] is "":
             self.slot.recolog = "1"
             answer = "성별을 입력해 주세요 (여자/남자)"
+            self.get_data_list(1)
             return answer, 0
 
         elif self.slot.recoentity[1] is not "" and self.slot.recoentity[2] is "":
             self.slot.recolog = "2"
-            answer = "20세 이상이신가요? (이상/이하)"
+            answer = "예금/대출"
+            self.get_data_list(2)
             return answer, 0
 
-        elif self.slot.recoentity[2] is not "" and self.slot.recoentity[3] is "":
+        elif self.slot.recoentity[2] is not "" and self.slot.recoentity[3] is "" and self.slot.recoentity[1]is not "":
             self.slot.recolog = "3"
             answer = "무슨 일을 하시나요? (대학생/직장인/그외)"
+            self.get_data_list(3)
             return answer, 0
 
-            #elif self.slot.recoentity[3] is not "" and self.slot.recoentity[4] is "":
-            #self.slot.recolog = "4"
-            #answer = "제발살려줘"
-            #return answer, 0
-
-        elif self.slot.entity[3] is not "" and self.slot.entity[4] is "":
-            answer = co.distinct("상품이름", {"상품종류": self.slot.recoentity3})[0]
+        elif self.slot.recoentity[3] is not "" and self.slot.recoentity[4] is "":
+            gender = self.slot.recoentity1
+            answer = co.distinct("상품설명", {"직업": self.slot.recoentity3,"성별": gender,"상품종류": self.slot.recoentity2})[0]
             return answer, 1
 
     def slot_filling(self):
@@ -89,4 +93,13 @@ class SlotOperator:
         elif self.slot.recolog is "4":
             return self.fill_entity(4)
 
-
+    def get_data_list(self,num):
+        if num == 1:
+            data_list = [['남자', '여자'], ['남자추천성별이름봇', '여자추천성별이름봇']]
+            return data_list
+        if num == 2:
+            data_list = [['예금', '대출'], ['예추천이름봇', '대추천이름봇']]
+            return data_list
+        if num == 3:
+            data_list = [['대학생', '직장인', '그외'], ['대직업이름봇', '직직업이름봇', '그외직업이름봇']]
+            return data_list
