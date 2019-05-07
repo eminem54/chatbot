@@ -324,7 +324,7 @@ function placesSearchCB (data, status, pagination) {
     });
 
     //컴퍼젼트 테스트
-    socket.on('test',function(msg){
+    socket.on('convergent',function(msg){
            var left_clearfix=document.createElement('li');
            left_clearfix.setAttribute('class','leftclearfix');
 
@@ -368,6 +368,7 @@ function placesSearchCB (data, status, pagination) {
 
            var div_card=document.createElement('div');
            div_card.setAttribute('class','card');
+           div_card.setAttribute('style','border:1px solid black');
 
            var div_header=document.createElement('div');
            div_header.setAttribute('class','card-header');
@@ -401,7 +402,6 @@ function placesSearchCB (data, status, pagination) {
            div_intent_group.append(div_button);
            div_body.append(div_intent_group);
            div_card.append(div_body);
-           div_frame.append(div_card);
 
             var div_entity_frame=document.createElement('div');
 
@@ -429,9 +429,10 @@ function placesSearchCB (data, status, pagination) {
             }
            div_body.append(div_entity_frame);
            div_card.append(div_body);
-           div_frame.append(div_card);
+
 
            var div_add_clear_btn=document.createElement('div');
+           div_add_clear_btn.setAttribute('style','text-align:right; margin-right:5px; margin-bottom:5px');
            //추가 버튼
            var div_inner_addBtn=document.createElement('input');
            div_inner_addBtn.setAttribute('type','button');
@@ -449,7 +450,8 @@ function placesSearchCB (data, status, pagination) {
            div_inner_clearBtn.setAttribute('style','background-color:gray');
            div_add_clear_btn.append(div_inner_clearBtn);
 
-           div_frame.append(div_add_clear_btn);
+           div_card.append(div_add_clear_btn);
+           div_frame.append(div_card);
 
             pp.append(div_frame);
 
