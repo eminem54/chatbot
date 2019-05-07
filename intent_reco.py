@@ -40,7 +40,8 @@ class SlotOperator:
            answer = co.distinct(self.slot.recoentity[4], {"직업": self.slot.recoentity[3],"성별":self.slot.recoentity[1],
                                                            "상품종류": self.slot.recoentity[2]})
            if answer == []:
-                return "해당되는 정보가 없습니다", 1
+                self.get_data_button(3)
+                return "해당되는 정보가 없습니다", 0
            else:
                 return answer[0], 1
 
@@ -53,19 +54,19 @@ class SlotOperator:
         elif self.slot.recoentity[1] is "" and self.slot.recoentity[2] is "":
             self.slot.recolog = "1"
             answer = "성별을 입력해 주세요 (여자/남자)"
-            self.get_data_list(1)
+            self.get_data_button(1)
             return answer, 0
 
         elif self.slot.recoentity[1] is not "" and self.slot.recoentity[2] is "":
             self.slot.recolog = "2"
             answer = "예금/대출"
-            self.get_data_list(2)
+            self.get_data_button(2)
             return answer, 0
 
         elif self.slot.recoentity[2] is not "" and self.slot.recoentity[3] is "" and self.slot.recoentity[1]is not "":
             self.slot.recolog = "3"
             answer = "무슨 일을 하시나요? (대학생/직장인/그외)"
-            self.get_data_list(3)
+            self.get_data_button(3)
             return answer, 0
 
         elif self.slot.recoentity[3] is not "" and self.slot.recoentity[4] is "":
@@ -93,13 +94,16 @@ class SlotOperator:
         elif self.slot.recolog is "4":
             return self.fill_entity(4)
 
-    def get_data_list(self,num):
+    def get_data_button(self,num):
         if num == 1:
-            data_list = [['남자', '여자'], ['남자추천성별이름봇', '여자추천성별이름봇']]
-            return data_list
+            self.slot.button = ['남자', '여자']
+            self.slot.button_list = ['남자추천성별이름봇', '여자추천성별이름봇']
+            return
         if num == 2:
-            data_list = [['예금', '대출'], ['예추천이름봇', '대추천이름봇']]
-            return data_list
+            self.slot.button = ['예금', '대출']
+            self.slot.button_list = ['예추천이름봇', '대추천이름봇']
+            return
         if num == 3:
-            data_list = [['대학생', '직장인', '그외'], ['대직업이름봇', '직직업이름봇', '그외직업이름봇']]
-            return data_list
+            self.slot.button = ['대학생', '직장인', '그외',]
+            self.slot.button_list = ['대직업이름봇', '직직업이름봇','그외직업이름봇']
+            return

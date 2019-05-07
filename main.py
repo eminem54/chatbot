@@ -101,13 +101,8 @@ def server_msg_function(msg):
                 socketio.emit('slot', {'data': '아래 항목 중에서 선택해주세요.', 'slots': slot.button}, room=room)
 
         elif slot.intent == "상품 추천":
-             data_btn=[]
-             data_list=[]
-             data_btn=['남자','여자']
-             data_list=[['남자','남자추천성별이름봇'],['여자','여자추천성별이름봇'],['대학생','대직업이름봇'],['직장인','직직업이름봇'],['그외','그외직업이름봇'],
-                        ['대출','대추천이름봇'],['예금','예추천이름봇']]
              socketio.emit('messageClient', {'data': msg}, room=room)
-             socketio.emit('product_recommend',{'data':answer,'data_btn':data_btn,'data_list':data_list}, room=room)
+             socketio.emit('product_recommend',{'data':answer,'data_btn': slot.button, 'data_list': slot.button_list}, room=room)
 
 
         elif slot.intent == "UnKnown":

@@ -40,6 +40,7 @@ class Slot:
 
     recoentity4 = ""
     button = []
+    button_list = []
 
     entity = ["" for _ in range(4)]
     recoentity = ["" for _ in range(5)]
@@ -72,6 +73,7 @@ class Slot:
         for j in range(5):
             self.recoentity[j] = ""
 
+        self.button_list = []
         self.recointent = ""
         self.recolog = ""
         self.gender = ""
