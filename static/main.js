@@ -48,6 +48,7 @@ $('.bxslider').bxSlider();
         input_text.setAttribute('value',msg.data);
         var keyword_value=Math.random();
         input_text.setAttribute('id',keyword_value);
+        input_text.setAttribute('style','width:70%');
         var input_btn=document.createElement('button');
         input_btn.setAttribute('type','submit');
         input_btn.append('검색하기');
@@ -324,6 +325,7 @@ $('.bxslider').bxSlider();
     /////////////////////// 버튼 생성  /////////////////////////////
     socket.on('slot',function(msg){
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data);
+            var div_frame=document.createElement('div');
             for(var i=0;i<msg.slots.length;i+=5){
                 var div_wrap=document.createElement('div');
                 div_wrap.setAttribute('id','div_wrap');
@@ -334,8 +336,9 @@ $('.bxslider').bxSlider();
                     btn.setAttribute('value',msg.slots[j]);
                     div_wrap.append(btn);
                  }
-                $(".chat").append(div_wrap);
+                 div_frame.appendChild(div_wrap);
             }
+            $(".chat").append(div_frame);
             $(".chat").append("</pre></div></li>");
             $(".panel-body").scrollTop($(".chat").height());
             $("input").click(function(){

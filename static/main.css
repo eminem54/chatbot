@@ -125,17 +125,19 @@ body {
 }
 
 input{
-  background:rgb(45, 139, 233);
+  background:rgb(66, 130, 195);
   color:#fff;
   border:none;
   position:relative;
-  height:20px;
+  height:24px;
+  width:17%;
   font-size:1.0em;
-  padding:0 0.5em;
+  padding:1 1.5em;
   cursor:pointer;
   transition:800ms ease all;
   outline:none;
   margin-left: 10px;
+  margin-bottom: 7px;
 }
 input:hover{
   background:#fff;
