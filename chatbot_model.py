@@ -65,11 +65,6 @@ class ChatBot:
         elif slot.intent == "UnKnown":
             answer = gm.make_generative_answer(msg)
 
-        # print("의도: ", slot.intent, "log: ", slot.log, "대답: ", answer, "type(answer): ", type(answer))
-        # for i in range(1, 4):
-        #     print("entity" + str(i) + ": ", slot.entity[i], end='')
-
-        slot.print_slot()
         store_slot = copy.deepcopy(slot)
         slot.button = []
         if slot_result == 1 or slot.intent == "지점 안내" or slot.intent == "UnKnown" or slot.intent == "상품 추천":
