@@ -8,7 +8,7 @@ from Deeplearning_Model import data_processing
 from keras import optimizers
 
 np.random.seed(7)
-X_train, y_train, X_test, y_test = data_processing.get_train_data('kkk.train')
+X_train, y_train, X_test, y_test = data_processing.get_train_data('../data/kkk.train')
 
 max_review_length = 20
 X_train = sequence.pad_sequences(X_train, maxlen=max_review_length)
