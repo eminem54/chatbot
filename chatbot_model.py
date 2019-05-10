@@ -7,8 +7,7 @@ import keras_intent_extract
 import copy
 import refine_sentence
 import data_tfidf
-from Deeplearning_Model import generative_model_predict as gm
-
+import generative_model_predict as gm
 
 slot = chatbot_slot.Slot()
     
