@@ -31,17 +31,23 @@ $('.bxslider').bxSlider();
         mapMake.setAttribute('style',"width:100%;height:100%;position:relative;overflow:hidden;");
         map_wrap.append(mapMake);
 
+
+
         var menu_wrap=document.createElement('div');
         menu_wrap.setAttribute('id','menu_wrap');
-        menu_wrap.setAttribute('class','bh_white');
+        menu_wrap.setAttribute('class','bg_white');
         var option=document.createElement('div');
         option.setAttribute('class','option');
         var div_btn_text=document.createElement('div');
         div_btn_text.setAttribute('id','text_btn');
         var input_text=document.createElement('input');
         input_text.setAttribute('type','text');
+        //테스트
+        input_text.addEventListener("keypress",keyevent,false);
+        //
         input_text.setAttribute('value',msg.data);
-        input_text.setAttribute('id','keyword');
+        var keyword_value=Math.random();
+        input_text.setAttribute('id',keyword_value);
         var input_btn=document.createElement('button');
         input_btn.setAttribute('type','submit');
         input_btn.append('검색하기');
@@ -54,11 +60,14 @@ $('.bxslider').bxSlider();
         menu_wrap.append(hr);
 
         var placeList=document.createElement('ul');
-        placeList.setAttribute('id','placeList');
+        var place_random=Math.random();
+        placeList.setAttribute('id',place_random);
         menu_wrap.append(placeList);
 
         var pagination=document.createElement('div');
-        pagination.setAttribute('id','pagination');
+        var pagination_random=Math.random();
+        pagination.setAttribute('id',pagination_random);
+        pagination.setAttribute('style','margin:10px auto;text-align: center');
         menu_wrap.append(pagination);
 
         map_wrap.append(menu_wrap);
@@ -68,12 +77,16 @@ $('.bxslider').bxSlider();
         $("div").on("click", "button", function(){
             searchPlaces();
         });
-        $("#keyword").keypress(function (e){
-            if(e.keyCode=='13'){
+
+        $(".panel-body").scrollTop($(".chat").height());
+        //이벤트 테스트
+        function keyevent(){
+            if(event.keyCode=='13'){
                 searchPlaces();
             }
-        });
-        $(".panel-body").scrollTop($(".chat").height());
+        }
+
+
   // 마커를 담을 배열입니다
 var markers = [];
 
@@ -99,7 +112,7 @@ searchPlaces();
 // 키워드 검색을 요청하는 함수입니다
 function searchPlaces() {
 
-    var keyword = document.getElementById('keyword').value;
+    var keyword = document.getElementById(keyword_value).value;
 
     if (!keyword.replace(/^\s+|\s+$/g, '')) {
         alert('키워드를 입력해주세요!');
@@ -137,7 +150,7 @@ function placesSearchCB(data, status, pagination) {
 // 검색 결과 목록과 마커를 표출하는 함수입니다
 function displayPlaces(places) {
 
-    var listEl = document.getElementById('placeList'),
+    var listEl = document.getElementById(place_random),
     menuEl = document.getElementById('menu_wrap'),
     fragment = document.createDocumentFragment(),
     bounds = new daum.maps.LatLngBounds(),
@@ -247,7 +260,7 @@ function removeMarker() {
 
 // 검색결과 목록 하단에 페이지번호를 표시는 함수입니다
 function displayPagination(pagination) {
-    var paginationEl = document.getElementById('pagination'),
+    var paginationEl = document.getElementById(pagination_random),
         fragment = document.createDocumentFragment(),
         i;
 
