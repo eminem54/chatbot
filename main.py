@@ -46,7 +46,7 @@ def joined(msg):
     room=session.get('room', '')
     join_room(room)
     socketio.emit('slot', {'data': '새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.',
-                           'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천']}, room=room)
+                           'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천','컨버전트']}, room=room)
 
 
 @socketio.on('serverFaq')  # faq 질문 처리
@@ -79,17 +79,17 @@ def server_msg_function(msg):
     if msg == '메인화면':
         socketio.emit('messageClient', {'data': '메인화면'}, room=room)
         socketio.emit('slot', {'data': '새마을금고 고객센터에 오신것을 환영합니다. \n궁금하신 항목을 선택하거나, 간단한 문장을 입력해주세요.',
-                               'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천']}, room=room)
+                               'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천','컨버전트']}, room=room)
     elif msg == '자주 묻는 키워드':
         socketio.emit('messageClient', {'data': msg}, room=room)
         socketio.emit('faq_slot', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.'})
 
-    elif msg == '테스트':
+    elif msg == '컨버전트':
         intent_data=[]
         entity_data=[]
         intent_data=['aaa','bbb','ccc']     #인텐트 데이터
         entity_data=[[1,2,3,4],[5,6,7,8],[341,132,1424,'asd']]
-        socketio.emit('testLocation',{'data':'테스트입니다.','intent':intent_data,'entity':entity_data},room=room)
+        socketio.emit('convergent',{'data':'테스트입니다.','intent':intent_data,'entity':entity_data},room=room)
 
     ################## 모델 돌린다.
     else:  # 딥러닝 모델 실행
