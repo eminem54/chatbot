@@ -49,6 +49,14 @@ def joined(msg):
                            'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천','컨버전트']}, room=room)
 
 
+#컨버전트 처리 함수
+@socketio.on('serverConvergent')
+def server_convergent_function(msg):
+    room = session.get('room')
+    print(msg)
+
+
+
 @socketio.on('serverFaq')  # faq 질문 처리
 def server_faq_function(msg):
     room = session.get('room')

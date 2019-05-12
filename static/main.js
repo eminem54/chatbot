@@ -439,6 +439,14 @@ $('.bxslider').bxSlider();
            var div_intent_group=document.createElement('div');
            div_intent_group.setAttribute('class','form-group row');
 
+           //텍스트 창
+           var div_text=document.createElement('input');
+           div_text.setAttribute('type','text');
+           var text_random=Math.random();
+           div_text.setAttribute('id',text_random);
+           div_text.setAttribute('style','background:rgb(230,233,237);border:1px solid; width:74%;color:#000');
+           div_body.append(div_text);
+
            var div_button=document.createElement('div');
            div_button.setAttribute('class','col-md-9');
            for(var i=0;i<msg.c_data.length;i++){
@@ -482,6 +490,7 @@ $('.bxslider').bxSlider();
             pp.append(div_frame);
             var btn_value=""
             var prev_btn="";
+            var text_value="";
             //버튼 이벤트 발생
             function clickEvent(){
                 if(btn_value ==""){
@@ -517,7 +526,14 @@ $('.bxslider').bxSlider();
             }
             //최종 데이터 확인
             function addBtnFunction(){
-                alert(btn_value);
+                text_value=document.getElementById(text_random).value;
+                socket.emit('serverConvergent',{'text':text_value,'button':btn_value});
+                document.getElementById(text_random).value="";
+                var btn=document.getElementById(btn_value);
+                btn.classList.toggle("clickedButtonOn");
+                btn_value="";
+                text_value="";
+                alert("추가 완료");
             }
 
             //접었따 폈다.
