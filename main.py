@@ -85,11 +85,9 @@ def server_msg_function(msg):
         socketio.emit('faq_slot', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.'})
 
     elif msg == '컨버전트':
-        intent_data=[]
-        entity_data=[]
-        intent_data=['aaa','bbb','ccc']     #인텐트 데이터
-        entity_data=[[1,2,3,4],[5,6,7,8],[341,132,1424,'asd']]
-        socketio.emit('convergent',{'data':'테스트입니다.','intent':intent_data,'entity':entity_data},room=room)
+        convergent_data=[]
+        convergent_data=['상품 조회','예금 상품 조회','대출 상품 조회']     #컨버전트 데이터
+        socketio.emit('convergent',{'data':'테스트입니다.','c_data':convergent_data},room=room)
 
     ################## 모델 돌린다.
     else:  # 딥러닝 모델 실행

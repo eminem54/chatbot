@@ -379,9 +379,10 @@ ul.bxslider {
     position:absolute;
     height:90%;
     width:50%;
-
 }
-
+.col-md-6{
+    width:65%;
+}
 pre{
 display:block;
 padding:0px;
@@ -442,3 +443,5 @@ ul .item .marker_15 {background-position: 0 -654px;}
    margin: 10px 2px 3px 4px;
     padding: 10px 2px 3px 4px;
 }
+.clickedButtonOn { background-color: rgb(59,79,99); }
+.clickedButtonOff {background-color: rgb(66,130,195); }

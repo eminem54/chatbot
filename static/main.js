@@ -406,18 +406,20 @@ $('.bxslider').bxSlider();
            var pp=document.createElement('p');
            pp.append(msg.data);
 
-           var value="";
+           var data_test={};
            // 초기 프레임창 띄우기위한 버튼
            var save_btn=document.createElement('input');
+           var save_btn_random=Math.random();
            save_btn.setAttribute('type','button');
-           save_btn.setAttribute('id','saveBtn');
+           save_btn.setAttribute('id',save_btn_random);
            save_btn.setAttribute('value',"저장하기");
-
+           save_btn.addEventListener("click",frameClickEvent,false);
            pp.append(save_btn);
 
            //프레임창 생성
            var div_frame=document.createElement('div');
-           div_frame.setAttribute('id','divSave');
+           var div_save_random=Math.random();
+           div_frame.setAttribute('id',div_save_random);
            div_frame.setAttribute('style','display:none;');
 
            var div_card=document.createElement('div');
@@ -437,51 +439,19 @@ $('.bxslider').bxSlider();
            var div_intent_group=document.createElement('div');
            div_intent_group.setAttribute('class','form-group row');
 
-           var label_title=document.createElement('div');
-           label_title.setAttribute('class','col-md-4 col-form-label text-md-right');
-           label_title.append('의도');
-           div_intent_group.append(label_title);
-
            var div_button=document.createElement('div');
-           div_button.setAttribute('class','col-md-6');
-
-           for(var i=0;i<msg.intent.length;i++){
+           div_button.setAttribute('class','col-md-9');
+           for(var i=0;i<msg.c_data.length;i++){
                 var btn=document.createElement('input');
                 btn.setAttribute('type','button');
-                btn.setAttribute('id',msg.intent[i]);
-                value+=msg.intent[i];
-                btn.setAttribute('value',msg.intent[i]);
+                btn.setAttribute('id',msg.c_data[i]);
+                btn.setAttribute('value',msg.c_data[i]);
+                btn.setAttribute('style',"width:100%");
+                btn.addEventListener("click",clickEvent,false);
                 div_button.append(btn);
            }
            div_intent_group.append(div_button);
            div_body.append(div_intent_group);
-           div_card.append(div_body);
-
-            var div_entity_frame=document.createElement('div');
-
-            for(var i=0;i<msg.entity.length;i++){
-                var div_entity_group=document.createElement('div');
-               div_entity_group.setAttribute('class','form-group row');
-
-               var label_title=document.createElement('div');
-               label_title.setAttribute('class','col-md-4 col-form-label text-md-right');
-               label_title.append("entity "+(i+1)+" : ");
-               div_entity_group.append(label_title);
-
-               var div_button=document.createElement('div');
-               div_button.setAttribute('class','col-md-6');
-
-                for(var j=0;j<msg.entity[i].length;j++){
-                    var btn=document.createElement('input');
-                    btn.setAttribute('type','button');
-                    btn.setAttribute('id',msg.entity[i][j]);
-                    btn.setAttribute('value',msg.entity[i][j]);
-                    value+=msg.entity[i][j];
-                    div_entity_group.append(btn);
-                 }
-                 div_entity_frame.append(div_entity_group);
-            }
-           div_body.append(div_entity_frame);
            div_card.append(div_body);
 
 
@@ -490,8 +460,8 @@ $('.bxslider').bxSlider();
            //추가 버튼
            var div_inner_addBtn=document.createElement('input');
            div_inner_addBtn.setAttribute('type','button');
-           div_inner_addBtn.setAttribute('id','innerAddBtn');
-           div_inner_addBtn.setAttribute('value','추가')
+           div_inner_addBtn.setAttribute('value','추가');
+           div_inner_addBtn.addEventListener("click",addBtnFunction,false);
            div_inner_addBtn.setAttribute('style','background-color:gray');
 
            div_add_clear_btn.append(div_inner_addBtn);
@@ -499,7 +469,9 @@ $('.bxslider').bxSlider();
            //취소 버튼
            var div_inner_clearBtn=document.createElement('input');
            div_inner_clearBtn.setAttribute('type','button');
-           div_inner_clearBtn.setAttribute('id','innerClearBtn');
+           var clearBtn_random=Math.random();
+           div_inner_clearBtn.setAttribute('id',clearBtn_random);
+           div_inner_clearBtn.addEventListener("click",clearFunction,false);
            div_inner_clearBtn.setAttribute('value','취소')
            div_inner_clearBtn.setAttribute('style','background-color:gray');
            div_add_clear_btn.append(div_inner_clearBtn);
@@ -508,23 +480,60 @@ $('.bxslider').bxSlider();
            div_frame.append(div_card);
 
             pp.append(div_frame);
+            var btn_value=""
+            var prev_btn="";
+            //버튼 이벤트 발생
+            function clickEvent(){
+                if(btn_value ==""){
+                  btn_value = $(this).attr('value');
+                } else {
+                     if(btn_value==$(this).attr('value')){
+                        btn_value ="";
+                     }else{
+                         btn_value ="";
+                         btn_value=$(this).attr('value');
+                     }
+                }
 
-            $(document).on("click","#innerClearBtn",function(){
-                $('#divSave').hide();
-            });
-
-            $(document).on("click","#innerAddBtn",function(){
-                alert(value);
-            });
-
-            $(document).on("click","#saveBtn",function(){
-                    var state=$('#divSave').css('display');
-                    if(state=='none'){
-                        $('#divSave').show();
-                    }else{
-                        $('#divSave').hide();
+                if(prev_btn==""){
+                    $(this).toggleClass("clickedButtonOn");
+                    prev_btn=$(this).attr('value');
+                }else{
+                    var btn=document.getElementById(prev_btn);
+                    if(btn_value==""){
+                          $(this).toggleClass("clickedButtonOn");
+                          prev_btn="";
                     }
-             });
+                    else if(prev_btn!=btn_value){
+                        $(this).toggleClass("clickedButtonOn");
+                        btn.classList.toggle("clickedButtonOn");
+                        prev_btn=$(this).attr('value');
+                    }
+                    else{
+                        $(this).toggleClass("clickedButtonOn");
+                    }
+                }
+
+            }
+            //최종 데이터 확인
+            function addBtnFunction(){
+                alert(btn_value);
+            }
+
+            //접었따 폈다.
+            function frameClickEvent(){
+                var check=document.getElementById(div_save_random);
+                if(check.style.display=='none'){
+                       check.style.display='block';
+                 }else{
+                       check.style.display='none';
+                }
+            }
+
+            function clearFunction(){
+                var check=document.getElementById(div_save_random);
+                check.style.display='none';
+            }
 
            chat_body.appendChild(pp);
            left_clearfix.appendChild(chat_body);
@@ -536,6 +545,7 @@ $('.bxslider').bxSlider();
             return_btn.setAttribute('type','button');
             return_btn.setAttribute('id','returnBtn');
             return_btn.setAttribute('value','처음화면');
+
             $(".chat").append(return_btn);
             $(".panel-body").scrollTop($(".chat").height());
     });
