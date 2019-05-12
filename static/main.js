@@ -648,8 +648,6 @@ $('.bxslider').bxSlider();
     socket.on('faq_server',function(msg){
            var left_clearfix=document.createElement('li');
            left_clearfix.setAttribute('class','leftclearfix');
-
-
            var chat_img=document.createElement('span');
            chat_img.setAttribute('class',"chat-img pull-left");
            var img=document.createElement('img');
@@ -658,7 +656,6 @@ $('.bxslider').bxSlider();
            img.setAttribute('class','img-circle');
            chat_img.appendChild(img);
            left_clearfix.appendChild(chat_img);
-
            var chat_body=document.createElement('div');
            chat_body.setAttribute('class','chat-body clearfix');
            var header=document.createElement('div');
@@ -668,7 +665,6 @@ $('.bxslider').bxSlider();
            primary_font.append('뉴빌리지 봇');
            header.appendChild(primary_font);
            chat_body.appendChild(header);
-
           // 유사도 추출된 문장 출력
            var pp=document.createElement('p');
            pp.append(msg.data);
@@ -677,7 +673,6 @@ $('.bxslider').bxSlider();
            for(var i=0;i<msg.faq_db_question.length;i++){
                var li=document.createElement('li');
                li.setAttribute('style','text-align:center');
-
                var title=document.createElement('div');
                title.append(msg.faq_db_question[i]);
                li.append(title);
@@ -695,7 +690,6 @@ $('.bxslider').bxSlider();
            $(".chat").append(left_clearfix);
            $(".chat").append(slider[0]);
            $('.bxslider').bxSlider();
-
            //버튼 생성
            for(var i=0;i<msg.slots.length;i++){
                 var btn=document.createElement('input');
@@ -709,8 +703,6 @@ $('.bxslider').bxSlider();
             return_btn.setAttribute('id','returnBtn');
             return_btn.setAttribute('value','처음화면');
             $(".chat").append(return_btn);
-
-
             $(".panel-body").scrollTop($(".chat").height());
             $("input").click(function(){
             static_faq=true;
@@ -760,4 +752,3 @@ $('.bxslider').bxSlider();
     });
 
  });
-
