@@ -1,30 +1,6 @@
-
-.idea/chatbot.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-.idea/workspace.xml
-__pycache__/chatbot_slot.cpython-36.pyc
-__pycache__/entity_extractor.cpython-36.pyc
-__pycache__/option1.cpython-36.pyc
-__pycache__/retrieval_model.cpython-36.pyc
-word_table.txt
-model.h5
-__pycache__/keras_intent_extract.cpython-36.pyc
-__pycache__/data_processing.cpython-36.pyc
-model.h5
-word_table.txt
-word_table.txt
-word_table.txt
-model.h5
-pdf/새 텍스트 문서.txt
-pdf/새 텍스트 문서 (2).txt
-pdf/test_file_server.py
-pdf/page.html
-pdf/새 텍스트 문서 (2).txt
-pdf/새 텍스트 문서.txt
-__pycache__/intent_product.cpython-36.pyc
+﻿
 __pycache__/chatbot_model.cpython-36.pyc
-model.h5
-pdf/새 텍스트 문서 (2).txt
-pdf/새 텍스트 문서.txt
+*.pyc
+*.xml
+*.iml
+*.html
