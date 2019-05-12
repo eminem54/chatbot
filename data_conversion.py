@@ -47,5 +47,5 @@ class ConversionClass:
     # conversion = "상품소개 대출 알려줘"
 # test_input = "예금 금리 알려줘"
 #
-cc = ConversionClass()
-cc.clear_conversion_db()
+# cc = ConversionClass()
+# cc.clear_conversion_db()
