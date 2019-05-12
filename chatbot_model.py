@@ -10,24 +10,14 @@ import data_tfidf
 import generative_model_predict as gm
 
 slot = chatbot_slot.Slot()
-dc_obj = data_tfidf.dc.ConversionClass()
-
+    
 
 class ChatBot:
     def intent_extraction(self, msg):
         msg = refine_sentence.refine_sentence(msg)
         return keras_intent_extract.evaluation(msg)
 
-    def convert_msg(self, msg):
-        if dc_obj.is_existed_conversion_data(msg):
-            print("컨버팅 있음")
-            return dc_obj.get_conversion_data(msg)
-        else:
-            print("컨버팅 없음")
-            return msg
-
     def run(self, msg):
-        msg = self.convert_msg(msg)
         msg = refine_sentence.refine_sentence(msg)
         slot_result = 0
 

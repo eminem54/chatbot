@@ -8,9 +8,7 @@ from flask_socketio import SocketIO, join_room
 
 import chatbot_model as re
 import cosine_similarity as cs
-import data_conversion as dc
 
-d_c = dc.ConversionClass()
 c_s = cs.Similarity()
 chatbot = re.ChatBot()
 app = Flask(__name__)
@@ -55,8 +53,7 @@ def joined(msg):
 @socketio.on('serverConvergent')
 def server_convergent_function(msg):
     room = session.get('room')
-    print(msg['text'])
-    d_c.add_conversion_data(msg['text'], msg['button'])
+    print(msg)
 
 
 
