@@ -446,14 +446,16 @@ $('.bxslider').bxSlider();
            div_text.setAttribute('id',text_random);
            div_text.setAttribute('style','background:rgb(230,233,237);border:1px solid; width:74%;color:#000');
            div_body.append(div_text);
-
+           data_list={};
            var div_button=document.createElement('div');
            div_button.setAttribute('class','col-md-9');
            for(var i=0;i<msg.c_data.length;i++){
                 var btn=document.createElement('input');
                 btn.setAttribute('type','button');
-                btn.setAttribute('id',msg.c_data[i]);
+                var id_random=Math.random();
+                btn.setAttribute('id',id_random);
                 btn.setAttribute('value',msg.c_data[i]);
+                data_list[msg.c_data[i]]=id_random;
                 btn.setAttribute('style',"width:100%");
                 btn.addEventListener("click",clickEvent,false);
                 div_button.append(btn);
@@ -508,7 +510,7 @@ $('.bxslider').bxSlider();
                     $(this).toggleClass("clickedButtonOn");
                     prev_btn=$(this).attr('value');
                 }else{
-                    var btn=document.getElementById(prev_btn);
+                    var btn=document.getElementById(data_list[prev_btn]);
                     if(btn_value==""){
                           $(this).toggleClass("clickedButtonOn");
                           prev_btn="";
@@ -529,7 +531,7 @@ $('.bxslider').bxSlider();
                 text_value=document.getElementById(text_random).value;
                 socket.emit('serverConvergent',{'text':text_value,'button':btn_value});
                 document.getElementById(text_random).value="";
-                var btn=document.getElementById(btn_value);
+                var btn=document.getElementById(data_list[btn_value]);
                 btn.classList.toggle("clickedButtonOn");
                 btn_value="";
                 text_value="";
