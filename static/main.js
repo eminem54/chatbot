@@ -449,7 +449,9 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
            var text_random=Math.random();
            div_text.setAttribute('id',text_random);
            div_text.setAttribute('style','background:rgb(230,233,237);border:1px solid; width:74%;color:#000');
+           div_text.setAttribute('placeholder','이 창에 저장하고자하는 문장을 입력해주세요.');
            div_body.append(div_text);
+
            data_list={};
            var div_button=document.createElement('div');
            div_button.setAttribute('class','col-md-9');
@@ -532,14 +534,17 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
             }
             //최종 데이터 확인
             function addBtnFunction(){
+                var addText="";
                 text_value=document.getElementById(text_random).value;
+                addText=text_value+" "+btn_value;
                 socket.emit('serverConvergent',{'text':text_value,'button':btn_value});
                 document.getElementById(text_random).value="";
                 var btn=document.getElementById(data_list[btn_value]);
                 btn.classList.toggle("clickedButtonOn");
                 btn_value="";
                 text_value="";
-                alert("추가 완료");
+                prev_btn="";
+                alert(addText+" 추가 완료");
             }
 
             //접었따 폈다.
@@ -717,6 +722,11 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
         });
     });
 */
+    /////////////////////// 컨버전트 버튼  /////////////////////////////
+    $('#convergentBtn').on('click',function(){
+        static_faq=false;
+        socket.emit("serverMsg","컨버전트");
+    });
 
 
     /////////////////////// 메인화면 버튼  /////////////////////////////
