@@ -434,11 +434,11 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
 
            var div_card=document.createElement('div');
            div_card.setAttribute('class','card');
-           div_card.setAttribute('style','border:1px solid black;margin-top:40px');
+           div_card.setAttribute('style','border:1px solid black;margin-top:40px;width:70%');
 
            var div_header=document.createElement('div');
            div_header.setAttribute('class','card-header');
-           div_header.append('질문 등록 창');
+           div_header.append('사용자 질문 등록');
 
            div_card.append(div_header);
 
@@ -454,8 +454,8 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
            div_text.setAttribute('type','text');
            var text_random=Math.random();
            div_text.setAttribute('id',text_random);
-           div_text.setAttribute('style','background:rgb(230,233,237);border:1px solid; width:74%;color:#000');
-           div_text.setAttribute('placeholder','이 창에 저장하고자하는 문장을 입력해주세요.');
+           div_text.setAttribute('style','background:rgb(230,233,237);border:1px solid; width:70%;color:#000');
+           div_text.setAttribute('placeholder','여기에 질문을 입력해주세요.');
            div_body.append(div_text);
 
            data_list={};
@@ -468,7 +468,7 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
                 btn.setAttribute('id',id_random);
                 btn.setAttribute('value',msg.c_data[i]);
                 data_list[msg.c_data[i]]=id_random;
-                btn.setAttribute('style',"width:100%");
+                btn.setAttribute('style',"width:50%");
                 btn.addEventListener("click",clickEvent,false);
                 div_button.append(btn);
            }
@@ -656,20 +656,7 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
                left_clearfix.appendChild(chat_body);
                $(".chat").append(left_clearfix);
                $(".chat").append(div_box[0]);
-               //버튼 생성
-               for(var i=0;i<msg.slots.length;i++){
-                    var btn=document.createElement('input');
-                    btn.setAttribute('type','button');
-                    btn.setAttribute('id',msg.slots[i]);
-                    btn.setAttribute('value',msg.slots[i]);
-                    $(".chat").append(btn);
-                }
 
-                var return_btn=document.createElement('input');
-                return_btn.setAttribute('type','button');
-                return_btn.setAttribute('id','returnBtn');
-                return_btn.setAttribute('value','처음화면');
-                $(".chat").append(return_btn);
                 $(".panel-body").scrollTop($(".chat").height());
 
          });
