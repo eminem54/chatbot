@@ -95,7 +95,7 @@ def server_msg_function(msg):
 
     elif msg == '컨버전트':
         convergent_data=[]
-        convergent_data=['상품 조회','예금 상품 조회','대출 상품 조회']     #컨버전트 데이터
+        convergent_data=['상품 조회','예금 상품 조회','대출 상품 조회','상품 금리 조회','새마을금고 지점 조회','상품 추천','고객 상담']     #컨버전트 데이터
         socketio.emit('convergent',{'data':'문장 입력과 해당되는 버튼을 클릭해주세요..','c_data':convergent_data},room=room)
 
     ################## 모델 돌린다.
