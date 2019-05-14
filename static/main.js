@@ -323,36 +323,40 @@ $('.bxslider').bxSlider();
     });
 
     /////////////////////// 버튼 생성  /////////////////////////////
-    socket.on('slot',function(msg){
-        $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data);
-            var div_frame=document.createElement('div');
-            for(var i=0;i<msg.slots.length;i+=5){
-                var div_wrap=document.createElement('div');
-                div_wrap.setAttribute('id','div_wrap');
-                for(var j=i;j<msg.slots.length&&j<(i+5);j++){
-                    var btn=document.createElement('input');
-                    btn.setAttribute('type','button');
-                    btn.setAttribute('id',msg.slots[j]);
-                    btn.setAttribute('value',msg.slots[j]);
-                    div_wrap.append(btn);
-                 }
-                 div_frame.appendChild(div_wrap);
+socket.on('slot',function(msg){
+$(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data);
+    var div_frame=document.createElement('div');
+    data_list={};
+    for(var i=0;i<msg.slots.length;i+=5){
+        var div_wrap=document.createElement('div');
+        div_wrap.setAttribute('id','div_wrap');
+        for(var j=i;j<msg.slots.length&&j<(i+5);j++){
+            var btn=document.createElement('input');
+            btn.setAttribute('type','button');
+            var id_random=Math.random();
+            btn.setAttribute('id',id_random);
+            btn.setAttribute('value',msg.slots[j]);
+            data_list[msg.slots[j]]=id_random;
+            btn.addEventListener("click",clickEvent,false);
+            div_wrap.append(btn);
+        }
+        div_frame.appendChild(div_wrap);
+    }
+    $(".chat").append(div_frame);
+    $(".chat").append("</pre></div></li>");
+    $(".panel-body").scrollTop($(".chat").height());
+    function clickEvent(){
+        var text=$(this).attr('value');
+        if(text!=null){
+            static_faq=false;
+            if(text=="상품 추천"){
+                socket.emit("serverMsg","추천");
+            }else{
+                socket.emit("serverMsg",text);
             }
-            $(".chat").append(div_frame);
-            $(".chat").append("</pre></div></li>");
-            $(".panel-body").scrollTop($(".chat").height());
-            $("input").click(function(){
-            var text=$(this).attr('value');
-            if(text!=null){
-                    static_faq=false;
-                    if(text=="상품 추천"){
-                        socket.emit("serverMsg","추천");
-                    }else{
-                        socket.emit("serverMsg",text);
-                    }
-            }
-        });
-    });
+        }
+    }
+});
 
     /////////////////////// 상품 추천  /////////////////////////////
     socket.on('product_recommend',function(msg){
