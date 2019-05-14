@@ -331,12 +331,18 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
         var div_wrap=document.createElement('div');
         div_wrap.setAttribute('id','div_wrap');
         for(var j=i;j<msg.slots.length&&j<(i+5);j++){
+
             var btn=document.createElement('input');
             btn.setAttribute('type','button');
             var id_random=Math.random();
             btn.setAttribute('id',id_random);
             btn.setAttribute('value',msg.slots[j]);
             data_list[msg.slots[j]]=id_random;
+            if(msg.slots[j].length>=10){
+                btn.setAttribute('style','width:25%');
+            }
+
+
             btn.addEventListener("click",clickEvent,false);
             div_wrap.append(btn);
         }
