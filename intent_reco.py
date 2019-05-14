@@ -49,29 +49,31 @@ class SlotOperator:
            # congender = conv.distinct("변환", {"성별": self.slot.recoentity1})
             gender = self.slot.recoentity[1]
             answer = co.distinct("상품설명", {"직업": self.slot.recoentity[3],"성별": gender,"상품종류": self.slot.recoentity[2]})[0]
+            self.get_data_button(4)
             return answer, 1
 
         elif self.slot.recoentity[1] is "" and self.slot.recoentity[2] is "":
             self.slot.recolog = "1"
-            answer = "성별을 입력해 주세요 (여자/남자)"
+            answer = "고객님 성별이 알고싶어요."
             self.get_data_button(1)
             return answer, 0
 
         elif self.slot.recoentity[1] is not "" and self.slot.recoentity[2] is "":
             self.slot.recolog = "2"
-            answer = "예금/대출"
+            answer = "어떤 상품을 찾고 계시나요?"
             self.get_data_button(2)
             return answer, 0
 
         elif self.slot.recoentity[2] is not "" and self.slot.recoentity[3] is "" and self.slot.recoentity[1]is not "":
             self.slot.recolog = "3"
-            answer = "무슨 일을 하시나요? (대학생/직장인/그외)"
+            answer = "무슨 일을 하시나요?"
             self.get_data_button(3)
             return answer, 0
 
         elif self.slot.recoentity[3] is not "" and self.slot.recoentity[4] is "":
             gender = self.slot.recoentity1
             answer = co.distinct("상품설명", {"직업": self.slot.recoentity3,"성별": gender,"상품종류": self.slot.recoentity2})[0]
+            self.get_data_button(4)
             return answer, 1
 
     def slot_filling(self):
@@ -98,13 +100,18 @@ class SlotOperator:
         if num == 1:
             self.slot.button = ['남자', '여자']
             self.slot.button_list = [['남자', '남자추천성별이름봇'], ['여자', '여자추천성별이름봇']]
+            self.slot.okay = ['상품추천을 선택하셨습니다']
             return
         if num == 2:
             self.slot.button = ['예금', '대출']
             self.slot.button_list = [['예금', '예추천이름봇'], ['대출', '대추천이름봇']]
+            self.slot.okay = ["성별을 선택하셨습니다"]
             return
         if num == 3:
             self.slot.button = ['대학생', '직장인', '그외',]
             self.slot.button_list = [['대학생', '직장인', '그외',], ['대직업이름봇', '직직업이름봇','그외직업이름봇']]
             self.slot.button_list = [['대학생', '대직업이름봇'], ['직장인', '직직업이름봇'], ['그외', '그외직업이름봇']]
+            self.slot.okay = ['상품종류를 선택하셨습니다']
+        if num == 4:
+            self.slot.okay = ['직업을 선택하셨습니다']
             return

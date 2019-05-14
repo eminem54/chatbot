@@ -9,6 +9,7 @@ from flask_socketio import SocketIO, join_room
 import chatbot_model as re
 import cosine_similarity as cs
 import data_conversion as dc
+import intent_reco
 
 d_c = dc.ConversionClass()
 c_s = cs.Similarity()
@@ -118,8 +119,8 @@ def server_msg_function(msg):
                 socketio.emit('slot', {'data': '아래 항목 중에서 선택해주세요.', 'slots': slot.button}, room=room)
 
         elif slot.intent == "상품 추천":
-             socketio.emit('messageClient', {'data': msg}, room=room)
-             socketio.emit('product_recommend',{'data':answer,'data_btn': slot.button, 'data_list': slot.button_list}, room=room)
+             socketio.emit('messageClient', {'data': slot.okay}, room=room)
+             socketio.emit('product_recommend',{'data': answer,'data_btn': slot.button, 'data_list': slot.button_list}, room=room)
 
 
         elif slot.intent == "UnKnown":
