@@ -408,7 +408,7 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
            header.appendChild(primary_font);
            chat_body.appendChild(header);
            var pp=document.createElement('p');
-           pp.append(msg.data);
+           //pp.append(msg.data);
 
            var data_test={};
            // 초기 프레임창 띄우기위한 버튼
@@ -418,17 +418,17 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
            save_btn.setAttribute('id',save_btn_random);
            save_btn.setAttribute('value',"저장하기");
            save_btn.addEventListener("click",frameClickEvent,false);
-           pp.append(save_btn);
+           //pp.append(save_btn);
 
            //프레임창 생성
            var div_frame=document.createElement('div');
            var div_save_random=Math.random();
            div_frame.setAttribute('id',div_save_random);
-           div_frame.setAttribute('style','display:none;');
+           div_frame.setAttribute('style','display:block;');
 
            var div_card=document.createElement('div');
            div_card.setAttribute('class','card');
-           div_card.setAttribute('style','border:1px solid black');
+           div_card.setAttribute('style','border:1px solid black;margin-top:40px');
 
            var div_header=document.createElement('div');
            div_header.setAttribute('class','card-header');
@@ -490,12 +490,19 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
            div_inner_clearBtn.addEventListener("click",clearFunction,false);
            div_inner_clearBtn.setAttribute('value','취소')
            div_inner_clearBtn.setAttribute('style','background-color:gray');
-           div_add_clear_btn.append(div_inner_clearBtn);
+           //div_add_clear_btn.append(div_inner_clearBtn);
+
 
            div_card.append(div_add_clear_btn);
            div_frame.append(div_card);
 
             pp.append(div_frame);
+
+           chat_body.appendChild(pp);
+           left_clearfix.appendChild(chat_body);
+           $(".chat").append(left_clearfix);
+           $(".panel-body").scrollTop($(".chat").height());
+
             var btn_value=""
             var prev_btn="";
             var text_value="";
@@ -556,25 +563,10 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
                        check.style.display='none';
                 }
             }
-
             function clearFunction(){
                 var check=document.getElementById(div_save_random);
                 check.style.display='none';
             }
-
-           chat_body.appendChild(pp);
-           left_clearfix.appendChild(chat_body);
-           $(".chat").append(left_clearfix);
-           $(".chat").append(div_box[0]);
-
-
-            var return_btn=document.createElement('input');
-            return_btn.setAttribute('type','button');
-            return_btn.setAttribute('id','returnBtn');
-            return_btn.setAttribute('value','처음화면');
-
-            $(".chat").append(return_btn);
-            $(".panel-body").scrollTop($(".chat").height());
     });
 
     /////////////////////// faq  /////////////////////////////
