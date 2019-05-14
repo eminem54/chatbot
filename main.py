@@ -90,7 +90,8 @@ def server_msg_function(msg):
                                'slots': ['상품 소개', '지점 안내', '자주 묻는 키워드', '상품 추천']}, room=room)
     elif msg == '자주 묻는 키워드':
         socketio.emit('messageClient', {'data': msg}, room=room)
-        socketio.emit('faq_slot', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.'})
+        data_list=['인터넷뱅킹','대출','예금']
+        socketio.emit('faq_slot', {'data': '현재 FAQ 질의 공간입니다. 처음화면으로 돌아가고 싶으시면 처음화면 버튼을 눌러주세요.','faq_slots':data_list},room=room)
 
     elif msg == '컨버전트':
         convergent_data=[]
