@@ -338,8 +338,8 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
             btn.setAttribute('id',id_random);
             btn.setAttribute('value',msg.slots[j]);
             data_list[msg.slots[j]]=id_random;
-            if(msg.slots[j].length>=10){
-                btn.setAttribute('style','width:25%');
+            if(msg.slots[j].length>=9){
+                btn.setAttribute('style','width:23%');
             }
 
 
@@ -413,7 +413,7 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
            primary_font.append('뉴빌리지 봇');
            header.appendChild(primary_font);
            chat_body.appendChild(header);
-           var pp=document.createElement('p');
+           var pp=document.createElement('div');
            //pp.append(msg.data);
 
            var data_test={};
@@ -434,7 +434,7 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
 
            var div_card=document.createElement('div');
            div_card.setAttribute('class','card');
-           div_card.setAttribute('style','border:1px solid black;margin-top:40px;width:70%');
+           div_card.setAttribute('style','border:1px solid black;margin-top:40px;width:60%');
 
            var div_header=document.createElement('div');
            div_header.setAttribute('class','card-header');
@@ -454,7 +454,7 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
            div_text.setAttribute('type','text');
            var text_random=Math.random();
            div_text.setAttribute('id',text_random);
-           div_text.setAttribute('style','background:rgb(230,233,237);border:1px solid; width:70%;color:#000');
+           div_text.setAttribute('style','background:rgb(230,233,237);border:1px solid; width:75%;color:#000');
            div_text.setAttribute('placeholder','여기에 질문을 입력해주세요.');
            div_body.append(div_text);
 
@@ -468,7 +468,7 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
                 btn.setAttribute('id',id_random);
                 btn.setAttribute('value',msg.c_data[i]);
                 data_list[msg.c_data[i]]=id_random;
-                btn.setAttribute('style',"width:50%");
+                btn.setAttribute('style',"width:50%; margin-bottom:8px;margin-right:5px");
                 btn.addEventListener("click",clickEvent,false);
                 div_button.append(btn);
            }
@@ -484,7 +484,7 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
            div_inner_addBtn.setAttribute('type','button');
            div_inner_addBtn.setAttribute('value','추가');
            div_inner_addBtn.addEventListener("click",addBtnFunction,false);
-           div_inner_addBtn.setAttribute('style','background-color:gray');
+           div_inner_addBtn.setAttribute('style','background-color:gray;width:22%');
 
            div_add_clear_btn.append(div_inner_addBtn);
 
