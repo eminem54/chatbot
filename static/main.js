@@ -557,7 +557,6 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
                 btn_value="";
                 text_value="";
                 prev_btn="";
-                alert(addText+" 추가 완료");
             }
 
             //접었따 폈다.
