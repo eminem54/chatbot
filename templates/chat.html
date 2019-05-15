@@ -20,11 +20,26 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
-
-
-
-
 </head>
+<script type="text/javascript">
+    function make(){
+       container.style.display="none";
+        var img = document.createElement('img'); // 이미지 객체 생성
+        img.onclick = function(){document.getElementById('board').removeChild(this)}; // 이미지를 클릭하면 제거되는 onclick 함수 생성
+        img.src = 'https://scontent-icn1-1.xx.fbcdn.net/v/t1.0-9/16641049_625376667647811_8844539678282274552_n.png?_nc_cat=103&_nc_ht=scontent-icn1-1.xx&oh=55d1f745fa762e5fbc966898ea7be6d0&oe=5D0A450D'
+        img.style.cursor = 'pointer'; // 커서 지정
+        img.style.width="40px";
+        img.style.height="40px";
+        document.getElementById('board').appendChild(img); // board DIV 에 이미지 동적 추가
+    }
+    function del(){
+    container.style.display="";
+        document.getElementById('board').innerHTML = '';
+    }
+        $('#blogCarousel').carousel({
+				interval: 5000
+		});
+</script>
 <body class="bg">
     <!------ Include the above in your HEAD tag ---------->
 <div id="container">
@@ -57,6 +72,6 @@
     </div>
 </div>
 </div>
-
+<div id="board" onclick="del();"></div>
 </body>
 </html>
