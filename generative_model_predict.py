@@ -1,11 +1,14 @@
 from keras.models import model_from_json
 import os
 import numpy as np
+from konlpy.tag import Mecab
 
-max_encoder_seq_length = 5
+mecab = Mecab(dicpath="C:\\mecab\\mecab-ko-dic")
+
+max_encoder_seq_length = 10
 max_decoder_seq_length = 12
-num_encoder_tokens = 255
-num_decoder_tokens = 303
+num_encoder_tokens = 241
+num_decoder_tokens = 352
 # dictionary load
 input_token_index = {}
 if os.path.exists('./Deeplearning_Model/input_token_index.txt'):
@@ -91,7 +94,7 @@ def convert_to_vector(text):
 
 
 def make_generative_answer(msg):
-    input_seq = convert_to_vector(msg)
+    input_seq = convert_to_vector("".join([i[0] + " " for i in mecab.pos(msg)]))
     decoded_sentence = decode_sequence(input_seq)
     return decoded_sentence
 
