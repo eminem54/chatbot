@@ -15,7 +15,7 @@ class Similarity:
         res_str=""
         for i in range(len(pos_data)):
             if pos_data[i][1][:2]=='NN' or pos_data[i][1][:2]=='VV':
-                res_str+=pos_data[0][0]+" "
+                res_str+=pos_data[i][0]+" "
         return res_str
 
     def get_csv_writer(self, callStr,filename,rows,delimiter):
