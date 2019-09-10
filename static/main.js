@@ -1,27 +1,25 @@
 $(document).ready(function() {
 var static_faq=false;
+
+
 $('.bxslider').bxSlider();
 
-    var socket = io.connect('http://127.0.0.1:5000');
+    var socket = io.connect('http://127.0.0.1:5000');       // 소켓 연결
 
-    /////////////////////// 서버 접속  /////////////////////////////
-    socket.on('connect',function(){
+    socket.on('connect',function(){                         // connect 이벤트 처리
         socket.emit('joined',{});
     });
-    /////////////////////// 서버 메시지  /////////////////////////////
     socket.on('messageServer', function(msg) {
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data+"</pre></div></li>");
         $(".panel-body").scrollTop($(".chat").height());
-    });
+    });        // 서버에서 전달받은 메시지 이벤트 처리
 
-    /////////////////////// 클라이언트 접속  /////////////////////////////
     socket.on('messageClient',function(msg){
         $(".chat").append( "<li class='right clearfix'><span class='chat-img pull-right'><img src='http://placehold.it/50/55C1E7/fff&text=U' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='pull-right primary-font'>고객님</strong></div><br/><p style='text-align:right;'>"+msg.data+"</p></div></li>");
         $(".panel-body").scrollTop($(".chat").height());
-    });
+    });          // 클라이언트가 요청한 메시지 이벤트 처리
 
-    /////////////////////// 키워드 지도   /////////////////////////////
-   socket.on('messageServerLocation',function(msg){
+    socket.on('messageServerLocation',function(msg){
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data+"</p></div></li>");
 
         var map_wrap=document.createElement('div');
@@ -306,9 +304,8 @@ $('.bxslider').bxSlider();
             el.removeChild (el.lastChild);
         }
     }
-});
+});   // 지도 출력 이벤트 처리
 
-    /////////////////////// pdf 다운로드  /////////////////////////////
     socket.on('pdf_download',function(msg){
         $(".chat").append("<li>"+"상품 약관 다운로드 하기 : ");
         var btn=document.createElement('input');
@@ -320,10 +317,9 @@ $('.bxslider').bxSlider();
         $(".chat").append(btn);
         $(".chat").append("</li>");
         $(".panel-body").scrollTop($(".chat").height());
-    });
+    });             //pdf 다운 이벤트 처리
 
-    /////////////////////// 버튼 생성  /////////////////////////////
-socket.on('slot',function(msg){
+    socket.on('slot',function(msg){
 $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data);
     var div_frame=document.createElement('div');
     data_list={};
@@ -362,9 +358,8 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
             }
         }
     }
-});
+});                     // 버튼 생성 이벤트 처리
 
-    /////////////////////// 상품 추천  /////////////////////////////
     socket.on('product_recommend',function(msg){
             $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><pre>"+msg.data+"</pre>");
             for(var i=0;i<msg.data_btn.length;i++){
@@ -388,9 +383,8 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
                     }
             }
         });
-    });
+    });        // 상품 추천 이벤트 처리
 
-    /////////////////////// 컨버전트  /////////////////////////////
     socket.on('convergent',function(msg){
            var left_clearfix=document.createElement('li');
            left_clearfix.setAttribute('class','leftclearfix');
@@ -572,9 +566,8 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
                 var check=document.getElementById(div_save_random);
                 check.style.display='none';
             }
-    });
+    });               // 컨버전트 이벤트 처리
 
-    /////////////////////// faq  /////////////////////////////
     socket.on('faq_slot',function(msg){
          static_faq=true;
         $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><img src='http://placehold.it/50/55C1E7/fff&text=BOT' alt='User Avatar' class='img-circle' /></span><div class='chat-body clearfix'><div class='header'> <strong class='primary-font'>뉴빌리지 봇</strong></div><p>"+msg.data);
@@ -603,9 +596,8 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
             var text=$(this).attr('value');
             socket.emit("serverFaq",text);
         }
-    });
+    });                 // faq slot 이벤트 처리
 
-    /////////////////////// faq 접속  /////////////////////////////
     socket.on('faq_server',function(msg){
                static_faq=true;
 
@@ -658,91 +650,18 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
 
                 $(".panel-body").scrollTop($(".chat").height());
 
-         });
+         });               // faq 접속 이벤트 처리
 
-
-    //faq_server  슬라이드
-/*
-    socket.on('faq_server',function(msg){
-           var left_clearfix=document.createElement('li');
-           left_clearfix.setAttribute('class','leftclearfix');
-           var chat_img=document.createElement('span');
-           chat_img.setAttribute('class',"chat-img pull-left");
-           var img=document.createElement('img');
-           img.setAttribute('src','http://placehold.it/50/55C1E7/fff&text=BOT');
-           img.setAttribute('alt','User Avatar');
-           img.setAttribute('class','img-circle');
-           chat_img.appendChild(img);
-           left_clearfix.appendChild(chat_img);
-           var chat_body=document.createElement('div');
-           chat_body.setAttribute('class','chat-body clearfix');
-           var header=document.createElement('div');
-           header.setAttribute('class','header');
-           var primary_font=document.createElement('strong');
-           primary_font.setAttribute('class','primary-font');
-           primary_font.append('뉴빌리지 봇');
-           header.appendChild(primary_font);
-           chat_body.appendChild(header);
-          // 유사도 추출된 문장 출력
-           var pp=document.createElement('p');
-           pp.append(msg.data);
-           var slider = $("<div class='slider' />");
-           var box = $("<ul class='bxslider'/>");
-           for(var i=0;i<msg.faq_db_question.length;i++){
-               var li=document.createElement('li');
-               li.setAttribute('style','text-align:center');
-               var title=document.createElement('div');
-               title.append(msg.faq_db_question[i]);
-               li.append(title);
-               li.innerHTML='<details><summary>제목</summary><p>내용</p></details>';
-               var hr=document.createElement('hr');
-               li.append(hr);
-               var content=document.createElement('div');
-               content.append(msg.faq_db_answer[i]);
-               li.append(content);
-               box.append(li);
-               slider.append(box);
-           }
-           chat_body.appendChild(pp);
-           left_clearfix.appendChild(chat_body);
-           $(".chat").append(left_clearfix);
-           $(".chat").append(slider[0]);
-           $('.bxslider').bxSlider();
-           //버튼 생성
-           for(var i=0;i<msg.slots.length;i++){
-                var btn=document.createElement('input');
-                btn.setAttribute('type','button');
-                btn.setAttribute('id',msg.slots[i]);
-                btn.setAttribute('value',msg.slots[i]);
-                $(".chat").append(btn);
-            }
-            var return_btn=document.createElement('input');
-            return_btn.setAttribute('type','button');
-            return_btn.setAttribute('id','returnBtn');
-            return_btn.setAttribute('value','처음화면');
-            $(".chat").append(return_btn);
-            $(".panel-body").scrollTop($(".chat").height());
-            $("input").click(function(){
-            static_faq=true;
-            var text=$(this).attr('value');
-            socket.emit("serverMsg",'자주 묻는 키워드@'+text);
-        });
-    });
-*/
-    /////////////////////// 컨버전트 버튼  /////////////////////////////
     $('#convergentBtn').on('click',function(){
         static_faq=false;
         socket.emit("serverMsg","컨버전트");
-    });
+    });         // 컨버전트 버튼 이벤트 처리
 
-
-    /////////////////////// 메인화면 버튼  /////////////////////////////
     $('#returnBtn').on('click',function(){
         static_faq=false;
         socket.emit("serverMsg","메인화면");
-    });
+    });             // 메인화면 버튼 이벤트 처리
 
-    /////////////////////// 전송 버튼  /////////////////////////////
     $('#inputBtn').on('click',function(){
         if(static_faq==false){
             socket.emit("serverMsg",$('#myMessage').val());
@@ -752,9 +671,8 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
             socket.emit("serverFaq",$('#myMessage').val());
             $('#myMessage').val('');
         }
-    });
+    });              // 전송 버튼 이벤트 처리
 
-    /////////////////////// 엔터 키 이벤트  /////////////////////////////
     $('#myMessage').keypress(function(e) {
         if(static_faq==false){
             var code = e.keyCode || e.which;
@@ -772,6 +690,6 @@ $(".chat").append( "<li class='left clearfix'><span class='chat-img pull-left'><
                 socket.emit("serverFaq",text);
             }
         }
-    });
+    });             // 엔터키입력 이벤트 처리
 
  });
