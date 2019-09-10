@@ -11,9 +11,15 @@ import cosine_similarity as cs
 
 c_s = cs.Similarity()
 chatbot = re.ChatBot()
+
+'''
+    Flask 객체를 app에 할당
+    socket.io 객체 생성
+'''
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app)
+
 connection = pymongo.MongoClient()
 
 
