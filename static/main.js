@@ -40,10 +40,8 @@ $('.bxslider').bxSlider();
         div_btn_text.setAttribute('id','text_btn');
         var input_text=document.createElement('input');
         input_text.setAttribute('type','text');
-        //테스트
         input_text.addEventListener("keypress",keyevent,false);
-        //
-        input_text.setAttribute('value',msg.data);
+        input_text.setAttribute('value',msg.data);      // 텍스트 저장하는 부분
         var keyword_value=Math.random();
         input_text.setAttribute('id',keyword_value);
         input_text.setAttribute('style','width:70%');
